@@ -1,0 +1,80 @@
+import Image from "next/image";
+
+interface elevProp {
+  elev: boolean
+  setElev: React.Dispatch<React.SetStateAction<boolean>>;
+  setFloor: React.Dispatch<React.SetStateAction<string>>;
+}
+function Elevator({ elev, setElev, setFloor }: elevProp) {
+
+  return (
+    <div className={`
+      absolute
+      z-10
+      ${!elev ? "top-[-100%]" : "top-0"}
+      flex flex-col justify-center
+      w-[450px] h-full px-10
+      bg-[white]
+    `}
+    style={{
+      opacity: elev ? "100" : "0",
+      transition: "1s ease"
+    }}
+    >
+      <Image
+        src={"/images/mall/elevator/goldFloor.png"}
+        alt="gold"
+        width={3000}
+        height={3000}
+        onClick={() => {
+          setElev(prev => !prev)
+          setFloor("gold")
+        }}
+        className={`
+          w-full
+          object-cover
+          cursor-pointer
+        `}
+        style={{
+          transition: "0.8s ease"
+        }}
+      />
+      <Image
+        src={"/images/mall/elevator/silverFloor.png"}
+        alt="silver"
+        width={3000}
+        height={3000}
+        onClick={() => {
+          setElev(prev => !prev)
+          setFloor("silver")
+        }}
+        className={`
+          w-full
+          object-cover
+          cursor-pointer
+        `}
+        style={{
+          marginBottom: !elev ? "400px" : "0px",
+          marginTop: !elev ? "400px" : "0px",
+          transition: "0.8s ease"
+        }}
+      />
+      <Image
+        src={"/images/mall/elevator/rawFloor.png"}
+        alt="raw"
+        width={3000}
+        height={3000}
+        onClick={() => setElev(prev => !prev)}
+        className={`
+          w-full
+          object-cover
+          cursor-pointer
+        `}
+        style={{
+          transition: "0.8s ease"
+        }}
+      />
+    </div>
+  )
+}
+export default Elevator;
