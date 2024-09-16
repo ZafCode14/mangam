@@ -2,8 +2,9 @@ import Image from "next/image";
 
 interface PerspectiveProp {
   className: string
+  width: string
 }
-function Perspective1({ className }: PerspectiveProp) {
+function Perspective1({ className, width }: PerspectiveProp) {
   return (
     <div className={`
       absolute
@@ -11,6 +12,7 @@ function Perspective1({ className }: PerspectiveProp) {
       h-full 
       ${className}
     `} style={{
+      width: `${width}vw`,
       transition: "1s ease"
     }}>
       <Image
