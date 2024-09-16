@@ -7,7 +7,7 @@ function page() {
     }}>
       <div className={`
         relative
-        flex items-end justify-center
+        flex items-center justify-center
         h-full w-auto
       `}>
         <Image
@@ -15,9 +15,10 @@ function page() {
           alt="floor plan"
           width={3000}
           height={3000}
+          priority
           className={`
-            absolute bottom-0
-            h-full
+            absolute
+            w-full
             object-cover
           `}
         />
@@ -27,8 +28,8 @@ function page() {
           width={3000}
           height={3000}
           className={`
-            absolute bottom-0
-            h-full
+            absolute
+            w-full
             object-cover
           `}
         />
@@ -38,8 +39,8 @@ function page() {
           width={3000}
           height={3000}
           className={`
-            absolute bottom-0
-            h-full
+            absolute
+            w-full
             object-cover
           `}
         />
@@ -49,8 +50,8 @@ function page() {
           width={3000}
           height={3000}
           className={`
-            absolute bottom-0
-            h-full
+            absolute
+            w-full
             object-cover
           `}
         />
@@ -60,8 +61,8 @@ function page() {
           width={3000}
           height={3000}
           className={`
-            absolute bottom-0
-            h-full
+            absolute
+            w-full
             object-cover
           `}
         />

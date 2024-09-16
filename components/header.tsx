@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link";
+import Image from "next/image";
 
 function Header() {
     return (
@@ -9,7 +10,16 @@ function Header() {
           h-[70px] w-full bg-[#2A1C1B]
           text-white
         `}>
-          <Link href="/" className={`mx-5`}>MANGAM</Link>
+          <Link href={'/'} className="flex items-center">
+            <Image
+             src={'/icons/logo.png'}
+             alt="logo"
+             width={100}
+             height={100}
+             className="h-[40px] w-auto mx-3"
+            />
+            <p>MANGAM</p>
+          </Link>
           <div>
             <Link href="/" className={`mx-5`}>Home</Link>
             <Link href="/shop" className={`mx-5`}>Shop</Link>
