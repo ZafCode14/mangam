@@ -18,7 +18,7 @@ function Page() {
     }}>
     <Perspective2/>
     <Perspective1
-      className={`opacity-[${opacity ? "100" : "0"}]`}
+      opacity={opacity ? "100" : "0"}
       width={width ? "100" : "210"}
     />
     <button onClick={() => {setWidth(prev => !prev), setOpacity(prev => !prev)}} className={`

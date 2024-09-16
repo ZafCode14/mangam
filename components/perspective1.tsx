@@ -1,17 +1,17 @@
 import Image from "next/image";
 
 interface PerspectiveProp {
-  className: string
   width: string
+  opacity: string
 }
-function Perspective1({ className, width }: PerspectiveProp) {
+function Perspective1({ opacity, width }: PerspectiveProp) {
   return (
     <div className={`
       absolute
       flex items-center justify-center
       h-full 
-      ${className}
     `} style={{
+      opacity: `${opacity}`,
       width: `${width}vw`,
       transition: "1s ease"
     }}>
