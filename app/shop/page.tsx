@@ -59,7 +59,7 @@ function Page() {
                 priority
                 className={`h-[30px] w-auto ml-5`}
               />
-              <input placeholder="Search products" className={`ml-5 w-[70%] bg-[#E8E4E1] focus:outline-none text-black`}/>
+              <input placeholder="Search products" className={`ml-5 w-[70%] bg-[#e8e4e1] focus:outline-none text-black`}/>
               <div className={``}></div>
             </div>
             <button className={`

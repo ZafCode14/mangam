@@ -47,6 +47,7 @@ function Page() {
         elev={elev}
         setElev={setElev}
         setFloor={setFloor}
+        floor={floor}
       />
     </main>
   );
