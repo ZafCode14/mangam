@@ -1,74 +1,32 @@
-import Image from "next/image";
+"use client";
+import Perspective1 from "@/components/perspective1";
+import Perspective2 from "@/components/perspective2";
+import { useState } from "react";
 
-function page() {
+function Page() {
+  const [width, setWidth] = useState(true);
+  const [opacity, setOpacity] = useState(true)
+
   return (
-    <main className="relative w-full top-[70px]" style={{
+    <main className={`
+      relative 
+      overflow-hidden 
+      flex justify-center items-center
+      w-full top-[70px] 
+    `} style={{
       height: "calc(100vh - 70px)"
     }}>
-      <div className={`
-        relative
-        flex items-center justify-center
-        h-full w-auto
-      `}>
-        <Image
-          src={"/images/mall/Floor.jpeg"}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          priority
-          className={`
-            absolute
-            w-full
-            object-cover
-          `}
-        />
-        <Image
-          src={"/images/mall/classic3.png"}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          className={`
-            absolute
-            w-full
-            object-cover
-          `}
-        />
-        <Image
-          src={"/images/mall/classic1.png"}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          className={`
-            absolute
-            w-full
-            object-cover
-          `}
-        />
-        <Image
-          src={"/images/mall/classic2.png"}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          className={`
-            absolute
-            w-full
-            object-cover
-          `}
-        />
-        <Image
-          src={"/images/mall/classic4.png"}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          className={`
-            absolute
-            w-full
-            object-cover
-          `}
-        />
-      </div>
+    <Perspective2/>
+    <Perspective1
+      className={`w-[${width ? "100" : "300"}%] opacity-[${opacity ? "100" : "0"}]`}
+    />
+    <button onClick={() => {setWidth(prev => !prev), setOpacity(prev => !prev)}} className={`
+      absolute 
+      w-[200px]
+      h-[150px]
+    `}> </button>
     </main>
   );
 }
 
-export default page;
+export default Page;

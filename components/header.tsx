@@ -5,7 +5,7 @@ import Image from "next/image";
 function Header() {
     return (
         <header className={`
-          fixed top-0
+          fixed top-0 z-20
           flex justify-between items-center
           h-[70px] w-full bg-[#2A1C1B]
           text-white
