@@ -13,7 +13,7 @@ function Perspective1({ opacity, width }: PerspectiveProp) {
     `} style={{
       opacity: `${opacity}`,
       width: `${width}vw`,
-      transition: "1s ease"
+      transition: "0.6s ease"
     }}>
       <Image
         src={"/images/mall/perspective1/Floor.jpeg"}
