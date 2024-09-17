@@ -29,7 +29,6 @@ function Page() {
         setElev={setElev}
         floor={floor}
       />
-      {floor === "gold" && 
       <button
         onClick={() => {
           setWidth(prev => !prev);
@@ -42,7 +41,6 @@ function Page() {
           z-10
         `}
       ></button>
-      }
       <Elevator
         elev={elev}
         setElev={setElev}

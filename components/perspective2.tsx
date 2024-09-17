@@ -23,7 +23,7 @@ function Perspective2({ setElev }: PerspectiveProp) {
         `}
       />
       <Image
-        src={"/images/mall/perspective2/Modern1.png"}
+        src={"/images/mall/perspective2/Classic1.png"}
         alt="floor plan"
         width={3000}
         height={3000}
