@@ -8,7 +8,7 @@ function Perspective2() {
       h-full w-[100%]
     `}>
       <Image
-        src={"/images/mall/perspective2/Corridor2.jpeg"}
+        src={"/images/mall/perspective2/Corridor.jpeg"}
         alt="floor plan"
         width={3000}
         height={3000}
