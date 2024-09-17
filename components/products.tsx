@@ -9,6 +9,7 @@ export interface ProductAttr {
   description: string;
   images: string[];
   brandDocID: string;
+  docID: string;
   // Add other fields based on your Firestore document structure
 }
 interface Prop {

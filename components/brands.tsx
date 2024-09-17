@@ -10,7 +10,7 @@ function Brands() {
     }}>
       {
         vendors.map((vendor, index) => (
-          <Link href={`/shop/${vendor.docID}`} key={index} className="w-[220px] mx-1 relative text-black mb-10">
+          <Link href={`/shop/brand/${vendor.docID}`} key={index} className="w-[220px] mx-1 relative text-black mb-10">
             <div className={`w-full h-[140px] object-cover overflow-hidden flex justify-center items-center`}>
               <Image
                 src={vendor.logo}

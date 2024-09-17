@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export interface Product {
   name: string;
   images: string[];
+  docID: string;
 }
 
 export interface Prop {
@@ -10,7 +12,7 @@ export interface Prop {
 }
 function Product({ product }:Prop) {
   return (
-    <div className="w-[220px] mx-1 relative text-black mb-10">
+    <Link href={`/shop/product/${product.docID}`} className="w-[220px] mx-5 relative text-black mb-10">
       <div className={`w-full h-[220px] object-cover overflow-hidden flex justify-center items-center`}>
         <Image
           src={product.images[0]}
@@ -22,7 +24,7 @@ function Product({ product }:Prop) {
         />
       </div>
       <p className="relative font-bold">{product.name}</p>
-    </div>
+    </Link>
   );
 }
 
