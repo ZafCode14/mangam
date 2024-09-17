@@ -7,7 +7,7 @@ import { useState } from "react";
 function Page() {
   const [width, setWidth] = useState<boolean>(true);
   const [opacity, setOpacity] = useState<boolean>(true);
-  const [elev, setElev] = useState<boolean>(false);  // This is correct
+  const [elev, setElev] = useState<boolean>(false);
   const [floor, setFloor] = useState<string>("gold");
 
   return (

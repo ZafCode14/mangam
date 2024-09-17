@@ -12,7 +12,7 @@ function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
     <div className={`
       absolute
       z-10
-      ${!elev ? "top-[-100%]" : "top-[10%]"}
+      ${!elev ? "top-[-300%]" : "top-[10%]"}
       flex flex-col justify-center
       w-[450px] pb-10 px-10
       bg-[#ffffffb2]

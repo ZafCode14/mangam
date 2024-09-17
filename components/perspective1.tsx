@@ -13,11 +13,11 @@ function Perspective1({ opacity, width, setElev, floor }: PerspectiveProp) {
   let classic3 = "";
   let classic4 = "";
   if (floor === "gold") {
-    corridor = "/images/mall/perspective1/Floor.jpeg"; 
-    classic1 = "/images/mall/perspective1/classic1.png"
-    classic2 = "/images/mall/perspective1/classic2.png"
-    classic3 = "/images/mall/perspective1/classic3.png"
-    classic4 = "/images/mall/perspective1/classic4.png"
+    corridor = "/images/mall/perspective1/Corridor.jpeg"; 
+    classic1 = "/images/mall/perspective1/Classic1.png"
+    classic2 = "/images/mall/perspective1/Classic2.png"
+    classic3 = "/images/mall/perspective1/Classic3.png"
+    classic4 = "/images/mall/perspective1/Classic4.png"
   } else if (floor === "silver") {
     corridor = "/images/mall/Sperspective1/Corridor.jpeg"; 
     classic1 = "/images/mall/Sperspective1/Classic1.png"
