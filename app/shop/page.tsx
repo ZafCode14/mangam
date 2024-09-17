@@ -40,9 +40,9 @@ function Page() {
               bg-[#2A1C1B]
               w-[30%] h-[77px]
               rounded-md
-            `}>Search by Product</button>
+            `}>{!brand ? "Search by Brand" : "Search by Product"}</button>
           </div>
-          {brand ?  <Brands/> : <Products/>}
+          {brand ?  <Brands/> : <Products brandId={"all"}/>}
         </div>
       </div>
     </main>
