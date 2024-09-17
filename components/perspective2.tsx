@@ -1,6 +1,9 @@
 import Image from "next/image";
 
-function Perspective2() {
+interface PerspectiveProp {
+  setElev: React.Dispatch<React.SetStateAction<boolean>>;
+}
+function Perspective2({ setElev }: PerspectiveProp) {
   return (
     <div className={`
       absolute
@@ -20,7 +23,7 @@ function Perspective2() {
         `}
       />
       <Image
-        src={"/images/mall/perspective2/Classic1.png"}
+        src={"/images/mall/perspective2/Modern1.png"}
         alt="floor plan"
         width={3000}
         height={3000}
@@ -31,7 +34,7 @@ function Perspective2() {
         `}
       />
       <Image
-        src={"/images/mall/perspective2/Classic2.png"}
+        src={"/images/mall/perspective2/Modern2.png"}
         alt="floor plan"
         width={3000}
         height={3000}
@@ -41,6 +44,11 @@ function Perspective2() {
           object-cover
         `}
       />
+      <button onClick={() => setElev(prev => !prev)} className={`
+        relative right-[38%] top-[-35px]
+        h-[27vw]
+        w-[15vw]
+      `}></button>
     </div>
   );
 }

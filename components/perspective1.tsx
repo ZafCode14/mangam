@@ -14,10 +14,10 @@ function Perspective1({ opacity, width, setElev, floor }: PerspectiveProp) {
   let classic4 = "";
   if (floor === "gold") {
     corridor = "/images/mall/perspective1/Corridor.jpeg"; 
-    classic1 = "/images/mall/perspective1/Classic1.png"
-    classic2 = "/images/mall/perspective1/Classic2.png"
-    classic3 = "/images/mall/perspective1/Classic3.png"
-    classic4 = "/images/mall/perspective1/Classic4.png"
+    classic1 = "/images/mall/perspective1/Modern1.png"
+    classic2 = "/images/mall/perspective1/Modern2.png"
+    classic3 = "/images/mall/perspective1/Modern3.png"
+    classic4 = "/images/mall/perspective1/Modern4.png"
   } else if (floor === "silver") {
     corridor = "/images/mall/Sperspective1/Corridor.jpeg"; 
     classic1 = "/images/mall/Sperspective1/Classic1.png"
@@ -40,7 +40,7 @@ function Perspective1({ opacity, width, setElev, floor }: PerspectiveProp) {
     `} style={{
       opacity: `${opacity}`,
       width: `${width}vw`,
-      transition: "0.8s ease"
+      transition: "1s ease"
     }}>
       <Image
         src={corridor}
@@ -48,17 +48,6 @@ function Perspective1({ opacity, width, setElev, floor }: PerspectiveProp) {
         width={3000}
         height={3000}
         priority
-        className={`
-          absolute
-          w-full
-          object-cover
-        `}
-      />
-      <Image
-        src={classic3}
-        alt="floor plan"
-        width={3000}
-        height={3000}
         className={`
           absolute
           w-full
@@ -78,6 +67,17 @@ function Perspective1({ opacity, width, setElev, floor }: PerspectiveProp) {
       />
       <Image
         src={classic2}
+        alt="floor plan"
+        width={3000}
+        height={3000}
+        className={`
+          absolute
+          w-full
+          object-cover
+        `}
+      />
+      <Image
+        src={classic3}
         alt="floor plan"
         width={3000}
         height={3000}
