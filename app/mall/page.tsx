@@ -46,6 +46,8 @@ function Page() {
         setElev={setElev}
         setFloor={setFloor}
         floor={floor}
+        setWidth={setWidth}
+        setOpacity={setOpacity}
       />
     </main>
   );

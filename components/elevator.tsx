@@ -4,9 +4,11 @@ interface elevProp {
   elev: boolean
   floor: string
   setElev: React.Dispatch<React.SetStateAction<boolean>>;
+  setWidth: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpacity: React.Dispatch<React.SetStateAction<boolean>>;
   setFloor: React.Dispatch<React.SetStateAction<string>>;
 }
-function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
+function Elevator({ elev, setElev, setWidth, setOpacity, setFloor, floor }: elevProp) {
 
   return (
     <div className={`
@@ -29,6 +31,8 @@ function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
         height={3000}
         onClick={() => {
           setElev(prev => !prev)
+          setWidth(true)
+          setOpacity(true)
           setFloor("gold")
         }}
         className={`
@@ -49,6 +53,8 @@ function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
         height={3000}
         onClick={() => {
           setElev(prev => !prev);
+          setWidth(true)
+          setOpacity(true)
           setFloor("silver");
         }}
         className={`
@@ -69,6 +75,8 @@ function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
         height={3000}
         onClick={() => {
           setElev(prev => !prev);
+          setWidth(true)
+          setOpacity(true)
           setFloor("raw");
         }}
         className={`

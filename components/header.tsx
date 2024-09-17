@@ -18,7 +18,6 @@ function Header() {
              height={100}
              className="h-[40px] w-auto mx-3"
             />
-            <p>MANGAM</p>
           </Link>
           <div>
             <Link href="/" className={`mx-5`}>Home</Link>
