@@ -3,8 +3,15 @@ import useVendors from "@/hooks/vendors";
 import Link from "next/link";
 import Loading from "./loading";
 
-function Brands() {
+interface BrandProps {
+  search: string;
+}
+function Brands({ search }:BrandProps) {
   const [vendors, loading] = useVendors();
+
+  const filteredBrands = vendors.filter((vendor) =>
+    vendor.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   if (!loading) {
     return (
@@ -12,8 +19,8 @@ function Brands() {
         height: "calc(100vh - 240px)"
       }}>
         {
-          vendors.map((vendor, index) => (
-            <Link href={`/shop/brand/${vendor.docID}`} key={index} className="w-[220px] mx-1 relative text-black mb-10">
+          filteredBrands.map((vendor, index) => (
+            <Link href={`/shop/brand/${vendor.docID}`} key={index} className="w-[200px] mx-1 relative text-black mb-10">
               <div className={`w-full h-[140px] overflow-hidden flex justify-center items-center bg-[white] rounded-md`}>
                 <Image
                   src={vendor.logo}
@@ -25,9 +32,6 @@ function Brands() {
                 />
               </div>
               <p className="relative">{vendor.name}</p>
-              <div>
-
-              </div>
             </Link>
           ))
         }
