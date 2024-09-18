@@ -112,7 +112,7 @@ const Page = ({ params }: ProductPageProps) => {
             <p className='mx-5'>More From {vendor?.name}</p>
             <div className='border-t border-gray-400 flex-1'></div>
           </div>
-          <Products brandId={product.brandDocID}/>
+          <Products brandId={product.brandDocID} search={""} categories={[]} price={[0, 300000]}/>
         </div>
       </main>
     );

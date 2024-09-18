@@ -40,48 +40,48 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="w-[1200px] mt-20">
-          <p className="mb-10 text-[24px] font-bold">Trending Products</p> 
+        <div className="w-full mt-20">
+          <p className="mb-10 ml-20 text-[24px] font-bold">Trending Products</p> 
           <div className="flex">
-            <div className="w-[50%] flex flex-wrap justify-end items-center">
-              <div className="w-[250px] h-[250px] mr-5 mb-20">
+            <div className="w-[50%] h-[650px] flex flex-wrap justify-end items-center">
+              <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                 <Product product={products[0]} res={2000}/>
               </div>
-              <div className="w-[250px] h-[250px] mr-5 mb-20">
+              <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                 <Product product={products[1]} res={2000}/>
               </div>
-              <div className="w-[250px] h-[250px] mr-5 mb-20">
+              <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                 <Product product={products[2]} res={2000}/>
               </div>
-              <div className="w-[250px] h-[250px] mr-5 mb-20">
+              <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                 <Product product={products[3]} res={2000}/>
               </div>
             </div>
-            <div className="w-[50%] flex items-center">
-              <div className="w-[550px] h-[650px] mb-20">
+            <div className="w-[50%] h-[650px] mt-20 flex items-center">
+              <div className="w-[97.5%] h-[650px] mb-20 mr-[2.5%]">
                 <Product product={products[4]} res={2000}/>
               </div>
             </div>
           </div>
         </div>
-        <div className="w-[1200px] mt-10">
+        <div className="flex mt-20 mb-20">
           <div className="flex flex-row-reverse">
-            <div className="w-[50%] flex flex-wrap items-center">
-              <div className="w-[250px] h-[250px] mr-5 mb-20">
+            <div className="h-[650px] w-[50%] flex flex-wrap items-center">
+              <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                 <Product product={products[5]} res={2000}/>
               </div>
-              <div className="w-[250px] h-[250px] mr-5 mb-20">
+              <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                 <Product product={products[6]} res={2000}/>
               </div>
-              <div className="w-[250px] h-[250px] mr-5 mb-20">
+              <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                 <Product product={products[7]} res={2000}/>
               </div>
-              <div className="w-[250px] h-[250px] mr-5 mb-20">
+              <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                 <Product product={products[8]} res={2000}/>
               </div>
             </div>
-            <div className="w-[50%] flex items-center justify-end mr-5">
-              <div className="w-[500px] h-[650px] mb-20">
+            <div className="w-[50%] flex items-center justify-end mr-5 mt-10">
+              <div className="w-[97.5%] h-[650px] mb-20 ml-[2.5%]">
                 <Product product={products[9]} res={2000}/>
               </div>
             </div>

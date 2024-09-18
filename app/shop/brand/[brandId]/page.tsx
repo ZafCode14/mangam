@@ -72,7 +72,7 @@ const Page = ({ params }: BrandPageProps) => {
               rounded-md
             `}>Visit Virtual Store</button>
           </div>
-          <Products brandId={brandId}/>
+          <Products brandId={brandId} search={""} categories={[]} price={[0, 300000]}/>
         </div>
       </div>
     </main>
