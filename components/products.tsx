@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { firestore } from "@/lib/firebase";
+import Loading from "./loading";
 import Product from "./product";
+import useProducts from "@/hooks/products";
 
 export interface ProductAttr {
   id: string;
@@ -16,47 +15,39 @@ interface Prop {
   brandId: string;
 }
 function Products({ brandId }: Prop) {
-  const [products, setProducts] = useState<ProductAttr[]>([]); // Type the useState hook
+  const [products, loading] = useProducts();
 
-  useEffect(() => {
-    const fetchVendors = async () => {
-      try {
-        const productsCollection = collection(firestore, "products");  // Reference to the 'vendors' collection
-        const productSnapshot = await getDocs(productsCollection);
-        const productsList: ProductAttr[] = productSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as ProductAttr[];
-        setProducts(productsList); // Set the state with the fetched data
-      } catch (error) {
-        console.error("Error fetching vendors: ", error);
-      }
-    };
-
-    fetchVendors();
-  }, []);
-
-  return (
-    <div className="flex flex-wrap justify-center overflow-scroll mt-10" style={{
-      height: "calc(100vh - 240px)"
-    }}>
-      {
-        products.map((product, index) => {
-          if (brandId === "all") {
-            return (
-              <Product key={index} product={product}/>
-            )
-          } else  {
-            if (brandId === product.brandDocID) {
+  if (!loading) {
+    return (
+      <div className="flex flex-wrap justify-center overflow-scroll mt-10" style={{
+        height: "calc(100vh - 240px)"
+      }}>
+        {
+          products.map((product, index) => {
+            if (brandId === "all") {
               return (
-                <Product key={index} product={product}/>
+                <div key={index} className="w-[175px] h-[100px] m-5 mb-14">
+                  <Product product={product} res={300}/>
+                </div>
               )
+            } else  {
+              if (brandId === product.brandDocID) {
+                return (
+                <div key={index} className="w-[180px] h-[100px] m-5 mb-14">
+                  <Product product={product} res={300}/>
+                </div>
+                )
+              }
             }
-          }
-        })
-      }
-    </div>
-  );
+          })
+        }
+      </div>
+    );
+  } else {
+    return (
+      <Loading/>
+    )
+  }
 }
 
 export default Products;

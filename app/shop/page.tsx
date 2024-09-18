@@ -12,18 +12,18 @@ function Page() {
       <div className={`
         relative top-[70px]
         flex items-start justify-center
-        max-w-full w-[1200px] pt-[50px]
+        max-w-full w-[1200px] pt-[50px] px-5
       `} style={{
         height: "calc(100% - 70px)"
       }}>
-        <div className={`w-[30%] bg-[#2A1C1B] h-[94%] rounded-md`}>
+        <div className={`w-[30%] bg-[#2A1C1B] h-[94%] rounded-md mr-5`}>
         </div>
         <div className="w-full">
-          <div className={`h-full w-full flex justify-between ml-5`}>
+          <div className={`h-full w-full flex justify-between`}>
             <div className={`
             bg-[#E8E4E1] 
             flex items-center
-            h-[77px] w-[70%] rounded-md mr-5
+            h-[60px] w-[70%] rounded-md mr-5
             `}>
               <Image
                 src={'/icons/search.svg'}
@@ -38,7 +38,7 @@ function Page() {
             </div>
             <button onClick={() => setBrand(prev => !prev)} className={`
               bg-[#2A1C1B]
-              w-[30%] h-[77px]
+              w-[30%] h-[60px]
               rounded-md
             `}>{!brand ? "Search by Brand" : "Search by Product"}</button>
           </div>
