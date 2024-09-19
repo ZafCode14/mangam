@@ -31,7 +31,7 @@ function Product({ product, res }:Prop) {
           className={`object-contain h-full`}
         />
       </div>
-      <p className="relative">{product.name}</p>
+      <p className="relative font-bold leading-[16px] mt-[5px]">{product.name}</p>
       <p className="relative text-[12px]">{brand?.name}</p>
       <p className="relative text-[12px]">{product.price} EGP</p>
     </Link>

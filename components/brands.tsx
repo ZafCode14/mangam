@@ -15,12 +15,12 @@ function Brands({ search }:BrandProps) {
 
   if (!loading) {
     return (
-      <div className="flex flex-wrap justify-center overflow-scroll mt-10" style={{
-        height: "calc(100vh - 240px)"
+      <div className="flex flex-wrap justify-around overflow-y-scroll mt-[20px]" style={{
+        height: "calc(100vh - 170px)"
       }}>
         {
           filteredBrands.map((vendor, index) => (
-            <Link href={`/shop/brand/${vendor.docID}`} key={index} className="w-[200px] mx-1 relative text-black mb-10">
+            <Link href={`/shop/brand/${vendor.docID}`} key={index} className="w-[24%] relative text-black mb-5">
               <div className={`w-full h-[140px] overflow-hidden flex justify-center items-center bg-[white] rounded-md`}>
                 <Image
                   src={vendor.logo}
@@ -31,7 +31,7 @@ function Brands({ search }:BrandProps) {
                   className={`object-contain h-full`}
                 />
               </div>
-              <p className="relative">{vendor.name}</p>
+              <p className="relative font-bold">{vendor.name}</p>
             </Link>
           ))
         }

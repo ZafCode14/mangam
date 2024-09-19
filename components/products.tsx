@@ -17,8 +17,9 @@ interface Prop {
   search: string;
   categories: string[];
   price: number[];
+  height: number;
 }
-function Products({ brandId, search, categories, price }: Prop) {
+function Products({ brandId, search, categories, price, height }: Prop) {
   const [products, loading] = useProducts();
 
   if (!loading) {
@@ -37,21 +38,21 @@ function Products({ brandId, search, categories, price }: Prop) {
     });
 
     return (
-      <div className="flex flex-wrap justify-center overflow-scroll mt-10" style={{
-        height: "calc(100vh - 240px)"
+      <div className="flex flex-wrap justify-around overflow-y-scroll mt-[20px]" style={{
+        height: `calc(100vh - ${height}px)`
       }}>
         {
           filteredProducts.map((product, index) => {
             if (brandId === "all") {
               return (
-                <div key={index} className="w-[175px] h-[100px] m-5 mb-14">
+                <div key={index} className="w-[19%] h-[100px] mb-20">
                   <Product product={product} res={300}/>
                 </div>
               )
             } else  {
               if (brandId === product.brandDocID) {
                 return (
-                <div key={index} className="w-[180px] h-[100px] m-5 mb-14">
+                <div key={index} className="w-[19%] h-[100px] mb-20">
                   <Product product={product} res={300}/>
                 </div>
                 )

@@ -18,7 +18,7 @@ function Header() {
             alt="logo"
             width={100}
             height={100}
-            className="h-[60px] w-auto ml-20"
+            className="h-[60px] w-auto ml-16"
           />
         </Link>
         <div>
@@ -28,10 +28,12 @@ function Header() {
           <Link href="/" className={`mx-5 ${p.startsWith('/cart') && "text-[#C4A153]"}`}>Cart</Link>
         </div>
         <Link href="/" className={`
+          flex justify-center items-center
           mx-5 bg-[#C4A153]
-          px-2 py-[2px]
-          rounded-md
-        `}>Login / Sign In</Link>
+          px-4 py-[3px]
+          rounded-md text-[14px]
+          font-bold
+        `}>Login/Sign up</Link>
       </header>
   );
 }
