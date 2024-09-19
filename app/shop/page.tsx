@@ -29,6 +29,7 @@ function Page() {
           setCategories={setCategories}
           setPrice={setPrice}
           marginTop="40%"
+          brandId=""
         />
 
         <div className="w-full">

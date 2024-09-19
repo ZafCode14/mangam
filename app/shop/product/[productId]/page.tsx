@@ -4,6 +4,7 @@ import useProducts from '@/hooks/products'; // Import your custom hook for produ
 import Image from 'next/image';
 import useVendors from '@/hooks/vendors';
 import Products from '@/components/products';
+import Loading from '@/components/loading';
 
 interface Product {
   docID: string;
@@ -49,10 +50,6 @@ const Page = ({ params }: ProductPageProps) => {
       }
     }
   }, [loading, error, products, productId, vendors]);
-
-  if (loading) {
-    return <p className='mt-[500px]'>Loading...</p>; // Show a loading state while fetching products
-  }
 
   if (error) {
     return <p className='mt-[500px]'>Error loading products: {error.message}</p>; // Handle error case
@@ -118,7 +115,7 @@ const Page = ({ params }: ProductPageProps) => {
     );
   }
 
-  return null; // Return null if no valid product or loading state exists
+  return <Loading/>;
 };
 
 export default Page;

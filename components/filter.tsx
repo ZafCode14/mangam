@@ -1,16 +1,35 @@
 import Image from "next/image";
 import React from "react";
 import ReactSlider from 'react-slider';
+import useProducts from "@/hooks/products";
+import { useState, useEffect } from "react";
 
 interface FilterProp {
   brand: boolean;
+  brandId: string;
   price: number[];
   categories: string[];
   setCategories: React.Dispatch<React.SetStateAction<string[]>>;
   setPrice: React.Dispatch<React.SetStateAction<number[]>>;
   marginTop: string;
 }
-function Filter({ marginTop, brand, price, categories, setPrice, setCategories }:FilterProp) {
+function Filter({ marginTop, brand, price, categories, setPrice, setCategories, brandId }:FilterProp) {
+  const [products, loading] = useProducts();
+  const [filteredCategories, setFilteredCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!loading && products) {
+      const filteredProducts = products.filter((product) => {
+        const matchbrand = product.brandDocID === brandId;
+        return matchbrand;
+      });
+
+      // Extract unique categories
+      const uniqueCategories = brandId === "" ? Array.from(new Set(products.map(product => product.category))) : Array.from(new Set(filteredProducts.map(product => product.category)));
+      setFilteredCategories(uniqueCategories);
+    }
+  }, [loading, products, categories, price, brandId]);
+
   // Function to handle category toggling
   const handleCategoryChange = (category: string) => {
     setCategories((prevCategories) =>
@@ -55,7 +74,7 @@ function Filter({ marginTop, brand, price, categories, setPrice, setCategories }
             <div className="bg-[#d8d1cd] rounded-md text-black flex flex-col p-5">
               <h4 className='text-lg'>Categories</h4>
               <div className='w-[40px] border-b-[1px] border-black  mb-3 mt-1'></div>
-              {["Anklets", "Bracelets", "Necklaces", "Rings", "Earrings", "Bangles"].map((category) => (
+              {filteredCategories.map((category) => (
                 <div key={category} className="flex items-center">
                   <input
                     type="checkbox"
