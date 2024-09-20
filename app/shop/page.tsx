@@ -1,5 +1,4 @@
 "use client";
-
 import { Suspense } from "react";
 import Brands from "@/components/brands";
 import Products from "@/components/products";
@@ -43,9 +42,9 @@ function Page() {
         />
 
         <div className="w-full">
-          <Search search={search} setSearch={setSearch} show={show} />
-
           <Suspense fallback={<div>Loading...</div>}>
+            <Search search={search} setSearch={setSearch} show={show} />
+
             {/** Brands or Products */}
             {show === "brand" ? (
               <Brands search={search} />
