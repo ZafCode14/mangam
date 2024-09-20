@@ -21,7 +21,7 @@ function Brands({ search }:BrandProps) {
         {
           filteredBrands.map((vendor, index) => (
             <Link href={`/shop/brand/${vendor.docID}`} key={index} className="w-[24%] relative text-black mb-5">
-              <div className={`w-full h-[140px] overflow-hidden flex justify-center items-center bg-[white] rounded-md`}>
+              <div className={`w-full h-[10vw] overflow-hidden flex justify-center items-center bg-[white] rounded-md`}>
                 <Image
                   src={vendor.logo}
                   alt={'search icon'}

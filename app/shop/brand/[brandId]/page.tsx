@@ -7,6 +7,7 @@ import Filter from '@/components/filter';
 import Search from '@/components/search';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 interface Brand {
   logo: string
@@ -22,6 +23,14 @@ const Page = ({ params }: BrandPageProps) => {
   const [vendors, loading, error] = useVendors(); // Using your custom hook to fetch vendors
   const [brand, setBrand] = useState<Brand | null>(null);
   const [isValidBrandId, setIsValidBrandId] = useState(false);
+  const searchParams = useSearchParams();
+  const [show, setShow] = useState<string | null>(searchParams.get('show'));
+
+  useEffect(() => {
+    const a = searchParams.get('show');
+    setShow(a);
+  }, [searchParams]);
+
 
   useEffect(() => {
     if (!loading && !error && vendors.length > 0) {
@@ -57,7 +66,7 @@ const Page = ({ params }: BrandPageProps) => {
             priority
             className='h-[110px] object-contain my-5 w-auto'
           />
-          <Link href={'/shop'} className={`
+          <Link href={'/shop?show=brand'} className={`
             absolute left-[10%]
             flex justify-center items-center
             text-[40px] w-[80px] h-[80px] rounded-full
@@ -77,20 +86,20 @@ const Page = ({ params }: BrandPageProps) => {
         `}>
 
           <Filter
-            brand={false}
             price={price}
             categories={categories}
             setCategories={setCategories}
             setPrice={setPrice}
             marginTop={"0"}
             brandId={brandId}
+            show={show}
           />
 
           <div className="w-full">
             <Search
-              brand={false}
               search={search}
               setSearch={setSearch}
+              show={show}
             />
             <Products brandId={brandId} search={search} categories={categories} price={price} height={300}/>
         </div>

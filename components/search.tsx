@@ -2,12 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface SearchProps {
-  brand: boolean;
   search: string;
+  show: string | null;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   setBrand?: React.Dispatch<React.SetStateAction<boolean>>
 }
-function Search({ brand, search, setSearch, setBrand }:SearchProps) {
+function Search({ search, setSearch, show }:SearchProps) {
   return (
     <div className={`h-full w-full flex justify-between`}>
 
@@ -26,7 +26,7 @@ function Search({ brand, search, setSearch, setBrand }:SearchProps) {
           className={`h-[16px] w-auto ml-5`}
         />
         <input 
-          placeholder={brand ? "Search brand" : "Search products"} 
+          placeholder={show === 'brand' ? "Search brand" : "Search products"} 
           className={`ml-2 w-[70%] bg-[#d8d1cd] focus:outline-none text-black`}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -34,7 +34,7 @@ function Search({ brand, search, setSearch, setBrand }:SearchProps) {
       </div>
 
       {/** Button */}
-      {!setBrand ?
+      {show !== 'brand' && show !== 'product' ?
       <Link href={'/mall'}>
         <button className={`
           bg-[#2A1C1B]
@@ -43,11 +43,15 @@ function Search({ brand, search, setSearch, setBrand }:SearchProps) {
         `}>Virtual Store</button>
       </Link>
       :
-      <button onClick={() => setBrand(prev => !prev)} className={`
+      <Link href={{
+        pathname: "/shop", 
+        query: {show: `${show === 'brand' ? 'product' : 'brand'}`}
+      }} className={`
+        flex justify-center items-center
         bg-[#2A1C1B]
         w-[200px] h-[50px] text-[14px]
         rounded-lg
-      `}>{!brand ? "Search by Brand" : "Search by Product"}</button>
+      `}>{show === 'brand' ? "Search by Product" : "Search by Brand"}</Link>
       }
     </div>
   );

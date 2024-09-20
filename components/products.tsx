@@ -38,14 +38,14 @@ function Products({ brandId, search, categories, price, height }: Prop) {
           filteredProducts.map((product, index) => {
             if (brandId === "all") {
               return (
-                <div key={index} className="w-[19%] h-[100px] mb-20">
+                <div key={index} className="w-[19%] h-[10vw] mb-20">
                   <Product product={product} res={300}/>
                 </div>
               )
             } else {
               if (brandId === product.brandDocID) {
                 return (
-                  <div key={index} className="w-[19%] h-[100px] mb-20">
+                  <div key={index} className="w-[19%] h-[10vw] mb-20">
                     <Product product={product} res={300}/>
                   </div>
                 )

@@ -1,15 +1,22 @@
 "use client";
 import Brands from "@/components/brands";
 import Products from "@/components/products";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Filter from "@/components/filter";
 import Search from "@/components/search";
+import { useSearchParams } from "next/navigation";
 
 function Page() {
-  const [brand, setBrand] = useState<boolean>(true);
   const [search, setSearch] = useState<string>("");
   const [categories, setCategories] = useState<string[]>([]);
   const [price, setPrice] = useState<number[]>([0, 300000])
+  const searchParams = useSearchParams();
+  const [show, setShow] = useState<string | null>(searchParams.get('show'));
+
+  useEffect(() => {
+    const a = searchParams.get('show');
+    setShow(a);
+  }, [searchParams]);
 
 
   return (
@@ -23,25 +30,33 @@ function Page() {
       }}>
 
         <Filter
-          brand={brand}
           price={price}
           categories={categories}
           setCategories={setCategories}
           setPrice={setPrice}
           marginTop="40%"
           brandId=""
+          show={show}
         />
 
         <div className="w-full">
           <Search
-            brand={brand}
             search={search}
             setSearch={setSearch}
-            setBrand={setBrand}
+            show={show}
           />
 
           {/** Brands or Products */}
-          {brand ?  <Brands search={search}/> : <Products brandId={"all"} search={search} categories={categories} price={price} height={170}/>}
+          {show === 'brand' ?  
+          <Brands 
+            search={search}
+          /> : 
+          <Products 
+            brandId={"all"} 
+            search={search} 
+            categories={categories} 
+            price={price} 
+            height={170}/>}
         </div>
       </div>
     </main>

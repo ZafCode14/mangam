@@ -5,7 +5,7 @@ import useProducts from "@/hooks/products";
 import { useState, useEffect } from "react";
 
 interface FilterProp {
-  brand: boolean;
+  show: string | null;
   brandId: string;
   price: number[];
   categories: string[];
@@ -13,7 +13,7 @@ interface FilterProp {
   setPrice: React.Dispatch<React.SetStateAction<number[]>>;
   marginTop: string;
 }
-function Filter({ marginTop, brand, price, categories, setPrice, setCategories, brandId }:FilterProp) {
+function Filter({ marginTop, show, price, categories, setPrice, setCategories, brandId }:FilterProp) {
   const [products, loading] = useProducts();
   const [filteredCategories, setFilteredCategories] = useState<string[]>([]);
 
@@ -47,7 +47,7 @@ function Filter({ marginTop, brand, price, categories, setPrice, setCategories, 
         <div className={`w-[300px] mr-5`} style={{
           marginTop: marginTop
         }}>
-          {brand ?
+          {show === 'brand' ?
             <div className='bg-[#2A1C1B] rounded-md flex flex-col h-[400px]'>
               <Image
                 alt='gold'
