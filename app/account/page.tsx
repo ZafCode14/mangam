@@ -2,11 +2,11 @@
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
-import useAuth from "@/hooks/redirect";
 import Loading from "@/components/loading";
+import useRedirect from "@/hooks/redirect";
 
 function Page() {
-  const { loading, isAuthenticated } = useAuth(); // Call the useAuth hook
+  const { loading, isAuthenticated } = useRedirect();// Call the useAuth hook
   const router = useRouter();
 
 

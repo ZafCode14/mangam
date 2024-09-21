@@ -6,8 +6,6 @@ import { auth, firestore } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import Link from "next/link";
-import useAuth from "@/hooks/redirect";
-import Loading from "@/components/loading";
 
 // Define the type for the form fields
 interface FormData {
@@ -36,8 +34,6 @@ function RegisterPage() {
 
   const inputClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 placeholder:text-center";
   const selectClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 text-center bg-white text-gray-400";
-
-  const { loading  } = useAuth();
 
   // Handle input change for text fields and select dropdown
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -81,10 +77,6 @@ function RegisterPage() {
     }
   };
 
-  if (loading) {
-    return <Loading/>
-  }
-
   return (
     <main className="flex h-screen relative z-20 w-full text-white">
       <div className="w-[71%] h-full overflow-hidden flex items-end relative">
@@ -93,6 +85,7 @@ function RegisterPage() {
           src="/images/loginImage.png"
           height={3000}
           width={3000}
+          priority
           className="w-full h-auto relative"
         />
         <p className="absolute text-[45px] top-12 left-12 leading-[45px]">

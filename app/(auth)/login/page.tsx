@@ -5,15 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase"; // Adjust to your Firebase configuration
-import useAuth from "@/hooks/redirect";
-import Loading from "@/components/loading";
 
 function Page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const { loading  } = useAuth();
 
   const inputClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 text-black placeholder:text-center";
 
@@ -38,10 +35,6 @@ function Page() {
       }
     }
   };
-
-  if (loading) {
-    return <Loading/>
-  }
 
   return (
     <main className="flex h-screen text-white relative z-20">
@@ -85,11 +78,9 @@ function Page() {
             Sign In
           </button>
         </form>
-        <Link href="/register">
-          <p>
-            Don&apso;t have an account? <span className="text-[#BF9944]">Sign Up</span>
-          </p>
-        </Link>
+          <Link href={'/register'}>
+            Don&apos;t have an account? <span className="text-[#BF9944]">Sign Up</span>
+          </Link>
       </div>
     </main>
   );

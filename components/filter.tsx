@@ -15,11 +15,16 @@ interface FilterProp {
   marginTop: string;
 }
 function Filter({ marginTop, price, categories, setPrice, setCategories, brandId }:FilterProp) {
-  const [products, loading] = useProducts();
-  const [filteredCategories, setFilteredCategories] = useState<string[]>([]);
-  const p = usePathname();
   const searchParams = useSearchParams();
+  const p = usePathname();
+  const [products, loading] = useProducts();
+
+  const [filteredCategories, setFilteredCategories] = useState<string[]>([]);
   const [show, setShow] = useState<string | null>(searchParams.get("show"));
+  const [gold, setGold] = useState<boolean>(false);
+  const [silver, setSilver] = useState<boolean>(false);
+  const [raw, setRaw] = useState<boolean>(false);
+
 
   useEffect(() => {
     const a = searchParams.get("show");
@@ -56,6 +61,22 @@ function Filter({ marginTop, price, categories, setPrice, setCategories, brandId
     );
   };
 
+  const handleFloorChange = (floor: string) => {
+    if (floor === "gold") {
+      setGold(!gold);
+      setSilver(false);
+      setRaw(false);
+    } else if (floor === "silver") {
+      setSilver(!silver);
+      setGold(false);
+      setRaw(false);
+    } else if (floor === "raw") {
+      setRaw(!raw);
+      setGold(false);
+      setSilver(false);
+    }
+  }
+
   const handlePrice = (newPrice: number[]) => {
     setPrice(newPrice);
   } 
@@ -73,21 +94,24 @@ function Filter({ marginTop, price, categories, setPrice, setCategories, brandId
                 width={500}
                 height={500}
                 priority
-                className='w-full h-auto'
+                onClick={() => handleFloorChange("gold")}
+                className={`w-full h-auto ${gold && "mb-10"}`}
               />
               <Image
                 alt='silver'
                 src={'/images/mall/elevator/silverFloor.png'}
                 width={500}
                 height={500}
-                className='w-full h-auto'
+                onClick={() => handleFloorChange("silver")}
+                className={`w-full h-auto ${silver && "my-5"}`}
               />
               <Image
                 alt='raw'
                 src={'/images/mall/elevator/rawFloor.png'}
                 width={500}
                 height={500}
-                className='w-full h-auto'
+                onClick={() => handleFloorChange("raw")}
+                className={`w-full h-auto ${raw && "mt-10"}`}
               />
             </div>
           :

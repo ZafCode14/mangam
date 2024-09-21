@@ -3,7 +3,7 @@ import { auth } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { usePathname, useRouter } from "next/navigation";
 
-const useAuth = () => {
+const useRedirect = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(true); // Track loading state
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Track authentication status
@@ -16,10 +16,6 @@ const useAuth = () => {
 
       if (!user) {
         router.push("/login");
-      } else {
-        if (pathname === "/login" || pathname === "/register") {
-          router.push("/")
-        }
       }
     });
 
@@ -29,4 +25,4 @@ const useAuth = () => {
   return { loading, isAuthenticated }; // Return loading and authentication status
 };
 
-export default useAuth;
+export default useRedirect;
