@@ -4,9 +4,9 @@ import ReactSlider from 'react-slider';
 import useProducts from "@/hooks/products";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 interface FilterProp {
-  show: string | null;
   brandId: string;
   price: number[];
   categories: string[];
@@ -14,10 +14,17 @@ interface FilterProp {
   setPrice: React.Dispatch<React.SetStateAction<number[]>>;
   marginTop: string;
 }
-function Filter({ marginTop, show, price, categories, setPrice, setCategories, brandId }:FilterProp) {
+function Filter({ marginTop, price, categories, setPrice, setCategories, brandId }:FilterProp) {
   const [products, loading] = useProducts();
   const [filteredCategories, setFilteredCategories] = useState<string[]>([]);
   const p = usePathname();
+  const searchParams = useSearchParams();
+  const [show, setShow] = useState<string | null>(searchParams.get("show"));
+
+  useEffect(() => {
+    const a = searchParams.get("show");
+    setShow(a);
+  }, [searchParams]);
 
   useEffect(() => {
     if (!loading && products) {

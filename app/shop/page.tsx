@@ -50,13 +50,6 @@ function Page() {
   const [search, setSearch] = useState<string>("");
   const [categories, setCategories] = useState<string[]>([]);
   const [price, setPrice] = useState<number[]>([0, 300000]);
-  const searchParams = useSearchParams();
-  const [show, setShow] = useState<string | null>(searchParams.get("show"));
-
-  useEffect(() => {
-    const a = searchParams.get("show");
-    setShow(a);
-  }, [searchParams]);
 
   return (
     <main className="flex justify-center w-full h-screen text-white">
@@ -71,7 +64,6 @@ function Page() {
           setPrice={setPrice}
           marginTop="40%"
           brandId=""
-          show={show}
         />
 
         <div className="w-full">
