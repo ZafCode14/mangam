@@ -3,6 +3,7 @@ import React from "react";
 import ReactSlider from 'react-slider';
 import useProducts from "@/hooks/products";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 interface FilterProp {
   show: string | null;
@@ -16,6 +17,7 @@ interface FilterProp {
 function Filter({ marginTop, show, price, categories, setPrice, setCategories, brandId }:FilterProp) {
   const [products, loading] = useProducts();
   const [filteredCategories, setFilteredCategories] = useState<string[]>([]);
+  const p = usePathname();
 
   useEffect(() => {
     if (!loading && products) {
@@ -29,10 +31,10 @@ function Filter({ marginTop, show, price, categories, setPrice, setCategories, b
       Array.from(new Set(products.map(product => product.category))) : 
       Array.from(new Set(filteredProducts.map(product => product.category)));
 
-      if (show === "product") {
-        setFilteredCategories(["Bracelets", "Rings", "Brooches", "Earrings", "Necklaces", "Anklets", "Cufflinks"]);
-      } else {
+      if (p.startsWith("/shop/brand/")) {
         setFilteredCategories(uniqueCategories);
+      } else {
+        setFilteredCategories(["Bracelets", "Rings", "Brooches", "Earrings", "Necklaces", "Anklets", "Cufflinks"]);
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
