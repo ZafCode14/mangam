@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestore } from '../lib/firebase'; // Make sure to import your Firestore instance
+import { useEffect, useMemo, useState } from 'react';
+import useVendors from './vendors';
+import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 
-// Define the Product type
+// Define Product type
 interface Product {
   id: string;
   name: string;
@@ -14,33 +14,50 @@ interface Product {
   category: string;
 }
 
-// Create the custom hook
-const useProducts = (): [Product[], boolean, Error | null] => {
+const useProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const [vendors] = useVendors();
+
+  // Memoize vendorIds to avoid re-render loops
+  const vendorIds = useMemo(() => vendors.map((vendor) => vendor.docID), [vendors]);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const productsCollection = collection(firestore, "products"); // Reference to the 'products' collection
-        const productsSnapshot = await getDocs(productsCollection);
-        const productsList: Product[] = productsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Product[];
-        setProducts(productsList); // Set the state with the fetched data
-      } catch (error) {
-        setError(error as Error); // Set the error state if there's an issue
+        setLoading(true);
+        const db = getFirestore(); // Initialize Firestore
+
+        // Loop through each vendor ID and fetch products
+        const allProducts: Product[] = [];
+        for (const vendorId of vendorIds) {
+          const q = query(
+            collection(db, 'products'), // Assuming 'products' is the collection
+            where('brandDocID', '==', vendorId) // Assuming 'brandDocID' is the field linking to the vendor
+          );
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            allProducts.push({ id: doc.id, ...doc.data() } as Product); // Push each product to allProducts array
+          });
+        }
+
+        setProducts(allProducts);
+      } catch (err) {
+        setError(err as Error);
       } finally {
-        setLoading(false); // Set loading to false when done
+        setLoading(false);
       }
     };
 
-    fetchProducts();
-  }, []);
+    // Only fetch products if we have vendor IDs
+    if (vendorIds.length > 0) {
+      fetchProducts();
+    }
+  }, [vendorIds]);
 
-  return [products, loading, error];
+  return [products, loading, error] as const; // Return as array
 };
 
 export default useProducts;

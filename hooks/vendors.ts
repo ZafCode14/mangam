@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { firestore } from '../lib/firebase'; // Make sure to import your Firestore instance
 
 // Define the Vendor type
@@ -20,8 +20,9 @@ const useVendors = (): [Vendor[], boolean, Error | null] => {
   useEffect(() => {
     const fetchVendors = async () => {
       try {
-        const vendorsCollection = collection(firestore, "vendors"); // Reference to the 'vendors' collection
-        const vendorsSnapshot = await getDocs(vendorsCollection);
+        const vendorsCollection = collection(firestore, 'vendors');
+        const approvedVendorsQuery = query(vendorsCollection, where('status', '==', 'approved')); // Add the 'status' filter
+        const vendorsSnapshot = await getDocs(approvedVendorsQuery);
         const vendorsList: Vendor[] = vendorsSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
