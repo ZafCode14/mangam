@@ -25,7 +25,7 @@ function Header() {
           <Link href="/" className={`mx-5 ${p === "/" && "text-[#C4A153]"}`}>Homepage</Link>
           <Link href={{pathname: '/shop', query: {show: "brand"}}} className={`mx-5 ${p.startsWith('/shop') && "text-[#C4A153]"}`}>Shop Now</Link>
           <Link href="/mall" className={`mx-5 ${p.startsWith('/mall') && "text-[#C4A153]"}`}>Mall</Link>
-          <Link href="/" className={`mx-5 ${p.startsWith('/cart') && "text-[#C4A153]"}`}>Cart</Link>
+          <Link href="/cart" className={`mx-5 ${p.startsWith('/cart') && "text-[#C4A153]"}`}>Cart</Link>
         </div>
         <Link href="/" className={`
           flex justify-center items-center

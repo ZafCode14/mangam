@@ -25,9 +25,17 @@ function Filter({ marginTop, show, price, categories, setPrice, setCategories, b
       });
 
       // Extract unique categories
-      const uniqueCategories = brandId === "" ? Array.from(new Set(products.map(product => product.category))) : Array.from(new Set(filteredProducts.map(product => product.category)));
-      setFilteredCategories(uniqueCategories);
+      const uniqueCategories = brandId === "" ? 
+      Array.from(new Set(products.map(product => product.category))) : 
+      Array.from(new Set(filteredProducts.map(product => product.category)));
+
+      if (show === "product") {
+        setFilteredCategories(["Bracelets", "Rings", "Brooches", "Earrings", "Necklaces", "Anklets", "Cufflinks"]);
+      } else {
+        setFilteredCategories(uniqueCategories);
+      }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, products, categories, price, brandId]);
 
   // Function to handle category toggling
@@ -42,6 +50,7 @@ function Filter({ marginTop, show, price, categories, setPrice, setCategories, b
   const handlePrice = (newPrice: number[]) => {
     setPrice(newPrice);
   } 
+
   return (
     <div>
         <div className={`w-[300px] mr-5`} style={{

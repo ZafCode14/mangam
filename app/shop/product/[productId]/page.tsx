@@ -51,6 +51,10 @@ const Page = ({ params }: ProductPageProps) => {
     }
   }, [loading, error, products, productId, vendors]);
 
+  if (loading) {
+    return <Loading/>
+  }
+
   if (error) {
     return <p className='mt-[500px]'>Error loading products: {error.message}</p>; // Handle error case
   }
@@ -65,31 +69,21 @@ const Page = ({ params }: ProductPageProps) => {
         <div className='w-[1200px]'>
           <p className='my-10'>{vendor?.name } / {product.category} / {product.name}</p>
           <div className='flex h-[500px]'>
-            <div className='h-[420px] w-[40%] overflow-hidden flex items-center justify-center'>
+            <div className='h-full w-[40%] overflow-hidden flex items-center justify-center bg-[white] mr-5 rounded-xl'>
               <Image
                 alt='product image'
                 src={product.images[0]}
                 width={3000}
                 height={3000}
                 priority
-                className='w-full'
+                className='h-full object-contain'
               />
             </div>
-            <div className='px-10 w-[60%] h-[500px] flex flex-col items-center justify-between'>
+            <div className='px-10 w-[60%] h-full flex flex-col items-center justify-between bg-[white] rounded-xl p-5'>
               <div className='flex items-end w-full justify-between relative'>
                 <h2 className='text-[34px]'>{product.name}</h2>
                 <p className='font-bold text-[20px]'>{product.price} EGP</p>
                 <p className='absolute right-0 bottom-[-20px] line-through text-gray-400'>{product.price} EGP</p>
-              </div>
-              <div className='flex w-[80%]'>
-                <div className='flex flex-col w-[50%]'>
-                  <p className='w-full h-[60px] flex justify-center items-center border-r border-y border-black'>Description</p>
-                  <p className='w-full h-[60px] flex justify-center items-center border-r border-b border-black'>Details</p>
-                </div>
-                <div className='flex flex-col w-[50%]'>
-                  <p className='w-full h-[60px] flex justify-center items-center border-y border-black'>Specifications</p>
-                  <p className='w-full h-[60px] flex justify-center items-center border-b border-black'>Shipping & Returns</p>
-                </div>
               </div>
               <div className='w-full flex flex-col text-center items-center'>
                 <h5 className='font-bold'>Description</h5>
@@ -114,7 +108,6 @@ const Page = ({ params }: ProductPageProps) => {
       </main>
     );
   }
-
   return <Loading/>;
 };
 

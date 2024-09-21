@@ -1,14 +1,19 @@
+import Image from "next/image";
+
 function Loading() {
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="loading-spinner"></div>
+      <div className="loading-spinner">
+        <Image
+          src={'/icons/logo.png'}
+          alt="logo spinner"
+          width={300}
+          height={300}
+          className="h-[70px] w-auto"
+        />
+      </div>
       <style jsx>{`
         .loading-spinner {
-          border: 8px solid rgba(0, 0, 0, 0.1);
-          border-top: 8px solid #000;
-          border-radius: 50%;
-          width: 50px;
-          height: 50px;
           animation: spin 1s linear infinite;
         }
 
