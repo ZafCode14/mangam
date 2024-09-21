@@ -92,7 +92,6 @@ const Page = ({ params }: BrandPageProps) => {
             setPrice={setPrice}
             marginTop={"0"}
             brandId={brandId}
-            show={show}
           />
 
           <div className="w-full">
