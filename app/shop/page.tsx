@@ -53,21 +53,21 @@ function Page() {
 
   return (
     <main className="flex justify-center w-full h-screen text-white">
-      <div
-        className="relative top-[70px] flex items-start justify-center w-full pt-[30px] px-24"
-        style={{ height: "calc(100% - 70px)" }}
-      >
-        <Filter
-          price={price}
-          categories={categories}
-          setCategories={setCategories}
-          setPrice={setPrice}
-          marginTop="40%"
-          brandId=""
-        />
+      <Suspense fallback={<div>Loading...</div>}>
+        <div
+          className="relative top-[70px] flex items-start justify-center w-full pt-[30px] px-24"
+          style={{ height: "calc(100% - 70px)" }}
+        >
+          <Filter
+            price={price}
+            categories={categories}
+            setCategories={setCategories}
+            setPrice={setPrice}
+            marginTop="40%"
+            brandId=""
+          />
 
-        <div className="w-full">
-          <Suspense fallback={<div>Loading...</div>}>
+          <div className="w-full">
             <ShowComponent
               search={search}
               setSearch={setSearch}
@@ -76,9 +76,9 @@ function Page() {
               price={price}
               setPrice={setPrice}
             />
-          </Suspense>
+          </div>
         </div>
-      </div>
+      </Suspense>
     </main>
   );
 }
