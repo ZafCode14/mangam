@@ -5,12 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase"; // Adjust to your Firebase configuration
+import useRedirect from "@/hooks/redirect";
 
 function Page() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  useRedirect();
 
   const inputClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 text-black placeholder:text-center";
 

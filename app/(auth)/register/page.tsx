@@ -6,6 +6,7 @@ import { auth, firestore } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import Link from "next/link";
+import useRedirect from "@/hooks/redirect";
 
 // Define the type for the form fields
 interface FormData {
@@ -31,6 +32,8 @@ function RegisterPage() {
   
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  useRedirect();
 
   const inputClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 placeholder:text-center";
   const selectClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 text-center bg-white text-gray-400";

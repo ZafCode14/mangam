@@ -14,8 +14,16 @@ const useRedirect = () => {
       setLoading(false); // Stop loading after checking auth state
       setIsAuthenticated(!!user); // Set auth status: true if user exists, false otherwise
 
-      if (!user) {
-        router.push("/login");
+      if (user) {
+        // Redirect authenticated users away from login and register pages
+        if (pathname === "/login" || pathname === "/register") {
+          router.push("/"); // Redirect to home page
+        }
+      } else {
+        // Redirect unauthenticated users to the login page
+        if (pathname !== "/register") {
+          router.push("/login");
+        }
       }
     });
 
