@@ -95,7 +95,11 @@ function Filter({ marginTop, price, categories, setPrice, setCategories, brandId
                 height={500}
                 priority
                 onClick={() => handleFloorChange("gold")}
-                className={`w-full h-auto ${gold && "mb-10"}`}
+                className={`w-full h-auto`}
+                style={{
+                  marginBottom: gold ? "20px" : "0px",
+                  transition: ".4s ease"
+                }}
               />
               <Image
                 alt='silver'
@@ -103,7 +107,12 @@ function Filter({ marginTop, price, categories, setPrice, setCategories, brandId
                 width={500}
                 height={500}
                 onClick={() => handleFloorChange("silver")}
-                className={`w-full h-auto ${silver && "my-5"}`}
+                className={`w-full h-auto`}
+                style={{
+                  marginBottom: silver ? "10px" : "0px",
+                  marginTop: silver ? "10px" : "0px",
+                  transition: ".4s ease"
+                }}
               />
               <Image
                 alt='raw'
@@ -111,7 +120,11 @@ function Filter({ marginTop, price, categories, setPrice, setCategories, brandId
                 width={500}
                 height={500}
                 onClick={() => handleFloorChange("raw")}
-                className={`w-full h-auto ${raw && "mt-10"}`}
+                className={`w-full h-auto`}
+                style={{
+                  marginTop: silver ? "10px" : "0px",
+                  transition: ".4s ease"
+                }}
               />
             </div>
           :

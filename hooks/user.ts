@@ -1,12 +1,25 @@
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { auth, firestore } from '../lib/firebase'; // Adjust the import based on your project structure
+import { auth, firestore } from '../lib/firebase';
 
 interface User {
   id: string;
   firstName: string;
   email: string;
+  addresses: [
+  {
+    country: string;
+    governate: string;
+    city: string;
+    postalCode: string;
+    apartment: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    address: string;
+  }
+  ]
   // Add other user properties as needed
 }
 
