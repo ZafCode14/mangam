@@ -17,9 +17,13 @@ interface Address {
   address: string;
   addressId: string;
 }
+interface Addresses  {
+  [id: string]: Address;
+};
+
 function Delivery() {
   const [theuser, loading] = useAuthUser();
-  const [addresses, setAddresses] = useState({});
+  const [addresses, setAddresses] = useState<Addresses>({});
   const [showCreateNew, setShowCreateNew] = useState(false);
   
   useEffect(() => {
@@ -36,11 +40,19 @@ function Delivery() {
     return null; // Return null or an appropriate fallback
   }
 
-  const handleNewAddress = (newAddress: { id: string; }) => {
+  const handleNewAddress = (newAddress: Address) => {
     setAddresses((prev) => ({
       ...prev,
-      [newAddress.id]: newAddress,
+      [newAddress.addressId]: newAddress,
     }));
+  };
+
+  const handleDeleteAddress = (id: string) => {
+    setAddresses((prev) => {
+      const updatedAddresses = { ...prev };
+      delete updatedAddresses[id]; // Removes the address with the specified id
+      return updatedAddresses;
+    });
   };
 
   return (
@@ -66,6 +78,7 @@ function Delivery() {
                     address={addr.address}
                     userId={theuser.id}
                     onAddressAdded={handleNewAddress}
+                    onAddressDeleted={handleDeleteAddress}
                   />
                 )
               })
@@ -77,6 +90,7 @@ function Delivery() {
                   userId={theuser.id} 
                   onAddressAdded={handleNewAddress} // Pass the callback function
                   setShowCreateNew={setShowCreateNew}
+                  onAddressDeleted={handleDeleteAddress}
                 />
               </div>
             </div>
@@ -87,6 +101,7 @@ function Delivery() {
             userId={theuser.id} 
             onAddressAdded={handleNewAddress} // Pass the callback function
             setShowCreateNew={setShowCreateNew}
+            onAddressDeleted={handleDeleteAddress}
           />
         )
       }

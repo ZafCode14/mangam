@@ -7,19 +7,21 @@ interface User {
   id: string;
   firstName: string;
   email: string;
-  addresses: [
-  {
-    country: string;
-    governate: string;
-    city: string;
-    postalCode: string;
-    apartment: string;
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    address: string;
+  addresses: {
+    id: {
+      country: string;
+      governate: string;
+      city: string;
+      postalCode: string;
+      apartment: string;
+      firstName: string;
+      lastName: string;
+      phoneNumber: string;
+      address: string;
+      addressId: string;
+      id: string;
+    }
   }
-  ]
   // Add other user properties as needed
 }
 

@@ -1,12 +1,24 @@
 import { useState, useEffect } from 'react';
 import { firestore } from '../../lib/firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, deleteField } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
+interface Address {
+  country: string;
+  governate: string;
+  city: string;
+  postalCode: string;
+  apartment: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  address: string;
+  addressId: string;
+}
 interface CreateFormProps {
   userId: string; // Assuming you're passing the authenticated user as a prop
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onAddressAdded: (address: { id: string; [key: string]: any }) => void; // Add the callback prop
+  onAddressAdded: (address: Address) => void; // Add the callback prop
+  onAddressDeleted: (id: string) => void;
   setShowCreateNew: React.Dispatch<React.SetStateAction<boolean>> 
   existingAddress?: {
     country: string;
@@ -22,7 +34,7 @@ interface CreateFormProps {
   addressId?: string; 
 }
 
-function CreateForm({ userId, onAddressAdded, setShowCreateNew, existingAddress, addressId }: CreateFormProps) {
+function CreateForm({ userId, onAddressAdded, onAddressDeleted, setShowCreateNew, existingAddress, addressId }: CreateFormProps) {
   const [formData, setFormData] = useState({
     country: existingAddress?.country || '',
     governate: existingAddress?.governate || '',
@@ -60,7 +72,7 @@ function CreateForm({ userId, onAddressAdded, setShowCreateNew, existingAddress,
       setShowCreateNew(false);
       const userRef = doc(firestore, 'users', userId);
       const currentAddressId = addressId || uuidv4(); // Use the existing ID if editing, otherwise generate a new one
-      const addressObject = { id: currentAddressId, ...formData };
+      const addressObject = { addressId: currentAddressId, ...formData };
 
       // Update the user document with the new or updated address object
       await updateDoc(userRef, {
@@ -73,6 +85,25 @@ function CreateForm({ userId, onAddressAdded, setShowCreateNew, existingAddress,
       console.error('Error updating/adding address:', error);
     }
   };
+
+  const handleDelete = async (addressId: string) => {
+    try {
+      if (!addressId) return; // Ensure there's an addressId to delete
+
+      const userRef = doc(firestore, 'users', userId);
+
+      // Update the user document by setting the address field to null
+      await updateDoc(userRef, {
+        [`addresses.${addressId}`]: deleteField(), // Remove the address with this ID
+      });
+
+      console.log('Address deleted successfully!');
+      onAddressDeleted(addressId);
+    } catch (error) {
+      console.error('Error deleting address:', error);
+    }
+  };
+
 
   return (
     <div className="w-full h-[400px] bg-white flex flex-col rounded-md">
@@ -157,12 +188,13 @@ function CreateForm({ userId, onAddressAdded, setShowCreateNew, existingAddress,
           { addressId ?
             <div className='w-full flex'>
               <button
-                type="submit"
+                type="button"
                 className={`mr-2 py-5 rounded-md text-white bg-[#b43e3e] flex-1`}
+                onClick={() => handleDelete(addressId)}
               >Delete</button>
               <button
                 type="submit"
-                className={`ml-2 py-5 rounded-md text-white flex-1 ${
+                className={`py-5 rounded-md text-white flex-1 ${
                   isFormComplete ? 'bg-[#C1A875]' : 'bg-[#C4C4C4] cursor-not-allowed'
                 }`}
                 disabled={!isFormComplete}

@@ -1,6 +1,18 @@
 import CreateForm from "./createForm";
 import { useState } from "react";
 
+interface Address {
+  country: string;
+  governate: string;
+  city: string;
+  postalCode: string;
+  apartment: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  address: string;
+  addressId: string;
+}
 interface Props {
   country: string;
   governate: string;
@@ -13,8 +25,8 @@ interface Props {
   address: string;
   addressId: string;
   userId: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onAddressAdded: (address: { id: string; [key: string]: any }) => void;
+  onAddressAdded: (address: Address) => void; // Add the callback prop
+  onAddressDeleted: (id: string) => void;
 }
 function FilledForm({
   country,
@@ -28,7 +40,8 @@ function FilledForm({
   address,
   addressId,
   userId,
-  onAddressAdded
+  onAddressAdded,
+  onAddressDeleted
 }: Props) {
   const [showCreateNew, setShowCreateNew] = useState(false);
 
@@ -54,6 +67,7 @@ function FilledForm({
             }}
             addressId={addressId}
             onAddressAdded={onAddressAdded} // Callback for updating address
+            onAddressDeleted={onAddressDeleted}
             setShowCreateNew={setShowCreateNew}
           />
         </div>
