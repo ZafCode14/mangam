@@ -37,8 +37,8 @@ function Page() {
   if (isAuthenticated) {
     return (
       <main className="w-full h-screen flex flex-col pt-[80px] px-20">
-        <div className="h-[15%]">
-          <p onClick={handleLogout}>Log Out</p>
+        <div className="h-[15%] flex items-center justify-end">
+          <p className="bg-[#C1A875] text-white px-10 py-2 rounded-md" onClick={handleLogout}>Log Out</p>
         </div>
         <div className="flex h-[85%]">
           <div className="w-[30%] flex flex-col items-center text-center font-bold text-[16px]">
