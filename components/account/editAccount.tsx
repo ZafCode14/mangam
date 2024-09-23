@@ -1,6 +1,8 @@
 import { doc, updateDoc } from "firebase/firestore"; // Assuming you're using Firestore
 import { firestore } from "@/lib/firebase";
 import { useState } from "react";
+import { updateEmail, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 interface Inputs {
   firstName: string;
@@ -38,19 +40,45 @@ function EditAccount({
   const handleSave = async () => {
     setLoading(true);
     try {
-      // Update the specific field in Firestore (assuming Firestore is used)
-      const userRef = doc(firestore, "users", userId);
-      await updateDoc(userRef, {
-        [name]: value, // Dynamically update the field
-      });
+      const user = auth.currentUser;
+      if (!user) {
+        throw new Error("No user is authenticated.");
+      }
+
+      // Reauthenticate the user before email update if the name is "email"
+      if (name === "email") {
+        const userPassword = prompt("Please enter your current password for security verification:");
+        if (!userPassword) {
+          throw new Error("Password is required for reauthentication.");
+        }
+
+        // Create credential using the current email and provided password
+        const credential = EmailAuthProvider.credential(user.email as string, userPassword);
+
+        // Reauthenticate the user
+        await reauthenticateWithCredential(user, credential);
+
+        // After successful reauthentication, update the user's email
+        await updateEmail(user, value);
+
+        // Update the email in Firestore
+        const userRef = doc(firestore, "users", userId);
+        await updateDoc(userRef, { email: value });
+      } else {
+        // Update Firestore for other fields
+        const userRef = doc(firestore, "users", userId);
+        await updateDoc(userRef, {
+          [name]: value,
+        });
+      }
 
       // Update local state (inputs) without overwriting other fields
       setSavedInputs((prevInputs) => ({
         ...prevInputs,
-        [name]: value, // Only update the specific field dynamically
+        [name]: value,
       }));
 
-      // Successful update - close edit mode
+      // Close the edit mode after successful save
       setEdit(false);
     } catch (error) {
       console.error("Error updating Firebase:", error);
@@ -58,6 +86,7 @@ function EditAccount({
       setLoading(false);
     }
   };
+
 
   return (
     <div className="w-[400px] max-w-full">
