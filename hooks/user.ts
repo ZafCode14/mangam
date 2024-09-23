@@ -6,7 +6,9 @@ import { auth, firestore } from '../lib/firebase';
 interface User {
   id: string;
   firstName: string;
+  lastName: string;
   email: string;
+  phone: string;
   addresses: {
     id: {
       country: string;
