@@ -3,6 +3,8 @@ import CreateForm from "./createForm";
 import FilledForm from "./filledForm";
 import Loading from "../loading";
 import { useState, useEffect } from 'react';
+import { firestore } from "../../lib/firebase";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 
 
 interface Address {
@@ -25,20 +27,45 @@ function Delivery() {
   const [theuser, loading] = useAuthUser();
   const [addresses, setAddresses] = useState<Addresses>({});
   const [showCreateNew, setShowCreateNew] = useState(false);
-  
+  const [defaultAddress, setDefaultAddress] = useState("");
+
+  const userId = theuser?.id || "";
+
+  useEffect(() => {
+    // Fetch the default address on component mount
+    const fetchDefaultAddress = async () => {
+      if (!userId) return;
+      try {
+        const userRef = doc(firestore, 'users', userId);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+          setDefaultAddress(userDoc.data()?.defaultAddress || "");
+        }
+      } catch (error) {
+        console.error("Error fetching default address:", error);
+      }
+    };
+
+    fetchDefaultAddress();
+  }, [userId]);
+
   useEffect(() => {
     if (theuser) {
       setAddresses(theuser.addresses);
     }
   }, [theuser]);
 
-  if (loading) {
-    return <Loading />;
-  }
+  const handleDefaultAddressChange = async (addressId: string) => {
+    try {
+      const userRef = doc(firestore, "users", userId);
+      await updateDoc(userRef, { defaultAddress: addressId });
 
-  if (theuser === null) {
-    return null; // Return null or an appropriate fallback
-  }
+      setDefaultAddress(addressId); // Update state globally
+    } catch (error) {
+      console.error("Error setting default address:", error);
+    }
+  };
 
   const handleNewAddress = (newAddress: Address) => {
     setAddresses((prev) => ({
@@ -54,6 +81,15 @@ function Delivery() {
       return updatedAddresses;
     });
   };
+
+  
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (theuser === null) {
+    return null; // Return null or an appropriate fallback
+  }
 
   return (
     <div>
@@ -79,6 +115,8 @@ function Delivery() {
                     userId={theuser.id}
                     onAddressAdded={handleNewAddress}
                     onAddressDeleted={handleDeleteAddress}
+                    defaultAddress={defaultAddress}
+                    onMakeDefault={handleDefaultAddressChange}
                   />
                 )
               })

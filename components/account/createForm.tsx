@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { firestore } from '../../lib/firebase';
-import { doc, updateDoc, deleteField } from 'firebase/firestore';
+import { doc, updateDoc, deleteField, getDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Address {
@@ -72,12 +72,24 @@ function CreateForm({ userId, onAddressAdded, onAddressDeleted, setShowCreateNew
       setShowCreateNew(false);
       const userRef = doc(firestore, 'users', userId);
       const currentAddressId = addressId || uuidv4(); // Use the existing ID if editing, otherwise generate a new one
+      
+      // Get the user document to check if any addresses exist
+      const userDoc = await getDoc(userRef);
+      const addresses = userDoc.data()?.addresses || {}; // Safely access the addresses field
+
       const addressObject = { addressId: currentAddressId, ...formData };
 
-      // Update the user document with the new or updated address object
-      await updateDoc(userRef, {
-        [`addresses.${currentAddressId}`]: formData, // This will either update or create a new address
-      });
+      const updateData: Partial<Record<string, typeof formData | string>> = {
+        [`addresses.${currentAddressId}`]: formData, // Update or create a new address in 'addresses'
+      };
+
+      // If there are no addresses, add 'defaultAddress' field
+      if (Object.keys(addresses).length === 0) {
+        updateData['defaultAddress'] = currentAddressId; // Set default address if it's the first one
+      }
+
+      // Update the user document with the new or updated address and possibly the default address
+      await updateDoc(userRef, updateData);
 
       console.log(addressId ? 'Address updated successfully!' : 'Address added successfully!');
       onAddressAdded(addressObject); // Notify the parent component
@@ -106,7 +118,7 @@ function CreateForm({ userId, onAddressAdded, onAddressDeleted, setShowCreateNew
 
 
   return (
-    <div className="w-full h-[400px] bg-white flex flex-col rounded-md">
+    <div className="w-full h-[400px] bg-white flex flex-col rounded-md relative">
       <div className="w-full px-5">
         <h2 className="flex justify-center items-center py-5 border-b border-[#cccccc]">
           Please Add Your Address

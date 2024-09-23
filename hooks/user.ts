@@ -22,6 +22,7 @@ interface User {
       id: string;
     }
   }
+  defaultAddress: string;
   // Add other user properties as needed
 }
 
