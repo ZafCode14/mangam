@@ -24,7 +24,7 @@ function Page() {
     try {
       // Firebase sign-in
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/"); // Redirect to the homepage after login
+      router.back();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       // Custom error handling based on Firebase error codes

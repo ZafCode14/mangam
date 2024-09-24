@@ -1,10 +1,13 @@
 "use client";
 import { useEffect, useState } from 'react';
-import useProducts from '@/hooks/products'; // Import your custom hook for products
+import useProducts from '@/hooks/products';
 import Image from 'next/image';
 import useVendors from '@/hooks/vendors';
 import Products from '@/components/products';
 import Loading from '@/components/loading';
+import useAuthUser from '@/hooks/user';
+import { useRouter } from 'next/navigation';
+import { putWishlist } from '@/components/wishlist/wishlist';
 
 interface Product {
   docID: string;
@@ -34,6 +37,8 @@ const Page = ({ params }: ProductPageProps) => {
   const [products, loading, error] = useProducts(); // Using your custom hook to fetch products
   const [vendors] = useVendors();
   const [isValidProductId, setIsValidProductId] = useState(false);
+  const [theuser] = useAuthUser();
+  const router = useRouter();
 
   useEffect(() => {
     if (!loading && !error && products.length > 0) {
@@ -50,6 +55,31 @@ const Page = ({ params }: ProductPageProps) => {
       }
     }
   }, [loading, error, products, productId, vendors]);
+
+  const handleUnauthUser = (callback: () => void) => {
+    if (!theuser) {
+      router.push('/login');
+    } else {
+      callback();
+    }
+  }
+
+  const handleWishlist = () => {
+    const userId = theuser?.id;
+    const productId = product?.docID;
+
+    if (userId && productId) {
+      putWishlist(userId, productId);
+    }
+  }
+
+  const handleAppointment = () => {
+    console.log("appointment clicked")
+  }
+
+  const handleCart = () => {
+    console.log("cart clicked");
+  }
 
   if (loading) {
     return <Loading/>
@@ -79,6 +109,7 @@ const Page = ({ params }: ProductPageProps) => {
                 className='h-full object-contain'
               />
             </div>
+
             <div className='px-10 w-[60%] h-full flex flex-col items-center justify-between bg-[white] rounded-xl p-5'>
               <div className='flex items-end w-full justify-between relative'>
                 <h2 className='text-[34px]'>{product.name}</h2>
@@ -91,13 +122,15 @@ const Page = ({ params }: ProductPageProps) => {
               </div>
               <div className='flex justify-between w-full text-white'>
                 <div>
-                  <button className='bg-[#2A1C1B] p-3 rounded-md'>Add to Whishlist</button>
-                  <button className='bg-[#2A1C1B] p-3 rounded-md ml-2'>Book Appointment</button>
+                  <button onClick={() => handleUnauthUser(handleWishlist)} className='bg-[#2A1C1B] p-3 rounded-md'>Add to Whishlist</button>
+                  <button onClick={() => handleUnauthUser(handleAppointment)} className='bg-[#2A1C1B] p-3 rounded-md ml-2'>Book Appointment</button>
                 </div>
-                <button className='bg-gradient-to-r from-[#796640] via-[#C1A875] to-[#796640] p-3 rounded-md'>Add to Cart</button>
+                <button onClick={() => handleUnauthUser(handleCart)} className='bg-gradient-to-r from-[#796640] via-[#C1A875] to-[#796640] p-3 rounded-md'>Add to Cart</button>
               </div>
             </div>
+
           </div>
+
           <div className='flex items-center mt-10'>
             <div className='border-t border-gray-400 flex-1'></div>
             <p className='mx-5'>More From {vendor?.name}</p>

@@ -62,7 +62,7 @@ function Header() {
       </div>
       {user ? (
         // Display round gray circle if user is authenticated
-        <Link href={'account'} className="flex items-center mx-5">
+        <Link href={'/account'} className="flex items-center mx-5">
           <p className="w-[40px] h-[40px] bg-[white] rounded-full mr-10 text-black flex justify-center items-center text-[24px] font-bold">{theuser !== null && theuser.firstName.charAt(0).toUpperCase()}</p>
         </Link>
       ) : (
