@@ -15,7 +15,7 @@ function Perspective2({ setElev, floor }: PerspectiveProp) {
   } else if (floor === "silver") {
     corridor = "/images/mall/Sperspective2/Corridor.jpeg"; 
     classic1 = "/images/mall/Sperspective2/Classic1.png"
-    classic2 = "/images/mall/Sperspective2/Classic2.png"
+    classic2 = "/images/mall/Sperspective2/Modern2.png"
   } else if (floor === "raw") {
     corridor = "/images/mall/perspective2/Floor.jpeg"; 
     classic1 = "/images/mall/perspective2/classic1.png"
