@@ -22,7 +22,10 @@ function Page() {
         height: "calc(100vh - 70px)"
       }}
     >
-      {floor === "gold" && <Perspective2 setElev={setElev}/>} 
+      <Perspective2 
+        setElev={setElev}
+        floor={floor}
+      />
       <Perspective1
         opacity={opacity ? "100" : "0"}
         width={width ? "100" : "210"}
