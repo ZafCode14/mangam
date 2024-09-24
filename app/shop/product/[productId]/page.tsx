@@ -8,6 +8,7 @@ import Loading from '@/components/loading';
 import useAuthUser from '@/hooks/user';
 import { useRouter } from 'next/navigation';
 import { putWishlist } from '@/components/wishlist/wishlist';
+import Appointment from '@/components/appointment/appointment';
 
 interface Product {
   docID: string;
@@ -37,6 +38,7 @@ const Page = ({ params }: ProductPageProps) => {
   const [products, loading, error] = useProducts(); // Using your custom hook to fetch products
   const [vendors] = useVendors();
   const [isValidProductId, setIsValidProductId] = useState(false);
+  const [appointment, setAppointment] = useState(false);
   const [theuser] = useAuthUser();
   const router = useRouter();
 
@@ -74,7 +76,7 @@ const Page = ({ params }: ProductPageProps) => {
   }
 
   const handleAppointment = () => {
-    console.log("appointment clicked")
+    setAppointment(true);
   }
 
   const handleCart = () => {
@@ -98,7 +100,7 @@ const Page = ({ params }: ProductPageProps) => {
       <main className={`flex flex-col items-center w-full mt-[70px]`}>
         <div className='w-[1200px]'>
           <p className='my-10'>{vendor?.name } / {product.category} / {product.name}</p>
-          <div className='flex h-[500px]'>
+          <div className='flex h-[500px] relative'>
             <div className='h-full w-[40%] overflow-hidden flex items-center justify-center bg-[white] mr-5 rounded-xl'>
               <Image
                 alt='product image'
@@ -129,6 +131,7 @@ const Page = ({ params }: ProductPageProps) => {
               </div>
             </div>
 
+            { appointment && <Appointment setAppointment={setAppointment}/> }
           </div>
 
           <div className='flex items-center mt-10'>

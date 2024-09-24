@@ -1,25 +1,21 @@
 import { firestore } from "@/lib/firebase";
-import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, arrayRemove, doc, getDoc, updateDoc } from "firebase/firestore";
 
+// Function to add a product to the wishlist
 const putWishlist = async (userId: string, productId: string) => {
   try {
-    // Reference to the user's document in the 'users' collection
     const userRef = doc(firestore, 'users', userId);
-
-    // Now we can safely get the updated user document
     const updatedUserSnap = await getDoc(userRef);
     const updatedUserData = updatedUserSnap.data();
     const currentWishlist = updatedUserData?.wishlist || [];
 
-    // Check if the product is already in the wishlist
     if (currentWishlist.includes(productId)) {
       console.log("Product is already in the wishlist");
       return "Product is already in the wishlist";
     }
 
-    // Add the product to the wishlist
     await updateDoc(userRef, {
-      wishlist: arrayUnion(productId)
+      wishlist: arrayUnion(productId),
     });
 
     console.log("Product added to the wishlist");
@@ -31,25 +27,20 @@ const putWishlist = async (userId: string, productId: string) => {
   }
 };
 
+// Function to get the wishlist
 const getWishlist = async (userId: string) => {
   try {
-    // Reference to the user's document in the 'users' collection
     const userRef = doc(firestore, 'users', userId);
-
-    // Fetch the document snapshot
     const userSnap = await getDoc(userRef);
 
-    // Check if the document exists
     if (!userSnap.exists()) {
       console.log("No wishlist found for this user.");
-      return []; // Return an empty array if the user does not exist
+      return [];
     }
 
-    // Get the user's wishlist
-    console.log("wishlist found");
+    console.log("Wishlist found");
     const userData = userSnap.data();
-    const wishlist = userData.wishlist || []; // Default to an empty array if wishlist is not defined
-
+    const wishlist = userData?.wishlist || [];
     return wishlist;
 
   } catch (err) {
@@ -58,5 +49,30 @@ const getWishlist = async (userId: string) => {
   }
 };
 
+// Function to remove a product from the wishlist
+const removeFromWishlist = async (userId: string, productId: string) => {
+  try {
+    const userRef = doc(firestore, 'users', userId);
+    const updatedUserSnap = await getDoc(userRef);
+    const updatedUserData = updatedUserSnap.data();
+    const currentWishlist = updatedUserData?.wishlist || [];
 
-export {putWishlist, getWishlist};
+    if (!currentWishlist.includes(productId)) {
+      console.log("Product is not in the wishlist");
+      return "Product is not in the wishlist";
+    }
+
+    await updateDoc(userRef, {
+      wishlist: arrayRemove(productId), // Use arrayRemove to remove the product
+    });
+
+    console.log("Product removed from the wishlist");
+    return "Product removed from wishlist";
+
+  } catch (err) {
+    console.error("Error removing product from wishlist: ", err);
+    throw new Error("Failed to remove from wishlist");
+  }
+};
+
+export { putWishlist, getWishlist, removeFromWishlist };
