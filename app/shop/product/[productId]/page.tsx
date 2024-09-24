@@ -8,7 +8,8 @@ import Loading from '@/components/loading';
 import useAuthUser from '@/hooks/user';
 import { useRouter } from 'next/navigation';
 import { putWishlist } from '@/components/wishlist/wishlist';
-import Appointment from '@/components/appointment/appointment';
+import Appointment from '@/components/productPage/appointment';
+import AddToCart from '@/components/productPage/cart';
 
 interface Product {
   docID: string;
@@ -39,6 +40,7 @@ const Page = ({ params }: ProductPageProps) => {
   const [vendors] = useVendors();
   const [isValidProductId, setIsValidProductId] = useState(false);
   const [appointment, setAppointment] = useState(false);
+  const [cart, setCart] = useState(false);
   const [theuser] = useAuthUser();
   const router = useRouter();
 
@@ -80,7 +82,7 @@ const Page = ({ params }: ProductPageProps) => {
   }
 
   const handleCart = () => {
-    console.log("cart clicked");
+    setCart(true);
   }
 
   if (loading) {
@@ -132,6 +134,7 @@ const Page = ({ params }: ProductPageProps) => {
             </div>
 
             { appointment && <Appointment setAppointment={setAppointment}/> }
+            { cart && <AddToCart setCart={setCart} product={product}/> }
           </div>
 
           <div className='flex items-center mt-10'>
