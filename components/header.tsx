@@ -10,6 +10,7 @@ import useAuthUser from "@/hooks/user";
 function Header() {
   const [theuser] = useAuthUser();
   const [user, setUser] = useState<User | null>(null); // Store the authenticated user
+  const [cartCount, setCartCount] = useState(0); // Track the number of items in the cart
   const p = usePathname();
 
   // Check if user is authenticated
@@ -23,6 +24,28 @@ function Header() {
     });
 
     return () => unsubscribe(); // Cleanup subscription on component unmount
+  }, []);
+
+  // Function to retrieve cart items from localStorage
+  const getCartItems = () => {
+    const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
+    setCartCount(cartItems.length); // Update the cart count
+  };
+
+  // Initial load of cart items
+  useEffect(() => {
+    getCartItems(); // Retrieve cart count when component mounts
+
+    // Listen to 'storage' event and 'cart-updated' event to detect changes in localStorage
+    const handleStorageChange = () => {
+      getCartItems(); // Update cart count when storage or cart is updated
+    };
+
+    window.addEventListener("cart-updated", handleStorageChange); // Listen to custom event
+
+    return () => {
+      window.removeEventListener("cart-updated", handleStorageChange); // Cleanup event listener
+    };
   }, []);
 
   return (
@@ -43,7 +66,7 @@ function Header() {
           className="h-[60px] w-auto ml-16"
         />
       </Link>
-      <div>
+      <div className="flex">
         <Link href="/" className={`mx-5 ${p === "/" && "text-[#C4A153]"}`}>
           Homepage
         </Link>
@@ -56,14 +79,18 @@ function Header() {
         <Link href="/mall" className={`mx-5 ${p.startsWith("/mall") && "text-[#C4A153]"}`}>
           Mall
         </Link>
-        <Link href="/cart" className={`mx-5 ${p.startsWith("/cart") && "text-[#C4A153]"}`}>
-          Cart
-        </Link>
+        <div className="relative">
+          <Link href="/cart" className={`mx-5 relative ${p.startsWith("/cart") && "text-[#C4A153]"}`}>
+            Cart {cartCount > 0 && <span className="ml-1 absolute bg-[#C1A875] rounded-full w-5 h-5 text-[white] flex justify-center items-center -top-2 -right-5">{cartCount}</span>}
+          </Link>
+        </div>
       </div>
       {user ? (
         // Display round gray circle if user is authenticated
         <Link href={'/account'} className="flex items-center mx-5">
-          <p className="w-[40px] h-[40px] bg-[white] rounded-full mr-10 text-black flex justify-center items-center text-[24px] font-bold">{theuser !== null && theuser.firstName.charAt(0).toUpperCase()}</p>
+          <p className="w-[40px] h-[40px] bg-[white] rounded-full mr-10 text-black flex justify-center items-center text-[24px] font-bold">
+            {theuser !== null && theuser.firstName.charAt(0).toUpperCase()}
+          </p>
         </Link>
       ) : (
         // Display "Login/Sign up" if no user is authenticated
