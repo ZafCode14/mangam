@@ -18,6 +18,7 @@ type Product = {
   name: string;
   images: string[];
   price: string;
+  docID: string;
 }
 
 type Products = {

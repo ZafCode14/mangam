@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Address {
   address: string;
@@ -14,6 +15,7 @@ interface Product {
   name: string;
   price: string;
   images: string[];
+  docID: string;
 }
 
 interface Products {
@@ -48,7 +50,6 @@ function ActiveOrders({ orders, status }:Props) {
   const filteredAndSortedOrders = [...orders]
   .filter((order) => order.status === status) // Filter by status
   .sort((a, b) => b.createdAt.toDate().getTime() - a.createdAt.toDate().getTime()); // Sort by createdAt
-
 
   return (
     <div className="flex w-full pt-10 mt-[2px] overflow-y-scroll" style={{
@@ -129,7 +130,7 @@ function ActiveOrders({ orders, status }:Props) {
                     </div>
                     <div className="flex items-center">
 
-                    <p className="mx-2 font-bold underline">View in Store</p>
+                    <Link href={`/shop/product/${product.docID}`} className="mx-2 font-bold underline">View in Store</Link>
 
                     </div>
                   </div>
