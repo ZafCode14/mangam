@@ -85,7 +85,9 @@ function Orders() {
   }, [user])
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden" style={{
+      height: "calc(100vh - 205px)"
+    }}>
       <div className="w-full flex">
         <p 
         onClick={() => setOrderTab("orders")} 

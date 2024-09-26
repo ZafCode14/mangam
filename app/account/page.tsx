@@ -84,7 +84,7 @@ function Page() {
           </div>
           <div className="w-0 mt-5 h-[210px] border-r border-[#c4c4c4]"></div>
 
-          <div className="w-[70%] h-full overflow-y-scroll px-5">
+          <div className="w-[70%] h-full overflow-y-auto px-5">
             {/* Render the tab based on the URL parameter */}
             {tabMap[activeTab] || <Whishlist />}
           </div>
