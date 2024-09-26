@@ -1,8 +1,88 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { collection, getDocs, query, Timestamp, where } from "firebase/firestore";
+import { firestore } from "@/lib/firebase";
+import ActiveOrders from "../orders/activeOrders";
 
+type Address = {
+  address: string;
+  firstName: string;
+  city: string;
+  country: string;
+  apartment: string;
+  postalCode: string;
+};
+
+type Product = {
+  name: string;
+  images: string[];
+  price: string;
+}
+
+type Products = {
+  product: Product;
+  quantity: number;
+};
+
+type Price = {
+  total: number;
+  subtotal: number;
+  discount: number;
+  delivery: number;
+}
+
+type Order = {
+  id: string;
+  userId: string;
+  address: Address;
+  products: Products[];
+  totalPrice: number;
+  price: Price;
+  status: string;
+  paymentMethod: string;
+  createdAt: Timestamp;
+  estimatedArrival: Timestamp;
+};
 function Orders() {
   const [orderTab, setOrderTab] = useState<string>("orders");
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [user, setUser] = useState<User | null>(null); // User is from Firebase Auth
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // Set the user when authenticated
+      } else {
+        setUser(null); // Handle case where user is not authenticated
+      }
+    });
+
+    return () => unsubscribe(); // Clean up the listener on component unmount
+  }, [auth]);
+
+  useEffect(() => {
+    if (user) {
+      const getOrderData = async () => {
+        try {
+          const ordersRef = collection(firestore, "usersOrders");
+          const q = query(ordersRef, where("userId", "==", user.uid))
+
+          const querySnapshot = await getDocs(q);
+          const ordersData = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as Order[];
+
+          setOrders(ordersData);
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      getOrderData();
+    }
+  }, [user])
 
   return (
     <div className="w-full">
@@ -22,18 +102,33 @@ function Orders() {
           ${orderTab === "previous orders" ? "border-b-2 font-bold" : "border-b"}
         `}>Previous Orders</p>
       </div>
-      <div className="flex flex-col justify-center items-center h-[200px]">
+      <div className="flex flex-col justify-center items-center">
         {
           orderTab === "orders" 
           ?
-          <div className="w-full h-[300px] flex flex-col justify-center items-center">
-            <p className="text-[#BF9944] mb-1">Start shopping and make your first order!</p>
-            <Link href={"/shop"} className="text-[#85563C] underline">Shop Now</Link>
+          <div className="w-full flex flex-col justify-center items-center">
+            {
+              orders.length > 0 ?
+              <ActiveOrders orders={orders} status={"pending"}/>
+              :
+              <div className="mt-20">
+                <p className="text-[#BF9944] mb-1">Start shopping and make your first order!</p>
+                <Link href={"/shop"} className="text-[#85563C] underline">Shop Now</Link>
+              </div>
+            }
           </div>
           : 
-          <div className="w-full h-[300px] flex flex-col justify-center items-center">
-            <p className="text-[#BF9944] mb-1">You currently have no delivered orders!</p>
-          </div>
+          <div className="w-full flex flex-col justify-center items-center">
+            {
+              orders.length > 0 ?
+              <ActiveOrders orders={orders} status={"fulfilled"}/>
+              :
+              <div className="mt-20">
+                <p className="text-[#BF9944] mb-1">You currently have no delivered orders!</p>
+              </div>
+
+            }
+            </div>
         }
       </div>
     </div>

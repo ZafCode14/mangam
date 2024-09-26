@@ -55,8 +55,6 @@ function PersonalInformation() {
     }));
   };
 
-  console.log(inputs);
-
   if (!resetPassword) {
     return (
       <div className="relative">

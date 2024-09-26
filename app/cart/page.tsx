@@ -163,7 +163,7 @@ function Page() {
                   </div>
                 </div>
 
-                <button className="mt-10 py-3 w-[200px] bg-[#BF9944] text-white rounded-md">Checkout</button>
+                <Link href={'/checkout'} className="mt-10 py-3 w-[200px] bg-[#BF9944] text-white rounded-md flex justify-center">Checkout</Link>
               </div>
 
             </div>
