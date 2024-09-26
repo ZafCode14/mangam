@@ -110,7 +110,7 @@ function Orders() {
           ?
           <div className="w-full flex flex-col justify-center items-center">
             {
-              orders.length > 0 ?
+              orders.filter((order) => order.status === "pending").length > 0 ?
               <ActiveOrders orders={orders} status={"pending"}/>
               :
               <div className="mt-20 flex flex-col items-center">
@@ -122,7 +122,7 @@ function Orders() {
           : 
           <div className="w-full flex flex-col justify-center items-center">
             {
-              orders.length > 0 ?
+              orders.filter((order) => order.status === "fulfilled").length > 0 ?
               <ActiveOrders orders={orders} status={"fulfilled"}/>
               :
               <div className="mt-20">
