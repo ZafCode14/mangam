@@ -113,7 +113,7 @@ function Orders() {
               orders.length > 0 ?
               <ActiveOrders orders={orders} status={"pending"}/>
               :
-              <div className="mt-20">
+              <div className="mt-20 flex flex-col items-center">
                 <p className="text-[#BF9944] mb-1">Start shopping and make your first order!</p>
                 <Link href={"/shop"} className="text-[#85563C] underline">Shop Now</Link>
               </div>
