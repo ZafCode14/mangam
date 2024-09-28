@@ -2,7 +2,7 @@ import Image from "next/image";
 
 function Loading() {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center mt-32">
       <div className="loading-spinner">
         <Image
           src={'/icons/logo.png'}
@@ -10,6 +10,7 @@ function Loading() {
           width={300}
           height={300}
           className="h-[70px] w-auto"
+          priority
         />
       </div>
       <style jsx>{`

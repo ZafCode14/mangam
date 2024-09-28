@@ -12,6 +12,7 @@ function Perspective1({ opacity, width, setElev, floor }: PerspectiveProp) {
   let classic2 = "";
   let classic3 = "";
   let classic4 = "";
+  let raw = "";
   if (floor === "gold") {
     corridor = "/images/mall/perspective1/Corridor.jpeg"; 
     classic1 = "/images/mall/perspective1/Classic1.png"
@@ -25,11 +26,41 @@ function Perspective1({ opacity, width, setElev, floor }: PerspectiveProp) {
     classic3 = "/images/mall/Sperspective1/Classic3.png"
     classic4 = "/images/mall/Sperspective1/Modern4.png"
   } else if (floor === "raw") {
-    corridor = "/images/mall/perspective1/Floor.jpeg"; 
-    classic1 = "/images/mall/perspective1/classic1.png"
-    classic2 = "/images/mall/perspective1/classic2.png"
-    classic3 = "/images/mall/perspective1/classic3.png"
-    classic4 = "/images/mall/perspective1/classic4.png"
+    raw = "/images/mall/Rperspective1/C-I.jpeg"; 
+  }
+
+  if (floor === "raw") {
+  return (
+    <div className={`
+      absolute
+      z-10
+      flex items-center justify-center
+      h-full 
+    `} style={{
+      opacity: `${opacity}`,
+      width: `${width}vw`,
+      transition: "1s ease"
+    }}>
+      <Image
+        src={raw}
+        alt="floor plan"
+        width={3000}
+        height={3000}
+        priority
+        className={`
+          absolute
+          w-full
+          object-cover
+        `}
+      />
+      <button onClick={() => setElev(prev => !prev)} className={`
+        relative right-[17%] top-[-20px]
+        h-[14vw]
+        w-[4vw]
+      `}></button>
+    </div>
+  );
+
   }
   return (
     <div className={`

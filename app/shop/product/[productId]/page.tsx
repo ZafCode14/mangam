@@ -1,16 +1,22 @@
 "use client";
 import { useEffect, useState } from 'react';
-import useProducts from '@/hooks/products';
 import Image from 'next/image';
-import useVendors from '@/hooks/vendors';
 import Products from '@/components/products';
 import Loading from '@/components/loading';
 import useAuthUser from '@/hooks/user';
 import { useRouter } from 'next/navigation';
 import { putWishlist } from '@/components/wishlist/wishlist';
-import Appointment from '@/components/productPage/appointment';
 import AddToCart from '@/components/productPage/cart';
+import { doc, getDoc } from 'firebase/firestore';
+import { firestore } from '@/lib/firebase';
+import CreateAppointment from './(appointments)/createAppointment';
 
+interface Branch {
+  inStock: string;
+  address: string;
+  phoneNumbers: string[];
+  branch: string;
+}
 interface Product {
   docID: string;
   brandDocID: string;
@@ -19,11 +25,12 @@ interface Product {
   price: number;
   category: string;
   images: string[];
+  branches: Branch[];
 }
-
 interface Vendor {
   docID: string;
   name: string;
+  branches: Branch[]
 }
 
 interface ProductPageProps {
@@ -35,30 +42,49 @@ interface ProductPageProps {
 const Page = ({ params }: ProductPageProps) => {
   const { productId } = params;
   const [product, setProduct] = useState<Product | null>(null);
-  const [vendor, setVendor] = useState<Vendor | null>(null); // Set vendor state to null initially
-  const [products, loading, error] = useProducts(); // Using your custom hook to fetch products
-  const [vendors] = useVendors();
-  const [isValidProductId, setIsValidProductId] = useState(false);
+  const [vendor, setVendor] = useState<Vendor | null>(null);
   const [appointment, setAppointment] = useState(false);
   const [cart, setCart] = useState(false);
   const [theuser] = useAuthUser();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !error && products.length > 0) {
-      // Check if the productId exists in the list of products
-      const foundProduct = products.find((product) => product.docID === productId);
-      if (foundProduct) {
-        setProduct(foundProduct);
-        // Find and set the corresponding vendor
-        const foundVendor = vendors.find((vendor) => vendor.docID === foundProduct.brandDocID);
-        setVendor(foundVendor || null); // If vendor is not found, set null
-        setIsValidProductId(true);
-      } else {
-        setIsValidProductId(false); // productId not found
+    const getVendorandProduct = async () => {
+      try {
+        // 1. Get product by product.docID
+        const productRef = doc(firestore, "products", productId);
+        const productSnap = await getDoc(productRef);
+
+        if (!productSnap.exists()) {
+          console.log("No such product!");
+          return;
+        }
+
+        const productData = productSnap.data() as Product;
+        setProduct(productData);
+
+        // 2. Get vendor by product.brandDocID
+        const brandDocID = productData.brandDocID;
+        const vendorRef = doc(firestore, "vendors", brandDocID);
+        const vendorSnap = await getDoc(vendorRef);
+
+        if (!vendorSnap.exists()) {
+          console.log("No such vendor!");
+          return;
+        }
+
+        const vendorData = vendorSnap.data() as Vendor;
+        setVendor(vendorData)
+
+        // Return both product and vendor data
+        return { productData, vendorData };
+
+      } catch (error) {
+        console.error("Error fetching product or vendor:", error);
       }
-    }
-  }, [loading, error, products, productId, vendors]);
+    };
+    getVendorandProduct();
+  }, [productId]);
 
   const handleUnauthUser = (callback: () => void) => {
     if (!theuser) {
@@ -84,20 +110,7 @@ const Page = ({ params }: ProductPageProps) => {
   const handleCart = () => {
     setCart(true);
   }
-
-  if (loading) {
-    return <Loading/>
-  }
-
-  if (error) {
-    return <p className='mt-[500px]'>Error loading products: {error.message}</p>; // Handle error case
-  }
-
-  if (!isValidProductId) {
-    return <p className='mt-[500px]'>Product not found</p>; // Return a message if productId is invalid (or handle 404 if needed)
-  }
-
-  if (product !== null) {
+  if (product !== null && vendor !== null) {
     return (
       <main className={`flex flex-col items-center w-full mt-[70px]`}>
         <div className='w-[1200px]'>
@@ -133,7 +146,7 @@ const Page = ({ params }: ProductPageProps) => {
               </div>
             </div>
 
-            { appointment && <Appointment setAppointment={setAppointment}/> }
+            { appointment && <CreateAppointment setAppointment={setAppointment} vendor={vendor} product={product}/> }
             { cart && <AddToCart setCart={setCart} product={product}/> }
           </div>
 
