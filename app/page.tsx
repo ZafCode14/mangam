@@ -13,7 +13,7 @@ export default function Home() {
 
       {/** Hero Section */}
       <div className="flex h-[400px] w-full mt-[80px]">
-        <div className="h-full w-[50%] relative flex justify-center items-end">
+        <div className="h-full w-[100%] md:w-[50%] relative flex justify-center items-end">
           <Image
             src={'/images/hero2.png'}
             alt="hero image"
@@ -23,11 +23,27 @@ export default function Home() {
             className="absolute w-full h-full object-cover"
           />
           <div className="relative text-white flex flex-col justify-center items-center">
-            <h2 className="text-[22px] font-bold">Experience Something New</h2>
-            <Link href={"/mall"} className="text-[14px] bg-[#2A1C1B] w-[180px] h-[44px] rounded-[4px] mb-8 mt-2 flex justify-center items-center">Shop in Mall</Link>
+            <h2 className="text-[18px] md:text-[22px] font-bold">Experience Something New</h2>
+            <h2 className="md:hidden text-[18px] md:text-[22px] font-bold">All Your Favorite Brands In One Place</h2>
+            <div className="flex">
+              <Link href={"/mall"} className={`
+                text-[14px] bg-[#2A1C1B] 
+                w-[150px] md:w-[180px] h-[44px] 
+                rounded-[4px] mb-12 mt-2 
+                flex justify-center items-center
+              `}>Shop in Mall</Link>
+              <Link href={"/shop"} className={`
+                md:hidden
+                text-[14px] bg-[#2A1C1B] 
+                w-[150px] md:w-[180px] h-[44px] 
+                rounded-[4px] mb-8 mt-2 ml-3
+                flex justify-center items-center
+              `}>Shop by Brand</Link>
+            </div>
           </div>
         </div>
-        <div className="h-full w-[50%] relative flex flex-col justify-end">
+
+        <div className="hidden md:flex h-full w-[50%] relative flex-col justify-end">
           <Image
             src={'/images/hero1.png'}
             alt="hero image"
@@ -37,7 +53,7 @@ export default function Home() {
           />
           <div className="relative text-white flex flex-col justify-center items-center">
             <h2 className="text-[22px] font-bold">All Your Favorite Brands In One Place</h2>
-            <Link href={"/shop"} className="text-[14px] bg-[#2A1C1B] w-[180px] h-[44px] rounded-[4px] mb-8 mt-2 flex justify-center items-center">Shop by Brand</Link>
+            <Link href={"/shop"} className="text-[14px] bg-[#2A1C1B] w-[180px] h-[44px] rounded-[4px] mb-12 mt-2 flex justify-center items-center">Shop by Brand</Link>
           </div>
         </div>
       </div>
@@ -46,12 +62,15 @@ export default function Home() {
       {
       loading ?
       <Loading/> :
-      <div className="p-10 bg-[#E7E7E7]">
-        <div className="bg-[#F1F1F1] rounded-[5%]">
+      <div className="p-3 md:p-10 bg-[#E7E7E7]">
+        <div className="flex-col items-center bg-[#F1F1F1] rounded-[5%]">
+          <p className={`
+            flex justify-center md:block
+            w-full py-10 my-5 md:ml-10 text-[24px] font-bold
+          `}>Trending Products</p> 
           <div className="w-full">
-            <p className="my-5 ml-20 text-[24px] font-bold">Trending Products</p> 
-            <div className="flex">
-              <div className="w-[50%] h-[650px] flex flex-wrap justify-end items-center">
+            <div className="flex flex-col-reverse md:flex-row">
+              <div className="w-full md:w-[50%] h-[90vw] md:h-[40vw] flex flex-wrap justify-end items-center">
                 <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                   <Product product={products[0]} res={2000}/>
                 </div>
@@ -65,16 +84,16 @@ export default function Home() {
                   <Product product={products[3]} res={2000}/>
                 </div>
               </div>
-              <div className="w-[50%] h-[650px] mt-20 flex items-center">
-                <div className="w-[97.5%] h-[650px] mb-20 mr-[2.5%]">
+              <div className="w-full md:w-[50%] md:mt-20 flex items-center">
+                <div className="w-[97.5%] h-[90vw] md:h-[40vw] mb-20 mx-[2.5%]">
                   <Product product={products[4]} res={2000}/>
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex mt-20 pb-20">
-            <div className="flex flex-row-reverse">
-              <div className="h-[650px] w-[50%] flex flex-wrap items-center">
+          <div className="flex mt-20 mb-20 pb-20">
+            <div className="flex flex-col-reverse md:flex-row-reverse">
+              <div className="h-[90vw] md:h-[40vw] w-full md:w-[50%] flex flex-wrap items-center">
                 <div className="w-[45%] h-[50%] mx-[2.5%] mb-20">
                   <Product product={products[5]} res={2000}/>
                 </div>
@@ -88,8 +107,8 @@ export default function Home() {
                   <Product product={products[8]} res={2000}/>
                 </div>
               </div>
-              <div className="w-[50%] flex items-center justify-end mr-5 mt-10">
-                <div className="w-[97.5%] h-[650px] mb-20 ml-[2.5%]">
+              <div className="w-full md:w-[50%] flex items-center justify-end mr-5 mt-20 md:mt-10">
+                <div className="w-[97.5%] h-[90vw] md:h-[40vw] mb-20 ml-[2.5%]">
                   <Product product={products[9]} res={2000}/>
                 </div>
               </div>
