@@ -4,14 +4,11 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import AccountAppointment from "./accountAppointment";
 
-interface Vendor {
-  addresses: string[];
-  branch: string;
-  phoneNumber: string[]
-
-}
-interface VendorInfo {
-  1: Vendor
+interface Branch {
+  inStock: string;
+  address: string;
+  phoneNumber: string[];
+  location: string;
 }
 interface Appointment {
   id: string;
@@ -22,7 +19,7 @@ interface Appointment {
   productId: string;
   time: string;
   userId: string;
-  vendorInfo: VendorInfo;
+  branchInfo: Branch;
   vendorName: string;
   status: string;
 }

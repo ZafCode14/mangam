@@ -4,8 +4,8 @@ import ChoseDateTime from "./choseDateTime";
 interface Branch {
   inStock: string;
   address: string;
-  phoneNumbers: string[];
-  branch: string;
+  phoneNumber: string[];
+  location: string;
 }
 interface Product {
   docID: string;
@@ -15,7 +15,7 @@ interface Product {
   price: number;
   category: string;
   images: string[];
-  branches: Branch[]
+  newBranches: Branch[];
 }
 
 interface Vendor {
@@ -29,59 +29,71 @@ interface Props {
   vendor: Vendor;
   product: Product;
 }
-function ChoseBranch({ setAppointment, userId, vendor, product }:Props) {
+function ChoseBranch({ setAppointment, userId, vendor, product }: Props) {
   const [next, setNext] = useState(false);
+  const [choseBranchInfo, setChosenBranchInfo] = useState<Branch | null>(null);
 
   return (
     <div className="w-[600px] h-[500px] bg-white rounded-md flex flex-col relative">
       {/* Header Section */}
       <div className="flex border-b border-[#bebebe] relative justify-center">
-        <p onClick={() => setAppointment(false)} className="absolute left-5 top-4 text-[20px]">
+        <p
+          onClick={() => setAppointment(false)}
+          className="absolute left-5 top-4 text-[20px]"
+        >
           &lt;
         </p>
         <p className="py-5">Please choose a branch</p>
       </div>
 
-      {/* Brand Choises */}
-      <div className="flex-1 px-10 w-full">
-        {
-          product.branches.map((branch, index) => {
-            return (
-              <div key={index} className={`bg-gray-300 p-5 w-[49%]`}>
-                <p>{branch.branch}</p>
-                <p>{branch.address}</p>
-                <p>{branch.inStock}</p>
-                <p>{branch.phoneNumbers}</p>
-              </div>
-            )
-          })
-        }
+      {/* Branch Choices */}
+      <div className="flex-1 px-10 w-full mt-10 flex justify-between items-start">
+        {product.newBranches.map((branch, index) => {
+          const isSelected = choseBranchInfo === branch;
+          return (
+            <div
+              onClick={() => setChosenBranchInfo(branch)}
+              key={index}
+              className={`
+                p-5 w-[49%] rounded-md cursor-pointer 
+                ${isSelected ? 'bg-green-300' : 'bg-gray-300'}
+              `}
+            >
+              <p>{branch.location}</p>
+              <p>{branch.address}</p>
+              {branch.phoneNumber.map((number, index) => (<p key={index}>{number}</p>))}
+            </div>
+          );
+        })}
       </div>
 
       {/* Confirm Button */}
-      <button 
-        className={`rounded-md w-[200px] py-3 text-white mx-auto mb-10 bg-gray-200`}
+      <button
+        className={`rounded-md w-[200px] py-3 text-white mx-auto mb-10 ${
+          choseBranchInfo ? "bg-blue-500" : "bg-gray-200 cursor-not-allowed"
+        }`}
         onClick={() => setNext(true)}
+        disabled={!choseBranchInfo}
       >
         Chose Time Slot
       </button>
-      {
-        next &&
-        <div className={`
-          absolute
-          right-0 top-0
-          h-full w-full
-          bg-[white]
-        `}>
+
+      {next && (
+        <div
+          className={`
+          absolute right-0 top-0 h-full w-full bg-white
+        `}
+        >
           <ChoseDateTime
             setAppointment={setAppointment}
             setNext={setNext}
             vendor={vendor}
             product={product}
             userId={userId}
+            branchInfo={choseBranchInfo}
           />
         </div>
-      }
+      )}
     </div>
   );
 }

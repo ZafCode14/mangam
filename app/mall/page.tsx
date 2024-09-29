@@ -5,8 +5,7 @@ import Perspective2 from "@/components/perspective2";
 import { useState } from "react";
 
 function Page() {
-  const [width, setWidth] = useState<boolean>(true);
-  const [opacity, setOpacity] = useState<boolean>(true);
+  const [middleButton, setMiddleButton] = useState<boolean>(false);
   const [elev, setElev] = useState<boolean>(false);
   const [floor, setFloor] = useState<string>("gold");
 
@@ -27,15 +26,13 @@ function Page() {
         floor={floor}
       />
       <Perspective1
-        opacity={opacity ? "100" : "0"}
-        width={width ? "100" : "210"}
+        middleButton={middleButton}
         setElev={setElev}
         floor={floor}
       />
       <button
         onClick={() => {
-          setWidth(prev => !prev);
-          setOpacity(prev => !prev);
+          setMiddleButton(prev => !prev);
         }}
         className={`
           absolute 
@@ -49,8 +46,7 @@ function Page() {
         setElev={setElev}
         setFloor={setFloor}
         floor={floor}
-        setWidth={setWidth}
-        setOpacity={setOpacity}
+        setMiddleButton={setMiddleButton}
       />
     </main>
   );

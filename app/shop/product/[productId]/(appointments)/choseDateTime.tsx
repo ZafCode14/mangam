@@ -1,12 +1,12 @@
 import { firestore } from "@/lib/firebase";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 interface Branch {
   inStock: string;
   address: string;
-  phoneNumbers: string[];
-  branch: string;
+  phoneNumber: string[];
+  location: string;
 }
 interface Product {
   docID: string;
@@ -16,7 +16,7 @@ interface Product {
   price: number;
   category: string;
   images: string[];
-  branches: Branch[];
+  newBranches: Branch[];
 }
 
 interface Vendor {
@@ -34,12 +34,12 @@ interface Props {
   userId: string;
   vendor: Vendor;
   product: Product;
+  branchInfo: Branch | null;
 }
-function ChoseDateTime({ setNext, setAppointment, userId, vendor, product }: Props) {
+function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branchInfo }: Props) {
   const [selectedDay, setSelectedDay] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
-  const [reservedSlots, setReservedSlots] = useState<string[]>([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
 
   // Handle day selection change
@@ -48,7 +48,6 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product }: Pro
       const date = getNextDateForDay(selectedDay);
       setSelectedDate(date);
       generateTimeSlots(); // Generate new time slots when the day changes
-      fetchReservedSlots(date); // Fetch reserved slots for the selected date
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDay]);
@@ -77,11 +76,11 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product }: Pro
   const generateTimeSlots = () => {
     const slots: TimeSlot[] = [];
     let startTime = new Date();
-    startTime.setHours(8, 0, 0, 0); // Start at 8:00 AM
+    startTime.setHours(12, 0, 0, 0); // Start at 8:00 AM
 
-    while (startTime.getHours() < 16) {
+    while (startTime.getHours() < 22) {
       const endTime = new Date(startTime);
-      endTime.setMinutes(startTime.getMinutes() + 45); // 45-minute interval
+      endTime.setMinutes(startTime.getMinutes() + 60); // 45-minute interval
 
       slots.push({
         time: `${startTime.getHours()}:${startTime.getMinutes() === 0 ? "00" : startTime.getMinutes()} - ${endTime.getHours()}:${endTime.getMinutes() === 0 ? "00" : endTime.getMinutes()}`,
@@ -92,19 +91,6 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product }: Pro
     }
 
     setTimeSlots(slots);
-  };
-
-  // Fetch reserved time slots from Firestore for the selected date
-  const fetchReservedSlots = async (date: string) => {
-    const q = query(collection(firestore, "appointments"), where("date", "==", date));
-    const querySnapshot = await getDocs(q);
-
-    const reservedTimes: string[] = [];
-    querySnapshot.forEach((doc) => {
-      reservedTimes.push(doc.data().time);
-    });
-
-    setReservedSlots(reservedTimes);
   };
 
   // Function to handle selecting a time slot
@@ -129,7 +115,8 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product }: Pro
       productImage: product.images[0],
       productId: product.docID,
       userId: userId,
-      status: "upcoming"
+      status: "upcoming",
+      branchInfo: branchInfo
     };
 
     try {
@@ -180,13 +167,10 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product }: Pro
             key={index}
             onClick={() => handleTimeSlotSelect(slot.time)}
             className={`block mb-2 p-3 rounded-md mx-2 w-[120px] ${
-              reservedSlots.includes(slot.time) // Disable if slot is reserved
-                ? "bg-gray-300 cursor-not-allowed"
-                : selectedTimeSlot === slot.time // Change color if selected
+                selectedTimeSlot === slot.time // Change color if selected
                 ? "bg-blue-500 text-white"
                 : "bg-green-200"
             }`}
-            disabled={reservedSlots.includes(slot.time)} // Disable button if time slot is reserved
           >
             {slot.time}
           </button>

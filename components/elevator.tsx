@@ -4,11 +4,10 @@ interface elevProp {
   elev: boolean
   floor: string
   setElev: React.Dispatch<React.SetStateAction<boolean>>;
-  setWidth: React.Dispatch<React.SetStateAction<boolean>>;
-  setOpacity: React.Dispatch<React.SetStateAction<boolean>>;
+  setMiddleButton: React.Dispatch<React.SetStateAction<boolean>>;
   setFloor: React.Dispatch<React.SetStateAction<string>>;
 }
-function Elevator({ elev, setElev, setWidth, setOpacity, setFloor, floor }: elevProp) {
+function Elevator({ elev, setElev, setMiddleButton, setFloor, floor }: elevProp) {
 
   return (
     <div className={`
@@ -31,8 +30,7 @@ function Elevator({ elev, setElev, setWidth, setOpacity, setFloor, floor }: elev
         height={3000}
         onClick={() => {
           setElev(prev => !prev)
-          setWidth(true)
-          setOpacity(true)
+          setMiddleButton(true)
           setFloor("gold")
         }}
         className={`
@@ -53,8 +51,7 @@ function Elevator({ elev, setElev, setWidth, setOpacity, setFloor, floor }: elev
         height={3000}
         onClick={() => {
           setElev(prev => !prev);
-          setWidth(true)
-          setOpacity(true)
+          setMiddleButton(true)
           setFloor("silver");
         }}
         className={`
@@ -75,8 +72,7 @@ function Elevator({ elev, setElev, setWidth, setOpacity, setFloor, floor }: elev
         height={3000}
         onClick={() => {
           setElev(prev => !prev);
-          setWidth(true)
-          setOpacity(true)
+          setMiddleButton(true)
           setFloor("raw");
         }}
         className={`

@@ -18,7 +18,7 @@ function Perspective2({ setElev, floor }: PerspectiveProp) {
     classic1 = "/images/mall/Sperspective2/Classic1.png"
     classic2 = "/images/mall/Sperspective2/Modern2.png"
   } else if (floor === "raw") {
-    raw = "/images/mall/Rperspective2/C.jpeg"
+    raw = "/images/mall/Rperspective2/I.jpeg"
   }
 
   if (floor === "raw") {
@@ -42,8 +42,7 @@ function Perspective2({ setElev, floor }: PerspectiveProp) {
       />
       <button onClick={() => setElev(prev => !prev)} className={`
         relative right-[38%] top-[-35px]
-        h-[27vw]
-        w-[15vw]
+        h-[45vw] w-[15vw]
       `}></button>
     </div>
   );
@@ -90,8 +89,7 @@ function Perspective2({ setElev, floor }: PerspectiveProp) {
       />
       <button onClick={() => setElev(prev => !prev)} className={`
         relative right-[38%] top-[-35px]
-        h-[27vw]
-        w-[15vw]
+        h-[27vw] w-[15vw]
       `}></button>
     </div>
   );

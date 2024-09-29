@@ -4,14 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-interface Vendor {
-  addresses: string[];
-  branch: string;
-  phoneNumber: string[]
-
-}
-interface VendorInfo {
-  1: Vendor
+interface Branch {
+  inStock: string;
+  address: string;
+  phoneNumber: string[];
+  location: string;
 }
 interface Appointment {
   id: string;
@@ -22,7 +19,7 @@ interface Appointment {
   productId: string;
   time: string;
   userId: string;
-  vendorInfo: VendorInfo;
+  branchInfo: Branch;
   vendorName: string;
   status: string;
 }
@@ -55,8 +52,8 @@ function AccountAppointment({appointment, status}:Props) {
         <div className={`flex flex-col justify-between`}>
           <div>
             <p className={`font-bold`}>{appointment.vendorName}</p> 
-            <p>{appointment.vendorInfo[1].branch}</p>
-            <p>{appointment.vendorInfo[1].addresses[0]}</p>
+            <p>{appointment.branchInfo.location}</p>
+            <p>{appointment.branchInfo.address}</p>
           </div>
           <div className={`flex`}>
             <Image
@@ -80,7 +77,7 @@ function AccountAppointment({appointment, status}:Props) {
           <div className={`flex flex-col items-end`}>
             <p>{appointment.date}</p>
             <p>{appointment.time}</p>
-            <p>{appointment.vendorInfo[1].phoneNumber[0]}</p>
+            {appointment.branchInfo.phoneNumber.map((number, index) => (<p key={index}>{number}</p>))}
           </div>
           {
             appointmentStatus === "upcoming" ?
