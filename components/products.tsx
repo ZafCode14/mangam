@@ -34,6 +34,7 @@ function Products({ brandId, search, categories, price, height }: Prop) {
       <div className={`
         flex flex-wrap justify-around
         overflow-y-scroll 
+        pb-24
       `} style={{
         maxHeight: `calc(100vh - ${height}px)`
       }}>
