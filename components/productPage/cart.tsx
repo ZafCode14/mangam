@@ -84,7 +84,7 @@ function AddToCart({ setCart, product }: Prop) {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] fixed flex justify-center items-center top-0 right-0 bg-[#000000a1] z-10">
+    <div className="w-[100vw] h-[100vh] fixed flex justify-center items-center top-0 right-0 bg-[#000000a1] z-10 px-5">
       <div className="w-[600px] bg-[#F5F5F5] rounded-md flex flex-col">
         {/* Header Section */}
         <div className="flex border-b border-[#bebebe] relative justify-center">
@@ -106,7 +106,7 @@ function AddToCart({ setCart, product }: Prop) {
             width={300}
             height={300}
             priority
-            className='h-full w-auto object-contain ml-5'
+            className='h-full w-[110px] object-contain ml-5'
           />
           <p>{product.name}</p>
           <p>{product.price} EGP</p>

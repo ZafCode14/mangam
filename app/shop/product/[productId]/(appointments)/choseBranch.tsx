@@ -34,7 +34,7 @@ function ChoseBranch({ setAppointment, userId, vendor, product }: Props) {
   const [choseBranchInfo, setChosenBranchInfo] = useState<Branch | null>(null);
 
   return (
-    <div className="w-[600px] h-[500px] bg-white rounded-md flex flex-col relative">
+    <div className="w-[600px] max-w-full h-[500px] bg-white rounded-md flex flex-col relative">
       {/* Header Section */}
       <div className="flex border-b border-[#bebebe] relative justify-center">
         <p
@@ -47,7 +47,7 @@ function ChoseBranch({ setAppointment, userId, vendor, product }: Props) {
       </div>
 
       {/* Branch Choices */}
-      <div className="flex-1 px-10 w-full mt-10 flex justify-between items-start">
+      <div className="flex-1 px-5 w-full mt-10 flex justify-between items-start text-[12px] md:text-[16px]">
         {product.newBranches.map((branch, index) => {
           const isSelected = choseBranchInfo === branch;
           return (

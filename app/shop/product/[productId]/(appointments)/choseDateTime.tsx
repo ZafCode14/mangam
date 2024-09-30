@@ -132,13 +132,13 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
   console.log(selectedDate);
   console.log(selectedTimeSlot);
   return (
-    <div className="w-[600px] h-[500px] bg-white rounded-md flex flex-col">
+    <div className="w-[600px] max-w-full h-[500px] bg-white rounded-md flex flex-col">
       {/* Header Section */}
       <div className="flex border-b border-[#bebebe] relative justify-center">
         <p onClick={() => setNext(false)} className="absolute left-5 top-4 text-[20px]">
           &lt;
         </p>
-        <p className="py-5">Please choose a date and time for appointment</p>
+        <p className="py-5 text-[12px] md:text-[16px]">Please choose a date and time for appointment</p>
       </div>
 
       {/* Day of the week dropdown */}
@@ -166,7 +166,7 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
           <button
             key={index}
             onClick={() => handleTimeSlotSelect(slot.time)}
-            className={`block mb-2 p-3 rounded-md mx-2 w-[120px] ${
+            className={`block mb-2 p-1 md:p-3 rounded-md mx-2 w-[120px] ${
                 selectedTimeSlot === slot.time // Change color if selected
                 ? "bg-blue-500 text-white"
                 : "bg-green-200"

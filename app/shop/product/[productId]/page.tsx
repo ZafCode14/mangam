@@ -112,11 +112,15 @@ const Page = ({ params }: ProductPageProps) => {
   }
   if (product !== null && vendor !== null) {
     return (
-      <main className={`flex flex-col items-center w-full mt-[70px]`}>
-        <div className='w-[1200px]'>
+      <main className={`flex flex-col items-center w-full md:mt-[70px]`}>
+        <div className='w-[1200px] max-w-full'>
           <p className='my-10'>{vendor?.name } / {product.category} / {product.name}</p>
-          <div className='flex h-[500px] relative'>
-            <div className='h-full w-[40%] overflow-hidden flex items-center justify-center bg-[white] mr-5 rounded-xl'>
+          <div className='flex flex-col md:flex-row h-[900px] md:h-[500px] relative px-3'>
+            <div className={`
+              h-full w-full md:w-[40%] 
+              overflow-hidden flex items-center justify-center 
+              bg-[white] mr-5 rounded-xl mb-5 md:mb-0
+            `}>
               <Image
                 alt='product image'
                 src={product.images[0]}
@@ -127,22 +131,39 @@ const Page = ({ params }: ProductPageProps) => {
               />
             </div>
 
-            <div className='px-10 w-[60%] h-full flex flex-col items-center justify-between bg-[white] rounded-xl p-5'>
-              <div className='flex items-end w-full justify-between relative'>
-                <h2 className='text-[34px]'>{product.name}</h2>
-                <p className='font-bold text-[20px]'>{product.price} EGP</p>
+            <div className='px-10 w-full md:w-[60%] h-full flex flex-col items-center justify-between bg-[white] rounded-xl p-5'>
+              <div className='flex flex-col items-center w-full justify-between relative'>
+                <h2 className='text-[28px] lg:text-[34px] mb-5'>{product.name}</h2>
+                <p className='absolute right-0 bottom-[0px]'>{product.price} EGP</p>
                 <p className='absolute right-0 bottom-[-20px] line-through text-gray-400'>{product.price} EGP</p>
               </div>
-              <div className='w-full flex flex-col text-center items-center'>
+              <div className='w-full flex flex-col text-center items-center py-5'>
                 <h5 className='font-bold'>Description</h5>
                 <p>{product.description}</p>
               </div>
               <div className='flex justify-between w-full text-white'>
-                <div>
-                  <button onClick={() => handleUnauthUser(handleWishlist)} className='bg-[#2A1C1B] p-3 rounded-md'>Add to Whishlist</button>
-                  <button onClick={() => handleUnauthUser(handleAppointment)} className='bg-[#2A1C1B] p-3 rounded-md ml-2'>Book Appointment</button>
+                <div className={`flex flex-col lg:flex-row`}>
+                  <button onClick={() => handleUnauthUser(handleWishlist)} className={`
+                    bg-[#2A1C1B] 
+                    text-[12px] lg:text-[16px]
+                    w-[140px] h-[50px] lg:w-[160px]
+                    rounded-md mb-2 lg:mb-0 lg:mr-3
+                  `}>Add to Whishlist</button>
+                  <button onClick={() => handleUnauthUser(handleAppointment)} className={`
+                    bg-[#2A1C1B] 
+                    text-[12px] lg:text-[16px] lg:w-[160px]
+                    w-[140px] h-[50px]
+                    rounded-md 
+                  `}>Book Appointment</button>
                 </div>
-                <button onClick={() => handleUnauthUser(handleCart)} className='bg-gradient-to-r from-[#796640] via-[#C1A875] to-[#796640] p-3 rounded-md'>Add to Cart</button>
+                <button onClick={() => handleUnauthUser(handleCart)} className={`
+                  self-end
+                  bg-gradient-to-r
+                  from-[#796640] via-[#C1A875] to-[#796640] 
+                  text-[12px] lg:text-[16px]
+                  w-[120px] h-[50px]
+                  rounded-md
+                `}>Add to Cart</button>
               </div>
             </div>
 
@@ -155,7 +176,9 @@ const Page = ({ params }: ProductPageProps) => {
             <p className='mx-5'>More From {vendor?.name}</p>
             <div className='border-t border-gray-400 flex-1'></div>
           </div>
-          <Products brandId={product.brandDocID} search={""} categories={[]} price={[0, 300000]} height={300}/>
+          <div className='px-2'>
+            <Products brandId={product.brandDocID} search={""} categories={[]} price={[0, 300000]} height={300}/>
+          </div>
         </div>
       </main>
     );
