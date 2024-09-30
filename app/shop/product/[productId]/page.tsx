@@ -114,7 +114,7 @@ const Page = ({ params }: ProductPageProps) => {
     return (
       <main className={`flex flex-col items-center w-full md:mt-[70px]`}>
         <div className='w-[1200px] max-w-full'>
-          <p className='my-10'>{vendor?.name } / {product.category} / {product.name}</p>
+          <p className='mt-24 mb-5 ml-5'>{vendor?.name } / {product.category} / {product.name}</p>
           <div className='flex flex-col md:flex-row h-[900px] md:h-[500px] relative px-3'>
             <div className={`
               h-full w-full md:w-[40%] 
@@ -131,13 +131,13 @@ const Page = ({ params }: ProductPageProps) => {
               />
             </div>
 
-            <div className='px-10 w-full md:w-[60%] h-full flex flex-col items-center justify-between bg-[white] rounded-xl p-5'>
+            <div className='px-2 md:px-10 w-full md:w-[60%] h-full flex flex-col items-center justify-between bg-[white] rounded-xl p-5'>
               <div className='flex flex-col items-center w-full justify-between relative'>
                 <h2 className='text-[28px] lg:text-[34px] mb-5'>{product.name}</h2>
                 <p className='absolute right-0 bottom-[0px]'>{product.price} EGP</p>
                 <p className='absolute right-0 bottom-[-20px] line-through text-gray-400'>{product.price} EGP</p>
               </div>
-              <div className='w-full flex flex-col text-center items-center py-5'>
+              <div className='w-full flex flex-col md:text-center items-center py-5 px-2'>
                 <h5 className='font-bold'>Description</h5>
                 <p>{product.description}</p>
               </div>

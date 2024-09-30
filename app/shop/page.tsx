@@ -58,7 +58,7 @@ function Page() {
   const [price, setPrice] = useState<number[]>([0, 300000]);
 
   return (
-    <main className="flex justify-center w-full h-screen text-white">
+    <main className="flex justify-center w-full h-[100vh] text-white">
       <Suspense fallback={<div>Loading...</div>}>
         <div
           className="relative top-[70px] flex items-start justify-center w-full pt-[30px] md:px-[5vw] px-2"
