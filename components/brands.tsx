@@ -18,7 +18,7 @@ function Brands({ search }:BrandProps) {
   if (!loading) {
     return (
       <div className="flex flex-wrap justify-around overflow-y-scroll mt-[20px]" style={{
-        height: width <= 768 ? "calc(100vh - 230px)" : "calc(100vh - 170px)"
+        height: width <= 768 ? "calc(101vh - 230px)" : "calc(100vh - 170px)"
       }}>
         {
           filteredBrands.map((vendor, index) => {
