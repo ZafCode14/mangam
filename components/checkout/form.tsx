@@ -100,12 +100,12 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
   return (
     <div className="w-full bg-[#F8F8F7] flex flex-col rounded-md relative">
 
-      <form className="flex" onSubmit={handleSubmit}>
-        <div className="flex flex-col w-[50%] p-5">
+      <form className="flex flex-col sm:flex-row" onSubmit={handleSubmit}>
+        <div className="flex flex-col w-full sm:w-[50%] p-5 pb-0 sm:pb-5">
           <input
             name="country"
             placeholder="Country/Region"
-            className={`flex text-center py-4 rounded-md mb-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
+            className={`flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
             onChange={handleChange}
             value={formData.country}
             disabled={confirmedAddress}
@@ -113,16 +113,16 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
           <input
             name="governate"
             placeholder="Governate"
-            className={`flex text-center py-4 rounded-md mb-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
+            className={`flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
             onChange={handleChange}
             value={formData.governate}
             disabled={confirmedAddress}
           />
-          <div className="flex mb-5">
+          <div className="flex mb-3 sm:mb-5">
             <input
               name="city"
               placeholder="City"
-              className={`flex text-center py-4 rounded-md w-[50%] mr-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
+              className={`flex text-center py-2 sm:py-4 rounded-md w-[50%] mr-3 sm:mr-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
               onChange={handleChange}
               value={formData.city}
               disabled={confirmedAddress}
@@ -130,7 +130,7 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
             <input
               name="postalCode"
               placeholder="Postal Code"
-              className={`flex text-center py-4 rounded-md w-[50%] ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
+              className={`flex text-center py-2 sm:py-4 rounded-md w-[50%] ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
               onChange={handleChange}
               value={formData.postalCode}
               disabled={confirmedAddress}
@@ -139,19 +139,19 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
           <input
             name="apartment"
             placeholder="Apartment, suite, etc."
-            className={`flex text-center py-4 rounded-md ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
+            className={`flex text-center py-2 sm:py-4 rounded-md ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
             onChange={handleChange}
             value={formData.apartment}
             disabled={confirmedAddress}
           />
         </div>
 
-        <div className="flex flex-col w-[50%] p-5">
+        <div className="flex flex-col w-full sm:w-[50%] p-5 pb-3 sm:pb-5">
           <div className="flex mb-5">
             <input
               name="firstName"
               placeholder="First Name"
-              className={`flex text-center py-4 rounded-md w-[50%] mr-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
+              className={`flex text-center py-2 sm:py-4 rounded-md w-[50%] mr-3 sm:mr-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
               onChange={handleChange}
               value={formData.firstName}
               disabled={confirmedAddress}
@@ -159,7 +159,7 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
             <input
               name="lastName"
               placeholder="Last Name"
-              className={`flex text-center py-4 rounded-md w-[50%] ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
+              className={`flex text-center py-2 sm:py-4 rounded-md w-[50%] ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
               onChange={handleChange}
               value={formData.lastName}
               disabled={confirmedAddress}
@@ -168,7 +168,7 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
           <input
             name="phoneNumber"
             placeholder="Phone Number"
-            className={`flex text-center py-4 rounded-md mb-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
+            className={`flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
             onChange={handleChange}
             value={formData.phoneNumber}
             disabled={confirmedAddress}
@@ -176,7 +176,7 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
           <input
             name="address"
             placeholder="Address"
-            className={`flex text-center py-4 rounded-md mb-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
+            className={`flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5 ${confirmedAddress ? "text-[gray]" : "text-[black]"}`}
             onChange={handleChange}
             value={formData.address}
             disabled={confirmedAddress}
@@ -184,7 +184,7 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
           <button
             onClick={() => setConfirmedAddress(prev => !prev)}
             type="submit"
-            className={`py-5 rounded-md text-white ${
+            className={`py-2 sm:py-5 rounded-md text-white ${
               isFormComplete ? `${confirmedAddress && isFormComplete ? "bg-[#4e8d4e]" : "bg-[#C1A875]"}` : 'bg-[#C4C4C4] cursor-not-allowed'
             }`}
             disabled={!isFormComplete}

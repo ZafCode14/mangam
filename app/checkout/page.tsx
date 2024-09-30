@@ -141,11 +141,11 @@ function Page() {
   }
 
   return (
-    <main className="flex justify-center bg-[#FFFFFF] h-[100vh] overflow-hidden">
-        <div className="flex-col w-full mx-32 h-full mt-32">
+    <main className="flex justify-center bg-[#FFFFFF] overflow-hidden min-h-screen">
+        <div className="flex-col w-[1200px] mx-5 md:mx-32 h-full mt-24 md:mt-32">
           <p className="mb-2">Delivery Address</p>
-          <div className="flex w-full h-full">
-            <div className="w-full">
+          <div className="flex flex-col lg:flex-row w-full h-full">
+            <div className="w-full mb-5">
               <CheckoutForm 
               setConfirmedAddress={setConfirmedAddress} 
               confirmedAddress={confirmedAddress}
@@ -155,22 +155,22 @@ function Page() {
             </div>
 
             {/* Price Breakdown */}
-            <div className="w-[35%] flex flex-col items-center">
-              <div className="flex flex-col ml-5 w-full bg-[#F1F1F1] p-5 rounded-md justify-center">
+            <div className="w-full lg:w-[35%] flex flex-col items-center">
+              <div className="flex flex-col lg:ml-5 w-full bg-[#F1F1F1] p-5 rounded-md justify-center">
                 {/* Sub Total */}
-                <div className="flex justify-between mb-4 text-[20px]">
+                <div className="flex justify-between mb-4 text-[16px]">
                   <p>Subtotal</p>
-                  <p>{subtotal.toFixed(2)} EGP</p>
+                  <p>{subtotal} EGP</p>
                 </div>
 
                 {/* Gem Discount */}
-                <div className="flex justify-between mb-4">
+                <div className="flex justify-between mb-4 text-[14px]">
                   <p>Gem Discount</p>
-                  <p>-{gemDiscount.toFixed(2)} EGP</p>
+                  <p>-{gemDiscount} EGP</p>
                 </div>
 
                 {/* Delivery */}
-                <div className="flex justify-between mb-4">
+                <div className="flex justify-between mb-4 text-[14px]">
                   <p>Delivery</p>
                   <p>{deliveryFee} EGP</p>
                 </div>
@@ -178,15 +178,15 @@ function Page() {
                 <div className="border-b border-[#c9c9c9] mb-4"></div>
 
                 {/* Total */}
-                <div className="flex justify-between font-bold text-lg">
+                <div className="flex justify-between font-bold text-[16px]">
                   <p>Total Price</p>
-                  <p>{totalPrice.toFixed(2)} EGP</p>
+                  <p>{totalPrice} EGP</p>
                 </div>
               </div>
 
               <button 
                 onClick={handlePayment}
-                className={`mt-10 py-3 w-[200px] ${confirmedAddress ? "bg-[#C1A875]" : "bg-[#c0c0c0]"}  text-white rounded-md`}
+                className={`mb-10 mt-10 py-3 w-[200px] ${confirmedAddress ? "bg-[#C1A875]" : "bg-[#c0c0c0]"}  text-white rounded-md`}
                 disabled={!confirmedAddress}
               >Proceed to Payment</button>
             </div>

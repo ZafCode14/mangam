@@ -87,11 +87,11 @@ function Page() {
     <main className="flex justify-center bg-[#FFFFFF] h-[100vh] overflow-hidden">
       {
         cartItems.length > 0 ?
-          <div className="flex-col w-full mx-32 h-full mt-32">
+          <div className="flex-col w-full lg:mx-32 mx-5 h-full mt-32">
             <p>Items({cartItems.length})</p>
-            <div className="flex w-full h-full">
+            <div className="flex flex-col lg:flex-row w-full h-full">
               {/* All Items */}
-              <div className="flex flex-col w-[65%] bg-[#F1F1F1] rounded-md overflow-y-scroll h-[70%]">
+              <div className="flex flex-col lg:w-[65%] w-full bg-[#F1F1F1] rounded-md overflow-y-scroll lg:h-[70%] mb-5">
                 {cartItems.map(({ product, amount }, index) => (
                   <div
                     key={index}
@@ -134,8 +134,8 @@ function Page() {
               </div>
 
               {/* Price Breakdown */}
-              <div className="w-[35%] flex flex-col items-center">
-                <div className="flex flex-col ml-5 w-full bg-[#F1F1F1] p-5 rounded-md justify-center">
+              <div className="w-full lg:w-[35%] flex flex-col items-center">
+                <div className="flex flex-col lg:ml-5 w-full bg-[#F1F1F1] p-5 rounded-md justify-center">
                   {/* Sub Total */}
                   <div className="flex justify-between mb-4 text-[20px]">
                     <p>Subtotal</p>
