@@ -35,7 +35,7 @@ function RegisterPage() {
 
   useRedirect();
 
-  const inputClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 placeholder:text-center";
+  const inputClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 text-center";
   const selectClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 text-center bg-white text-gray-400";
 
   // Handle input change for text fields and select dropdown
@@ -82,14 +82,15 @@ function RegisterPage() {
 
   return (
     <main className="flex h-screen relative z-20 w-full text-white">
-      <div className="w-[71%] h-full overflow-hidden flex items-end relative">
+      {/* Left Image */}
+      <div className="hidden flex-1 h-[100vh] w-auto overflow-hidden md:flex items-end relative">
         <Image
           alt="login image"
           src="/images/loginImage.png"
           height={3000}
           width={3000}
+          className="h-full object-cover"
           priority
-          className="w-full h-auto relative"
         />
         <p className="absolute text-[45px] top-12 left-12 leading-[45px]">
           Experience <br /> <i>Something New</i>
@@ -98,9 +99,11 @@ function RegisterPage() {
           All Your <br /> Favorite Brands <br /> <i>In One Place</i>
         </p>
       </div>
-      <div className="bg-[#2A1C1B] w-[30%] flex flex-col justify-center items-center">
+
+      {/* Input field */}
+      <div className="bg-[#2A1C1B] w-full md:w-[400px] max-w-[100%] flex flex-col justify-center items-center">
         <p>Sign Up</p>
-        <form onSubmit={handleSubmit} className="flex flex-col text-black w-[90%]">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center text-black w-[90%]">
           <input
             name="firstName"
             placeholder="First Name"

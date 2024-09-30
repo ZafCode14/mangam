@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase"; // Adjust to your Firebase configuration
+import { auth } from "@/lib/firebase";
 import useRedirect from "@/hooks/redirect";
 
 function Page() {
@@ -14,7 +14,7 @@ function Page() {
   const router = useRouter();
   useRedirect();
 
-  const inputClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 text-black placeholder:text-center";
+  const inputClass = "w-[340px] max-w-full h-[40px] rounded-md my-2 text-black text-center";
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,13 +40,14 @@ function Page() {
 
   return (
     <main className="flex h-screen text-white relative z-20">
-      <div className="w-[71%] h-full overflow-hidden flex items-end relative">
+      {/* Left Image */}
+      <div className="hidden flex-1 h-[100vh] w-auto overflow-hidden md:flex items-end relative">
         <Image
           alt="login image"
           src="/images/loginImage.png"
           height={3000}
           width={3000}
-          className="w-full h-auto relative"
+          className="h-full object-cover"
           priority
         />
         <p className="absolute text-[45px] top-12 left-12 leading-[45px]">
@@ -57,14 +58,15 @@ function Page() {
         </p>
       </div>
 
-      <div className="bg-[#2A1C1B] w-[30%] flex flex-col justify-center items-center">
+      {/* Input field */}
+      <div className="bg-[#2A1C1B] w-full md:w-[400px] max-w-[100%] flex flex-col justify-center items-center">
         <p>Sign In</p>
-        <form className="flex flex-col w-[90%]" onSubmit={handleSubmit}>
+        <form className="flex flex-col w-[90%] items-center" onSubmit={handleSubmit}>
           <input
             placeholder="E-mail"
             className={inputClass}
             value={email}
-            onChange={(e) => setEmail(e.target.value)} // Handle input change
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
@@ -72,7 +74,7 @@ function Page() {
             className={inputClass}
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)} // Handle input change
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
           {error && <p className="text-red-500">{error}</p>} {/* Display error if present */}

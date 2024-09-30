@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase"; // Make sure this path points to your Firebase configuration
 import { onAuthStateChanged, User } from "firebase/auth";
 import useAuthUser from "@/hooks/user";
-import useWindowDimensions from "@/hooks/dimentions";
 
 function Header() {
   const [theuser] = useAuthUser();
@@ -49,8 +48,6 @@ function Header() {
     };
   }, []);
 
-  const {width} = useWindowDimensions();
-
   return (
     <header
       className={`
@@ -64,7 +61,7 @@ function Header() {
       <Link href={"/"} className={`
         relative
         top-2 md:top-0
-        flex items-center justify-center ${width <= 768 && "flex1"}
+        flex items-center justify-center
       `}>
         <Image
           src={"/icons/logo.png"}
