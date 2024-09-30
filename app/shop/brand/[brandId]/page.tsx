@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import useVendors from '@/hooks/vendors'; // Import your custom hook
+import useVendors from '@/hooks/vendors';
 import Products from '@/components/products';
 import Loading from '@/components/loading';
 import Filter from '@/components/filter';
@@ -8,6 +8,7 @@ import Search from '@/components/search';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import useWindowDimensions from '@/hooks/dimentions';
 
 interface Brand {
   logo: string
@@ -20,11 +21,13 @@ const Page = ({ params }: BrandPageProps) => {
   const [categories, setCategories] = useState<string[]>([]);
   const [price, setPrice] = useState<number[]>([0, 300000])
   const { brandId } = params;
-  const [vendors, loading, error] = useVendors(); // Using your custom hook to fetch vendors
+  const [vendors, loading, error] = useVendors();
   const [brand, setBrand] = useState<Brand | null>(null);
   const [isValidBrandId, setIsValidBrandId] = useState(false);
   const searchParams = useSearchParams();
   const [show, setShow] = useState<string | null>(searchParams.get('show'));
+  const [showFilter, setShowFilter] = useState<boolean>(false);
+  const {width} = useWindowDimensions();
 
   useEffect(() => {
     const a = searchParams.get('show');
@@ -64,7 +67,7 @@ const Page = ({ params }: BrandPageProps) => {
             width={300}
             height={300}
             priority
-            className='h-[110px] object-contain my-5 w-auto'
+            className='h-[70px] lg:h-[110px] object-contain my-5 w-auto'
           />
           <Link href={'/shop?show=brand'} className={`
             absolute left-[10%]
@@ -79,28 +82,34 @@ const Page = ({ params }: BrandPageProps) => {
             `}>&larr;</p>
           </Link>
         </div>
+
         <div className={`
           relative
           flex items-start justify-center
-          w-full px-24
+          w-full lg:px-24 px-2
         `}>
 
-          <Filter
-            price={price}
-            categories={categories}
-            setCategories={setCategories}
-            setPrice={setPrice}
-            marginTop={"0"}
-            brandId={brandId}
-          />
-
+          <div className={`
+            ${showFilter ? "block" : "hidden"}
+            fixed top-0 right-0 z-10 lg:static
+            flex justify-center items-center lg:block
+            w-screen h-[100vh] lg:w-auto lg:mr-5 lg:mt-24 lg:h-auto
+            bg-[#000000cb] lg:bg-transparent
+          `} onClick={() => setShowFilter(false)}>
+            <div onClick={(e) => e.stopPropagation()}>
+              <Filter
+                price={price}
+                categories={categories}
+                setCategories={setCategories}
+                setPrice={setPrice}
+                marginTop="md:mt-[0]"
+                brandId=""
+              />
+            </div>
+          </div>
           <div className="w-full">
-            <Search
-              search={search}
-              setSearch={setSearch}
-              show={show}
-            />
-            <Products brandId={brandId} search={search} categories={categories} price={price} height={300}/>
+            <Search search={search} setSearch={setSearch} show={show} setShowFilter={setShowFilter}/>
+            <Products brandId={brandId} search={search} categories={categories} price={price} height={width <= 768 ? 300 : 300}/>
         </div>
         </div>
       </main>

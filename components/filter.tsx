@@ -83,9 +83,7 @@ function Filter({ marginTop, price, categories, setPrice, setCategories, brandId
 
   return (
     <div>
-        <div className={`w-[300px] mr-5`} style={{
-          marginTop: marginTop
-        }}>
+        <div className={`w-[300px] ${marginTop}`}>
           {show === 'brand' ?
             <div className='bg-[#2A1C1B] rounded-md flex flex-col h-[400px]'>
               <Image

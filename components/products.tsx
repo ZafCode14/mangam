@@ -31,21 +31,24 @@ function Products({ brandId, search, categories, price, height }: Prop) {
     });
 
     return (
-      <div className="flex flex-wrap justify-around overflow-y-scroll mt-[20px]" style={{
-        height: `calc(100vh - ${height}px)`
+      <div className={`
+        flex flex-wrap justify-around
+        overflow-y-scroll 
+      `} style={{
+        maxHeight: `calc(100vh - ${height}px)`
       }}>
         {
           filteredProducts.map((product, index) => {
             if (brandId === "all") {
               return (
-                <div key={index} className="w-[19%] h-[10vw] mb-20">
+                <div key={index} className="max-w-[48%] w-[200px] xl:w-[18%] h-[150px] mb-[60px] mx-[1%] mt-5">
                   <Product product={product} res={300}/>
                 </div>
               )
             } else {
               if (brandId === product.brandDocID) {
                 return (
-                  <div key={index} className="w-[19%] h-[10vw] mb-20">
+                  <div key={index} className="max-w-[48%] w-[250px] xl:w-[18%] h-[150px] mb-[60px] mx-[1%] mt-5">
                     <Product product={product} res={300}/>
                   </div>
                 )

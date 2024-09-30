@@ -21,8 +21,8 @@ const useVendors = (): [Vendor[], boolean, Error | null] => {
     const fetchVendors = async () => {
       try {
         const vendorsCollection = collection(firestore, 'vendors');
-        const approvedVendorsQuery = query(vendorsCollection, where('status', '==', 'approved')); // Add the 'status' filter
-        const vendorsSnapshot = await getDocs(approvedVendorsQuery);
+        //const approvedVendorsQuery = query(vendorsCollection, where('status', '==', 'approved')); // Add the 'status' filter
+        const vendorsSnapshot = await getDocs(vendorsCollection);
         const vendorsList: Vendor[] = vendorsSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
