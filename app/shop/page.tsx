@@ -34,7 +34,7 @@ function ShowComponent({
   const {width} = useWindowDimensions();
 
   return (
-    <div>
+    <div className="h-full flex flex-col justify-end">
       <Search search={search} setSearch={setSearch} show={show} setShowFilter={setShowFilter}/>
       {show === "brand" ? (
         <Brands search={search} />
