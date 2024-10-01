@@ -5,8 +5,7 @@ import ChoseBranch from "./choseBranch";
 interface Branch {
   inStock: string;
   address: string;
-  phoneNumber: string[];
-  location: string;
+  phoneNumbers: string[];
 }
 interface Product {
   docID: string;
@@ -16,12 +15,11 @@ interface Product {
   price: number;
   category: string;
   images: string[];
-  newBranches: Branch[];
+  branches: {[key: string]: Branch};
 }
 interface Vendor {
   docID: string;
   name: string;
-  branches: Branch[];
 }
 
 interface Prop {

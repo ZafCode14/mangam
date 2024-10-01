@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 interface Branch {
   inStock: string;
   address: string;
-  phoneNumber: string[];
-  location: string;
+  phoneNumbers: string[];
 }
 interface Product {
   docID: string;
@@ -17,13 +16,11 @@ interface Product {
   price: number;
   category: string;
   images: string[];
-  newBranches: Branch[];
 }
 
 interface Vendor {
   docID: string;
   name: string;
-  branches: Branch[];
 }
 interface TimeSlot {
   time: string;
@@ -130,7 +127,6 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
     const exactDate = getExactDateTime(selectedDate, selectedTimeSlot)
 
     const appointmentData = {
-      branch: branchInfo?.location,
       clientName: theuser?.firstName,
       clientNumber: theuser?.phone,
       exactDate,
@@ -138,7 +134,6 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
       date: selectedDate,
       time: selectedTimeSlot,
       vendorName: vendor.name,
-      vendorInfo: vendor.branches,
       productName: product.name,
       productPrice: product.price,
       productImage: product.images[0],

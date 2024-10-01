@@ -4,8 +4,7 @@ import ChoseDateTime from "./choseDateTime";
 interface Branch {
   inStock: string;
   address: string;
-  phoneNumber: string[];
-  location: string;
+  phoneNumbers: string[];
 }
 interface Product {
   docID: string;
@@ -15,13 +14,12 @@ interface Product {
   price: number;
   category: string;
   images: string[];
-  newBranches: Branch[];
+  branches: {[key: string]: Branch};
 }
 
 interface Vendor {
   docID: string;
   name: string;
-  branches: Branch[];
 }
 interface Props {
   setAppointment: React.Dispatch<React.SetStateAction<boolean>>;
@@ -48,7 +46,7 @@ function ChoseBranch({ setAppointment, userId, vendor, product }: Props) {
 
       {/* Branch Choices */}
       <div className="flex-1 px-5 w-full mt-10 flex justify-between items-start text-[12px] md:text-[16px]">
-        {product.newBranches.map((branch, index) => {
+        {Object.entries(product.branches).map(([location, branch], index) => {
           const isSelected = choseBranchInfo === branch;
           return (
             <div
@@ -59,9 +57,9 @@ function ChoseBranch({ setAppointment, userId, vendor, product }: Props) {
                 ${isSelected ? 'bg-green-300' : 'bg-gray-300'}
               `}
             >
-              <p>{branch.location}</p>
+              <p>{location}</p>
               <p>{branch.address}</p>
-              {branch.phoneNumber.map((number, index) => (<p key={index}>{number}</p>))}
+              {branch.phoneNumbers?.map((number, index) => (<p key={index}>{number}</p>))}
             </div>
           );
         })}

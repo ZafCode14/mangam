@@ -7,7 +7,7 @@ import { useState } from "react";
 interface Branch {
   inStock: string;
   address: string;
-  phoneNumber: string[];
+  phoneNumbers: string[];
   location: string;
 }
 interface Appointment {
@@ -77,7 +77,7 @@ function AccountAppointment({appointment, status}:Props) {
           <div className={`flex flex-col items-end`}>
             <p>{appointment.date}</p>
             <p>{appointment.time}</p>
-            {appointment.branchInfo.phoneNumber.map((number, index) => (<p key={index}>{number}</p>))}
+            {appointment.branchInfo.phoneNumbers?.map((number, index) => (<p key={index}>{number}</p>))}
           </div>
           {
             appointmentStatus === "upcoming" ?

@@ -108,33 +108,47 @@ function Orders() {
       <div className="flex flex-col justify-start items-center overflow-y-auto" style={{
         height: "calc(100vh - 235px)"
       }}>
-        {
-          orderTab === "orders" 
-          ?
-          <div className="w-full flex flex-col justify-center items-center">
-            {
-              orders.filter((order) => order.status === "pending").length > 0 ?
-              <ActiveOrders orders={orders} status={"pending"}/>
-              :
-              <div className="mt-20 flex flex-col items-center">
-                <p className="text-[#BF9944] mb-1">Start shopping and make your first order!</p>
-                <Link href={"/shop"} className="text-[#85563C] underline">Shop Now</Link>
-              </div>
-            }
-          </div>
-          : 
-          <div className="w-full flex flex-col justify-center items-center">
-            {
-              orders.filter((order) => order.status === "fulfilled").length > 0 ?
-              <ActiveOrders orders={orders} status={"fulfilled"}/>
-              :
-              <div className="mt-20">
-                <p className="text-[#BF9944] mb-1">You currently have no delivered orders!</p>
-              </div>
-
-            }
+      {
+        orderTab === "orders" 
+        ?
+        <div className="w-full flex flex-col justify-center items-center">
+          {
+            orders.filter((order) => 
+              order.estimatedArrival.toMillis() > Date.now() // Check if estimated arrival is greater than now
+            ).length > 0 ?
+            <ActiveOrders 
+              orders={orders.filter((order) => 
+                order.estimatedArrival.toMillis() > Date.now() // Filter for Active Orders
+              )} 
+              status={"pending"}
+            />
+            :
+            <div className="mt-20 flex flex-col items-center">
+              <p className="text-[#BF9944] mb-1">Start shopping and make your first order!</p>
+              <Link href={"/shop"} className="text-[#85563C] underline">Shop Now</Link>
             </div>
-        }
+          }
+        </div>
+        : 
+        <div className="w-full flex flex-col justify-center items-center">
+          {
+            orders.filter((order) => 
+              order.estimatedArrival.toMillis() <= Date.now() // Check if estimated arrival is less than or equal to now
+            ).length > 0 ?
+            <ActiveOrders 
+              orders={orders.filter((order) => 
+                order.estimatedArrival.toMillis() <= Date.now() // Filter for Fulfilled Orders
+              )} 
+              status={"fulfilled"}
+            />
+            :
+            <div className="mt-20">
+              <p className="text-[#BF9944] mb-1">You currently have no delivered orders!</p>
+            </div>
+          }
+        </div>
+      }
+
       </div>
     </div>
   )
