@@ -57,7 +57,7 @@ function PersonalInformation() {
 
   if (!resetPassword) {
     return (
-      <div className="relative w-full flex justify-center">
+      <div className="relative w-full flex justify-center pb-24">
         <div className="w-[500px] lg:w-[1000px] max-w-full">
           <EditAccount
             statement={"First Name"}

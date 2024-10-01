@@ -81,11 +81,13 @@ function Appointments() {
           ${appointmentTab === "previous" ? "border-b-2 font-bold" : "border-b"}
         `}>Previous</p>
       </div>
-      <div className="flex mt-10 w-full">
+      <div className="flex mt-10 w-full overflow-y-auto" style={{
+        height: "calc(100vh - 270px)"
+      }}>
         {
           appointmentTab === "upcoming" 
           ?
-          <div className={`w-full flex justify-between flex-wrap`}>
+          <div className={`w-full flex justify-between flex-wrap overflow-y-auto`}>
             {
               appointments &&
               appointments.length > 0 ?

@@ -92,7 +92,7 @@ function Delivery() {
   }
 
   return (
-    <div className="px-5">
+    <div className="px-5 pb-24">
       {
         addresses && Object.keys(addresses).length > 0 ? (
           <div className="w-full flex flex-col items-center">

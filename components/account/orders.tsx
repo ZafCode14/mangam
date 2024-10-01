@@ -86,7 +86,7 @@ function Orders() {
   }, [user])
 
   return (
-    <div className="w-full overflow-hidden px-5" style={{
+    <div className="w-full px-5" style={{
       height: "calc(100vh - 205px)"
     }}>
       <div className="w-full flex">
@@ -105,7 +105,9 @@ function Orders() {
           ${orderTab === "previous orders" ? "border-b-2 font-bold" : "border-b"}
         `}>Previous Orders</p>
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-start items-center overflow-y-auto" style={{
+        height: "calc(100vh - 235px)"
+      }}>
         {
           orderTab === "orders" 
           ?

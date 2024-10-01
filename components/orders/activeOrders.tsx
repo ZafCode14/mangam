@@ -1,3 +1,4 @@
+import useWindowDimensions from "@/hooks/dimentions";
 import { Timestamp } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
@@ -47,12 +48,13 @@ interface Props {
   status: string;
 }
 function ActiveOrders({ orders, status }:Props) {
+  const {width} = useWindowDimensions();
   const filteredAndSortedOrders = [...orders]
   .filter((order) => order.status === status) // Filter by status
   .sort((a, b) => b.createdAt.toDate().getTime() - a.createdAt.toDate().getTime()); // Sort by createdAt
 
   return (
-    <div className="flex w-full pt-10 mt-[2px] overflow-y-scroll" style={{
+    <div className="flex w-full pt-10 mt-[2px]" style={{
       height: "calc(100vh - 220px)"
     }}>
       {/* Order Information */}
@@ -62,7 +64,7 @@ function ActiveOrders({ orders, status }:Props) {
           return (
             <div key={index} className={`
               flex flex-col-reverse md:flex-row
-              mb-20
+              pb-20
             `}>
 
               {/* Pricing information */}

@@ -92,7 +92,7 @@ function AccountPageContent() {
 
 
       {/* Render the tab based on the URL parameter */}
-      <div className="w-full lg:w-[70%] h-full overflow-y-auto px-1 pb-24">
+      <div className="w-full lg:w-[70%] h-full px-1 pb-24">
         {tabMap[activeTab] || <Whishlist />}
       </div>
     </div>

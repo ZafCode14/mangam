@@ -94,7 +94,9 @@ const deleteWishlist = async (productId: string) => {
   // Render products if they exist
   if (products.length > 0) {
     return (
-      <div className="flex justify-center w-full flex-wrap pb-24">
+      <div className="flex justify-center w-full flex-wrap pb-24 overflow-y-auto" style={{
+        height: "calc(100vh - 210px)"
+      }}>
         {products.map((product, index) => {
           if (!product) return null;
           const brand = vendors.find((vendor) => vendor.docID === product.brandDocID);
