@@ -57,59 +57,61 @@ function PersonalInformation() {
 
   if (!resetPassword) {
     return (
-      <div className="relative">
-        <EditAccount
-          statement={"First Name"}
-          answer={savedInputs.firstName}
-          edit={editFirstName}
-          setEdit={setEditFirstName}
-          editText={"Edit First name"}
-          name={"firstName"}
-          value={inputs.firstName}
-          handleChange={handleChange}
-          setSavedInputs={setSavedInputs}
-          userId={user.id}
-        />
-        <EditAccount
-          statement={"Last Name"}
-          answer={savedInputs.lastName}
-          edit={editLastName}
-          setEdit={setEditLastName}
-          editText={"Edit Last name"}
-          name={"lastName"}
-          value={inputs.lastName}
-          handleChange={handleChange}
-          setSavedInputs={setSavedInputs}
-          userId={user.id}
-        />
-        <EditAccount
-          statement={"Email Address"}
-          answer={savedInputs.email}
-          edit={editEmail}
-          setEdit={setEditEmail}
-          editText={"Change Email"}
-          name={"email"}
-          value={inputs.email}
-          handleChange={handleChange}
-          setSavedInputs={setSavedInputs}
-          userId={user.id}
-        />
-        <EditAccount
-          statement={"Phone Number"}
-          answer={savedInputs.phone}
-          edit={editPhone}
-          setEdit={setEditPhone}
-          editText={"Change Phone Number"}
-          name={"phone"}
-          value={inputs.phone}
-          handleChange={handleChange}
-          setSavedInputs={setSavedInputs}
-          userId={user.id}
-        />
-        <ChangePassword
-          setResetPassword={setResetPassword}
-        />
-        <DeleteAccount userId={user.id}/>
+      <div className="relative w-full flex justify-center">
+        <div className="w-[500px] lg:w-[1000px] max-w-full">
+          <EditAccount
+            statement={"First Name"}
+            answer={savedInputs.firstName}
+            edit={editFirstName}
+            setEdit={setEditFirstName}
+            editText={"Edit First name"}
+            name={"firstName"}
+            value={inputs.firstName}
+            handleChange={handleChange}
+            setSavedInputs={setSavedInputs}
+            userId={user.id}
+          />
+          <EditAccount
+            statement={"Last Name"}
+            answer={savedInputs.lastName}
+            edit={editLastName}
+            setEdit={setEditLastName}
+            editText={"Edit Last name"}
+            name={"lastName"}
+            value={inputs.lastName}
+            handleChange={handleChange}
+            setSavedInputs={setSavedInputs}
+            userId={user.id}
+          />
+          <EditAccount
+            statement={"Email Address"}
+            answer={savedInputs.email}
+            edit={editEmail}
+            setEdit={setEditEmail}
+            editText={"Change Email"}
+            name={"email"}
+            value={inputs.email}
+            handleChange={handleChange}
+            setSavedInputs={setSavedInputs}
+            userId={user.id}
+          />
+          <EditAccount
+            statement={"Phone Number"}
+            answer={savedInputs.phone}
+            edit={editPhone}
+            setEdit={setEditPhone}
+            editText={"Change Phone Number"}
+            name={"phone"}
+            value={inputs.phone}
+            handleChange={handleChange}
+            setSavedInputs={setSavedInputs}
+            userId={user.id}
+          />
+          <ChangePassword
+            setResetPassword={setResetPassword}
+          />
+          <DeleteAccount userId={user.id}/>
+        </div>
       </div>
     );
   } else {

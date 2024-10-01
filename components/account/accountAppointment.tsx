@@ -48,7 +48,7 @@ function AccountAppointment({appointment, status}:Props) {
 
   if (status.includes(appointmentStatus)) {
     return (
-      <div className={`flex justify-between bg-[#D9D9D9] p-3 h-[150px] rounded-md w-[49%] text-[12px] mb-3`}>
+      <div className={`flex justify-between bg-[#D9D9D9] p-3 h-[150px] rounded-md w-full md:w-[49%] text-[12px] mb-3`}>
         <div className={`flex flex-col justify-between`}>
           <div>
             <p className={`font-bold`}>{appointment.vendorName}</p> 

@@ -61,11 +61,12 @@ function ActiveOrders({ orders, status }:Props) {
         filteredAndSortedOrders.map((order, index) => {
           return (
             <div key={index} className={`
-              flex mb-20
+              flex flex-col-reverse md:flex-row
+              mb-20
             `}>
 
               {/* Pricing information */}
-              <div className="flex flex-col w-[50%] px-10 mb-20]">
+              <div className="flex flex-col w-full md:w-[50%] px-10 mb-20]">
                 {/* Orders timestamps */}
                 <div className="bg-[white] rounded-md px-5 py-2">
                   <div className="flex justify-between">
@@ -109,7 +110,7 @@ function ActiveOrders({ orders, status }:Props) {
               </div>
 
               {/* product Information */}
-              <div className="w-[50%]">
+              <div className="w-full md:w-[50%]">
                 {order.products.map(({ product, quantity }, index) => (
                   <div
                     key={index}

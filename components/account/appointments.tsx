@@ -64,7 +64,7 @@ function Appointments() {
   }, [user])
 
   return (
-    <div className="w-full">
+    <div className="w-full px-5">
       <div className="w-full flex">
         <p 
         onClick={() => setAppointmentTab("upcoming")} 

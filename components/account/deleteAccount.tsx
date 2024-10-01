@@ -52,7 +52,7 @@ function DeleteAccount({ userId }: DeleteAccountProps) {
 
 
   return (
-    <div>
+    <div className="px-5">
       <h3 className="font-bold mt-10">Delete Account</h3>
       <p className="text-[12px]">
         Deleting your account will permanently delete all your account activity,

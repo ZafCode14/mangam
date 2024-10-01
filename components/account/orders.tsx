@@ -86,7 +86,7 @@ function Orders() {
   }, [user])
 
   return (
-    <div className="w-full overflow-hidden" style={{
+    <div className="w-full overflow-hidden px-5" style={{
       height: "calc(100vh - 205px)"
     }}>
       <div className="w-full flex">

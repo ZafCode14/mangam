@@ -69,15 +69,15 @@ function ChangePassword({ setResetPassword }: changePasswordProp) {
   };
 
   return (
-    <div>
+    <div className="px-5 max-w-full">
       <h3 className="font-bold mt-5 mb-1">Password</h3>
-      <form className="flex" onSubmit={handlePasswordChange}>
+      <form className="flex flex-col md:flex-row w-[350px] max-w-full md:w-auto" onSubmit={handlePasswordChange}>
         <input
           type="password"
           placeholder="Current Password"
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
-          className="mb-4 py-2 rounded-md text-center border"
+          className="mb-2 md:mb-4 py-2 rounded-md text-center border"
           required
         />
         <input
@@ -85,7 +85,7 @@ function ChangePassword({ setResetPassword }: changePasswordProp) {
           placeholder="New Password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          className="mb-4 py-2 rounded-md text-center border"
+          className="mb-2 md:mb-4 py-2 rounded-md text-center border"
           pattern={passwordPattern.source} // Apply pattern validation
           title="Password must be at least 8 characters long, contain one uppercase, one lowercase letter, and one number."
           required
@@ -118,7 +118,7 @@ function ChangePassword({ setResetPassword }: changePasswordProp) {
       {error && <p className="text-red-500 mt-2">{error}</p>}
       {success && <p className="text-green-500 mt-2">{success}</p>}
 
-      <p className="text-[12px] mt-1">
+      <p className="text-[12px] mt-10 md:mt-1">
         Can&apos;t remember your current password?{" "}
         <span onClick={() => setResetPassword(true)} className="font-bold underline cursor-pointer">Reset Password</span>
       </p>

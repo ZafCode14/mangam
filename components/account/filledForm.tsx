@@ -97,43 +97,43 @@ function FilledForm({
       </div>
 
       {/* Address Info */}
-      <div className="w-full bg-white flex rounded-md">
-        <div className="flex flex-col w-[50%] p-5">
-          <p className="bg-[#F1F1F1] flex text-center py-4 rounded-md mb-5 justify-center font-bold">
+      <div className="w-full bg-white flex flex-col sm:flex-row rounded-md">
+        <div className="flex flex-col w-full sm:w-[50%] p-5 pb-3">
+          <p className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5 justify-center font-bold">
             {country}
           </p>
-          <p className="bg-[#F1F1F1] flex text-center py-4 rounded-md mb-5 justify-center font-bold">
+          <p className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5 justify-center font-bold">
             {governate}
           </p>
-          <div className="flex mb-5">
-            <p className="bg-[#F1F1F1] flex text-center py-4 rounded-md w-[50%] mr-5 justify-center font-bold">
+          <div className="flex mb-3 sm:mb-5">
+            <p className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md w-[50%] mr-3 sm:mr-5 justify-center font-bold">
               {city}
             </p>
-            <p className="bg-[#F1F1F1] flex text-center py-4 rounded-md w-[50%] justify-center font-bold">
+            <p className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md w-[50%] justify-center font-bold">
               {postal}
             </p>
           </div>
-          <p className="bg-[#F1F1F1] flex text-center py-4 rounded-md justify-center font-bold">
+          <p className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md sm:mb-5 justify-center font-bold">
             {apartment}
           </p>
         </div>
 
-        <div className="flex flex-col w-[50%] p-5">
-          <div className="flex mb-5">
-            <p className="bg-[#F1F1F1] flex text-center py-4 rounded-md w-[50%] mr-5 justify-center font-bold">
+        <div className="flex flex-col w-full sm:w-[50%] p-5 pt-0 sm:pt-5">
+          <div className="flex mb-3 sm:mb-5">
+            <p className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md w-[50%] mr-3 sm:mr-5 justify-center font-bold">
               {firstName}
             </p>
-            <p className="bg-[#F1F1F1] flex text-center py-4 rounded-md w-[50%] justify-center font-bold">
+            <p className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md w-[50%] justify-center font-bold">
               {lastName}
             </p>
           </div>
-          <p className="bg-[#F1F1F1] flex text-center py-4 rounded-md mb-5 justify-center font-bold">
+          <p className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5 justify-center font-bold">
             {phoneNumber}
           </p>
-          <p className="bg-[#F1F1F1] flex text-center py-4 rounded-md mb-5 justify-center font-bold">
+          <p className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5 justify-center font-bold">
             {address}
           </p>
-          <button className="py-5 text-[#C1A875]" onClick={() => setShowCreateNew(true)}>
+          <button className="py-0 sm:py-5 text-[#C1A875]" onClick={() => setShowCreateNew(true)}>
             Edit Delivery Address
           </button>
         </div>

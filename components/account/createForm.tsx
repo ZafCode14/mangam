@@ -118,41 +118,40 @@ function CreateForm({ userId, onAddressAdded, onAddressDeleted, setShowCreateNew
 
 
   return (
-    <div className="w-full h-[400px] bg-white flex flex-col rounded-md relative">
+    <div className="w-full bg-white flex flex-col rounded-md relative">
       <div className="w-full px-5">
         <h2 className="flex justify-center items-center py-5 border-b border-[#cccccc]">
           Please Add Your Address
         </h2>
       </div>
-
-      <form className="flex" onSubmit={handleSubmit}>
-        <div className="flex flex-col w-[50%] p-5">
+      <form className="flex flex-col sm:flex-row" onSubmit={handleSubmit}>
+        <div className="flex flex-col w-full sm:w-[50%] p-5 pb-3">
           <input
             name="country"
             placeholder="Country/Region"
-            className="bg-[#F1F1F1] flex text-center py-4 rounded-md mb-5"
+            className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5"
             onChange={handleChange}
             value={formData.country}
           />
           <input
             name="governate"
             placeholder="Governate"
-            className="bg-[#F1F1F1] flex text-center py-4 rounded-md mb-5"
+            className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5"
             onChange={handleChange}
             value={formData.governate}
           />
-          <div className="flex mb-5">
+          <div className="flex mb-3 sm:mb-5">
             <input
               name="city"
               placeholder="City"
-              className="bg-[#F1F1F1] flex text-center py-4 rounded-md w-[50%] mr-5"
+              className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md w-[50%] mr-3 sm:mr-5"
               onChange={handleChange}
               value={formData.city}
             />
             <input
               name="postalCode"
               placeholder="Postal Code"
-              className="bg-[#F1F1F1] flex text-center py-4 rounded-md w-[50%]"
+              className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md w-[50%]"
               onChange={handleChange}
               value={formData.postalCode}
             />
@@ -160,25 +159,25 @@ function CreateForm({ userId, onAddressAdded, onAddressDeleted, setShowCreateNew
           <input
             name="apartment"
             placeholder="Apartment, suite, etc."
-            className="bg-[#F1F1F1] flex text-center py-4 rounded-md"
+            className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md sm:mb-5"
             onChange={handleChange}
             value={formData.apartment}
           />
         </div>
 
-        <div className="flex flex-col w-[50%] p-5">
-          <div className="flex mb-5">
+        <div className="flex flex-col w-full sm:w-[50%] p-5 pt-0 sm:pt-5">
+          <div className="flex mb-3 sm:mb-5">
             <input
               name="firstName"
               placeholder="First Name"
-              className="bg-[#F1F1F1] flex text-center py-4 rounded-md w-[50%] mr-5"
+              className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md w-[50%] mr-3 sm:mr-5"
               onChange={handleChange}
               value={formData.firstName}
             />
             <input
               name="lastName"
               placeholder="Last Name"
-              className="bg-[#F1F1F1] flex text-center py-4 rounded-md w-[50%]"
+              className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md w-[50%]"
               onChange={handleChange}
               value={formData.lastName}
             />
@@ -186,44 +185,50 @@ function CreateForm({ userId, onAddressAdded, onAddressDeleted, setShowCreateNew
           <input
             name="phoneNumber"
             placeholder="Phone Number"
-            className="bg-[#F1F1F1] flex text-center py-4 rounded-md mb-5"
+            className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5"
             onChange={handleChange}
             value={formData.phoneNumber}
           />
           <input
             name="address"
             placeholder="Address"
-            className="bg-[#F1F1F1] flex text-center py-4 rounded-md mb-5"
+            className="bg-[#F1F1F1] flex text-center py-2 sm:py-4 rounded-md mb-3 sm:mb-5"
             onChange={handleChange}
             value={formData.address}
           />
-          { addressId ?
-            <div className='w-full flex'>
+          {addressId ? (
+            <div className="w-full flex">
               <button
                 type="button"
-                className={`mr-2 py-5 rounded-md text-white bg-[#b43e3e] flex-1`}
+                className="mr-2 py-5 rounded-md text-white bg-[#b43e3e] flex-1"
                 onClick={() => handleDelete(addressId)}
-              >Delete</button>
+              >
+                Delete
+              </button>
               <button
                 type="submit"
                 className={`py-5 rounded-md text-white flex-1 ${
                   isFormComplete ? 'bg-[#C1A875]' : 'bg-[#C4C4C4] cursor-not-allowed'
                 }`}
                 disabled={!isFormComplete}
-              >Update</button>
+              >
+                Update
+              </button>
             </div>
-            :
+          ) : (
             <button
               type="submit"
               className={`py-5 rounded-md text-white ${
                 isFormComplete ? 'bg-[#C1A875]' : 'bg-[#C4C4C4] cursor-not-allowed'
               }`}
               disabled={!isFormComplete}
-            >Confirm Changes</button>
-          }
-
+            >
+              Confirm Changes
+            </button>
+          )}
         </div>
       </form>
+
     </div>
   );
 }

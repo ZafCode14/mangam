@@ -94,12 +94,12 @@ const deleteWishlist = async (productId: string) => {
   // Render products if they exist
   if (products.length > 0) {
     return (
-      <div className="flex w-full flex-wrap">
+      <div className="flex justify-center w-full flex-wrap pb-24">
         {products.map((product, index) => {
           if (!product) return null;
           const brand = vendors.find((vendor) => vendor.docID === product.brandDocID);
           return (
-            <div key={index} className="w-[240px] h-[200px] relative text-black px-3 mb-20">
+            <div key={index} className="w-[240px] max-w-[48%] h-[180px] md:h-[240px] relative text-black mx-[1%] mb-20">
               <Link href={`/shop/product/${product.docID}`} className="relative w-full h-full object-cover overflow-hidden flex justify-center items-center bg-[white] rounded-md">
                 <Image
                   src={product.images[0]}
