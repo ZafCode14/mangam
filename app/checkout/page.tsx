@@ -2,15 +2,19 @@
 import CheckoutForm from "@/components/checkout/form";
 import { firestore } from "@/lib/firebase";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, Timestamp, updateDoc, where } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { HarmSeverity } from "firebase/vertexai-preview";
+import { EmailAuthCredential } from "firebase/auth/web-extension";
 
 // Define types for product and cart items
 interface Product {
   name: string;
   price: number;
   images: string[];
+  brandDocID: string;
+  docID: string;
 }
 
 interface CartItem {
@@ -67,6 +71,8 @@ function Page() {
     return [];
   };
 
+  console.log(cartItems);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
@@ -85,6 +91,18 @@ function Page() {
     setCartItems(items);
   }, []);
 
+  // Group cart items by vendor
+  const groupItemsByVendor = (cartItems: CartItem[]) => {
+    return cartItems.reduce((acc, item) => {
+      const vendorID = item.product.brandDocID;
+      if (!acc[vendorID]) {
+        acc[vendorID] = [];
+      }
+      acc[vendorID].push(item);
+      return acc;
+    }, {} as { [vendorID: string]: CartItem[] });
+  };
+
   // Calculate subtotal
   const subtotal = cartItems.reduce(
     (total, item) => total + item.product.price * item.amount,
@@ -100,6 +118,26 @@ function Page() {
   // Calculate total price after discount and adding delivery fee
   const totalPrice = subtotal - gemDiscount + deliveryFee;
 
+  // Function to get the count of orders for a specific vendor
+  const getVendorOrdersCount = async (vendorID: string): Promise<number> => {
+    try {
+      // Reference the 'orders' collection
+      const ordersRef = collection(firestore, 'orders');
+      
+      // Create a query to get orders for the specific vendor
+      const q = query(ordersRef, where("vendorID", "==", vendorID));
+
+      // Execute the query
+      const querySnapshot = await getDocs(q);
+
+      // Return the count of orders
+      return querySnapshot.size; // Return the number of documents found
+    } catch (error) {
+      console.error("Error getting vendor orders count:", error);
+      return 0; // Return 0 if there's an error
+    }
+  };
+
   // handle on click payment
   const handlePayment = async () => {
     if (user) {
@@ -109,7 +147,10 @@ function Page() {
       const estimatedArrival = new Date();
       estimatedArrival.setDate(now.getDate() + 2);
 
-      const orderData = {
+      // Group cart Items by vendor
+      const groupedItems = groupItemsByVendor(cartItems);
+
+      const userOrderData = {
         userId: userId,
         address: formData,
         products: cartItems.map((product) => ({
@@ -126,13 +167,87 @@ function Page() {
         paymentMethod: "cash",
         createdAt: Timestamp.now(),
         estimatedArrival: estimatedArrival,
-
       };
+
       try {
-        await addDoc(collection(firestore, 'usersOrders'), orderData);
+        await addDoc(collection(firestore, 'usersOrders'), userOrderData);
+
+        // Loop through each vendor's items and create separate orders
+        for (const [vendorID, vendorItems] of Object.entries(groupedItems)) {
+          const docRef = doc(collection(firestore, 'orders'));
+          // Get the order count and create the vendor order data
+          const orderCount = await getVendorOrdersCount(vendorID);
+
+          // Create the charges object with product names as keys
+          const charges = vendorItems.reduce((acc: { [key: string]: { price: number; quantity: number } }, item) => {
+            acc[item.product.name] = {
+              price: item.product.price,
+              quantity: item.amount,
+            };
+            return acc;
+          }, {});
+
+          const vendorOrderData = {
+            address: formData,
+            branch: "Online Store", // branch location
+            charges, // like in the previous time
+            clientEmail: user.email,
+            clientID: userId,
+            clientName: `${formData.firstName} ${formData.lastName}`,
+            clientPhoneNumber: formData.phoneNumber,
+            deliveryDate: estimatedArrival,
+            id: docRef.id, // the id of the document
+            invoice: orderCount + 1,// this is how many orders did this branch have,
+            items: vendorItems.reduce((acc: { [key: string]: number }, item) => {
+              acc[item.product.docID] = item.amount;
+              return acc;
+            }, {}),
+            orderDate: Timestamp.now(),
+            paymentMethod: "cash",
+            price: vendorItems.reduce((total, item) => total + item.product.price * item.amount, 0),
+            promocode: "",
+            status: "pending",
+            vendorID: vendorID,
+          };
+
+          // Add a separate document for each vendor's order
+          await addDoc(collection(firestore, "orders"), vendorOrderData);
+
+        // Check if the client exists in the `clients` collection for this vendor
+        const clientsRef = collection(firestore, "clients");
+        const q = query(clientsRef, where("vendorID", "==", vendorID), where("email", "==", user.email));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          // Client does not exist for this vendor, so add them
+          const clientData = {
+            code: "20",
+            email: user.email,
+            exactDate: Timestamp.now(),
+            name: formData.firstName,
+            number: user.phoneNumber,
+            vendor: vendorID,
+          };
+
+        // Add client to the `clients` collection
+        const docRef = await addDoc(clientsRef, clientData);
+        const docId = docRef.id;
+        
+        // Update the client document to include the ID
+        await updateDoc(docRef, {
+          id: docId // Add the generated ID to the client document
+        });
+
+          console.log("Client added to vendor's clients list.");
+        } else {
+          console.log("Client already exists for this vendor.");
+        }
+
+        }
+
         localStorage.clear();
         window.dispatchEvent(new Event("cart-updated"));
-        console.log("Order created successfully!", orderData);
+        console.log("Order created successfully!", userOrderData);
         router.push('/account?tab=orders')
       } catch (error) {
         console.error(error);

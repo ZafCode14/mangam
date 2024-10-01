@@ -65,14 +65,35 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
       if (user) {
         const userId = user.uid;
         const userRef = doc(firestore, 'users', userId);
+
         try {
           const userDoc = await getDoc(userRef);
           const userData = userDoc.data();
 
           if (userData) {
             const defaultAddressId = userData.defaultAddress as string;
-            const defaultAddress = userData.addresses[defaultAddressId] as Address; // Type this as Address
-            setFormData(defaultAddress); // Set formData based on the fetched address
+
+            // Check if defaultAddressId exists and addresses field is valid
+            if (defaultAddressId && userData.addresses && userData.addresses[defaultAddressId]) {
+              const defaultAddress = userData.addresses[defaultAddressId] as Address;
+              setFormData(defaultAddress); // Set formData based on the fetched address
+            } else {
+              console.warn("No default address found. User may need to manually fill in the address.");
+              // Optionally set empty formData if no default address is found
+              setFormData({
+                country: '',
+                governate: '',
+                city: '',
+                postalCode: '',
+                apartment: '',
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                address: '',
+              });
+            }
+          } else {
+            console.warn("User document not found in Firestore.");
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -82,7 +103,6 @@ function CheckoutForm({ setConfirmedAddress, confirmedAddress, formData, setForm
 
     fetchUserData();
   }, [user, setFormData]);
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

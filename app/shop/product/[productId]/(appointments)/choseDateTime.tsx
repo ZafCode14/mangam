@@ -1,5 +1,6 @@
+import useAuthUser from "@/hooks/user";
 import { firestore } from "@/lib/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 interface Branch {
@@ -41,6 +42,7 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
+  const [theuser] = useAuthUser();
 
   // Handle day selection change
   useEffect(() => {
@@ -98,14 +100,41 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
     setSelectedTimeSlot(time); // Set the selected time slot
   };
 
+  // Function to combine date and time into a single Date object
+  const getExactDateTime = (dateStr: string, timeStr: string) => {
+    const [startTime] = timeStr.split(" - "); // Get the start time only (ignoring the end time)
+    const combinedDateTime = new Date(`${dateStr}T${startTime}:00`);
+
+    // Format the date to your desired format
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZone: 'UTC',
+      timeZoneName: 'short',
+    };
+    
+    return new Intl.DateTimeFormat('en-US', options).format(combinedDateTime);
+  };
+
+
   // Function to handle reservation and save to Firestore
   const handleReservation = async () => {
     if (!selectedTimeSlot || !selectedDate) {
       alert("Please select a valid time slot and date.");
       return;
     }
+    const exactDate = getExactDateTime(selectedDate, selectedTimeSlot)
 
     const appointmentData = {
+      branch: branchInfo?.location,
+      clientName: theuser?.firstName,
+      clientNumber: theuser?.phone,
+      exactDate,
+      vendorId: vendor.docID,
       date: selectedDate,
       time: selectedTimeSlot,
       vendorName: vendor.name,
@@ -120,7 +149,10 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
     };
 
     try {
-      await addDoc(collection(firestore, "appointments"), appointmentData);
+      const docRef = await addDoc(collection(firestore, "appointments"), appointmentData);
+      const docID = docRef.id; // Get the document ID
+      await updateDoc(docRef, { id: docID });
+
       alert("Appointment successfully reserved!");
       setAppointment(false); // Close the modal after successful reservation
     } catch (error) {
