@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { Vendors } from "@/types/products";
 import Loading from "@/components/loading";
 import useWindowDimensions from "@/hooks/dimentions";
-import Image from "next/image";
 import FlipPhone from "@/components/mall/flipPhone";
 
 interface GroupedVendors {

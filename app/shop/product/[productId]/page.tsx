@@ -36,24 +36,14 @@ const Page = ({ params }: ProductPageProps) => {
   const [cart, setCart] = useState(false);
   const [theuser] = useAuthUser();
   const [totalInStock, setTotalInStock] = useState<number>(0);
-  const [amount, setAmount] = useState(1);
   const router = useRouter();
 
   useEffect(() => {
     if (product) {
-      const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
-      const existingProduct = cart.find(item => item.product.docID === product.docID); // Use your product's unique identifier
-
-      // Calculate total stock from all branches
       const totalStock = Object.values(product.branches)
         .map((branch) => branch.inStock)
         .reduce((acc, inStock) => acc + inStock, 0);
-
       setTotalInStock(totalStock);
-
-      if (existingProduct) {
-        setAmount(existingProduct.amount); // Set amount to the existing amount in the cart
-      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
