@@ -1,4 +1,3 @@
-import useWindowDimensions from "@/hooks/dimentions";
 import { Timestamp } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,7 +47,6 @@ interface Props {
   status: string;
 }
 function ActiveOrders({ orders, status }:Props) {
-  const {width} = useWindowDimensions();
   const filteredAndSortedOrders = [...orders]
   .filter((order) => order.status === status) // Filter by status
   .sort((a, b) => b.createdAt.toDate().getTime() - a.createdAt.toDate().getTime()); // Sort by createdAt

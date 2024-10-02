@@ -3,13 +3,8 @@ import { doc, updateDoc } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { Branch } from "@/types/products";
 
-interface Branch {
-  inStock: string;
-  address: string;
-  phoneNumbers: string[];
-  location: string;
-}
 interface Appointment {
   id: string;
   date: string;

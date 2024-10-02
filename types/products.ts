@@ -2,6 +2,7 @@ export interface Branch {
   inStock: number;
   address: string;
   phoneNumbers: string[];
+  location: string;
 }
 export interface VendorBranch {
   active: boolean;

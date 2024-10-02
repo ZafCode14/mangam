@@ -3,13 +3,8 @@ import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import AccountAppointment from "./accountAppointment";
+import { Branch } from "@/types/products";
 
-interface Branch {
-  inStock: string;
-  address: string;
-  phoneNumber: string[];
-  location: string;
-}
 interface Appointment {
   id: string;
   date: string;

@@ -104,16 +104,6 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
     const exactDate = getExactDateTime(selectedDate, selectedTimeSlot)
 
     try {
-      // get product data from firestore
-      const productRef = doc(firestore, "products", product.docID);
-      const productDoc = await getDoc(productRef);
-      const productData = productDoc.data();
-
-      // get vendor data from firestore
-      const vendorRef = doc(firestore, "vendors", vendor.docID);
-      const vendorDoc = await getDoc(vendorRef);
-      const vendorData = vendorDoc.data();
-
       const appointmentData = {
         clientName: theuser?.firstName,
         clientNumber: theuser?.phone,

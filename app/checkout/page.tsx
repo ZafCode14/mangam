@@ -2,11 +2,9 @@
 import CheckoutForm from "@/components/checkout/form";
 import { firestore } from "@/lib/firebase";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, Timestamp, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, Timestamp, updateDoc, where } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { HarmSeverity } from "firebase/vertexai-preview";
-import { EmailAuthCredential } from "firebase/auth/web-extension";
 
 // Define types for product and cart items
 interface Product {
