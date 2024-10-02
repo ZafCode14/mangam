@@ -1,6 +1,6 @@
 import useAuthUser from "@/hooks/user";
 import { firestore } from "@/lib/firebase";
-import { addDoc, collection, doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
+import { addDoc, collection, Timestamp, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Product, VendorBranch } from "@/types/products";
 
