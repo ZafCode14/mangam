@@ -1,7 +1,7 @@
 export interface Branch {
   inStock: number;
   address: string;
-  phoneNumbers: string[];
+  numbers: string[];
   location: string;
   maps: string;
 }

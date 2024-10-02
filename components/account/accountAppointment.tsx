@@ -79,7 +79,8 @@ function AccountAppointment({appointment, status}:Props) {
           <div className={`flex flex-col items-end`}>
             <p>{appointment.date}</p>
             <p>{appointment.time}</p>
-            {appointment.branchInfo.phoneNumbers?.map((number, index) => (<p key={index}>{number}</p>))}
+            { appointment.branchInfo.numbers &&
+            appointment.branchInfo.numbers.map((number, index) => (<p key={index}>{number}</p>))}
           </div>
           {
             appointmentStatus === "upcoming" ?
