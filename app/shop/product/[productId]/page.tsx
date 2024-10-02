@@ -10,27 +10,12 @@ import AddToCart from '@/components/productPage/cart';
 import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import CreateAppointment from './(appointments)/createAppointment';
+import { Product, VendorBranch } from '@/types/products';
 
-interface Branch {
-  inStock: string;
-  address: string;
-  phoneNumber: string[];
-  location: string;
-}
-interface Product {
-  docID: string;
-  brandDocID: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  images: string[];
-  newBranches: Branch[];
-}
 interface Vendor {
   docID: string;
   name: string;
-  branches: Branch[]
+  branchesNew: {[key: string]: VendorBranch}
 }
 
 interface ProductPageProps {

@@ -1,25 +1,12 @@
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import ChoseBranch from "./choseBranch";
+import { Product, VendorBranch } from "@/types/products";
 
-interface Branch {
-  inStock: string;
-  address: string;
-  phoneNumbers: string[];
-}
-interface Product {
-  docID: string;
-  brandDocID: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  images: string[];
-  branches: {[key: string]: Branch};
-}
 interface Vendor {
   docID: string;
   name: string;
+  branchesNew: {[key: string]: VendorBranch}
 }
 
 interface Prop {

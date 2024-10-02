@@ -225,7 +225,7 @@ function Page() {
             email: user.email,
             exactDate: Timestamp.now(),
             name: formData.firstName,
-            number: user.phoneNumber,
+            number: formData.phoneNumber,
             vendor: vendorID,
           };
 

@@ -1,22 +1,8 @@
 import useAuthUser from "@/hooks/user";
 import { firestore } from "@/lib/firebase";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-
-interface Branch {
-  inStock: string;
-  address: string;
-  phoneNumbers: string[];
-}
-interface Product {
-  docID: string;
-  brandDocID: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  images: string[];
-}
+import { Product, VendorBranch } from "@/types/products";
 
 interface Vendor {
   docID: string;
@@ -32,7 +18,7 @@ interface Props {
   userId: string;
   vendor: Vendor;
   product: Product;
-  branchInfo: Branch | null;
+  branchInfo: VendorBranch | null;
 }
 function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branchInfo }: Props) {
   const [selectedDay, setSelectedDay] = useState<string>("");
@@ -126,24 +112,34 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
     }
     const exactDate = getExactDateTime(selectedDate, selectedTimeSlot)
 
-    const appointmentData = {
-      clientName: theuser?.firstName,
-      clientNumber: theuser?.phone,
-      exactDate,
-      vendorId: vendor.docID,
-      date: selectedDate,
-      time: selectedTimeSlot,
-      vendorName: vendor.name,
-      productName: product.name,
-      productPrice: product.price,
-      productImage: product.images[0],
-      productId: product.docID,
-      userId: userId,
-      status: "upcoming",
-      branchInfo: branchInfo
-    };
-
     try {
+      // get product data from firestore
+      const productRef = doc(firestore, "products", product.docID);
+      const productDoc = await getDoc(productRef);
+      const productData = productDoc.data();
+
+      // get vendor data from firestore
+      const vendorRef = doc(firestore, "vendors", vendor.docID);
+      const vendorDoc = await getDoc(vendorRef);
+      const vendorData = vendorDoc.data();
+
+      const appointmentData = {
+        clientName: theuser?.firstName,
+        clientNumber: theuser?.phone,
+        exactDate,
+        vendorId: vendor.docID,
+        date: selectedDate,
+        time: selectedTimeSlot,
+        vendorName: vendor.name,
+        productName: product.name,
+        productPrice: product.price,
+        productImage: product.images[0],
+        productId: product.docID,
+        userId: userId,
+        status: "upcoming",
+        branchInfo: branchInfo
+      };
+
       const docRef = await addDoc(collection(firestore, "appointments"), appointmentData);
       const docID = docRef.id; // Get the document ID
       await updateDoc(docRef, { id: docID });

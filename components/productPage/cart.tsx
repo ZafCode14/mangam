@@ -1,16 +1,8 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Product } from "@/types/products";
 
-interface Product {
-  docID: string;
-  brandDocID: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  images: string[];
-}
 interface CartItem {
   product: Product; // The product object
   amount: number; // The quantity of the product in the cart
@@ -21,19 +13,29 @@ interface Prop {
 }
 function AddToCart({ setCart, product }: Prop) {
   const [amount, setAmount] = useState(1);
+  const [totalInStock, setTotalInStock] = useState<number>(0);
   const router = useRouter();
 
   useEffect(() => {
     const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
     const existingProduct = cart.find(item => item.product.docID === product.docID); // Use your product's unique identifier
 
+    // Calculate total stock from all branches
+    const totalStock = Object.values(product.branches)
+      .map((branch) => branch.inStock)
+      .reduce((acc, inStock) => acc + inStock, 0);
+
+    setTotalInStock(totalStock);
+
     if (existingProduct) {
       setAmount(existingProduct.amount); // Set amount to the existing amount in the cart
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [product]);
 
-    // Helper function to save product to localStorage
+  console.log(Object.values(product.branches).map((value) => value.inStock));
+
+  // Helper function to save product to localStorage
   const saveToLocalStorage = (product: Product, amount: number) => {
     // Get the existing cart from localStorage or initialize an empty array
     const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -115,7 +117,7 @@ function AddToCart({ setCart, product }: Prop) {
               <p className="mb-1">-</p>
             </div>
             <p className="mx-2">{amount}</p>
-            <div onClick={() => setAmount(prev => prev + 1)} className="w-[15px] h-[15px] rounded-full bg-gray-300 flex items-center justify-center mr-5">
+            <div onClick={() => setAmount((prev) => Math.min(prev + 1, totalInStock))} className="w-[15px] h-[15px] rounded-full bg-gray-300 flex items-center justify-center mr-5">
               <p className="mb-[2px]">+</p>
             </div>
           </div>

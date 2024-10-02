@@ -1,25 +1,11 @@
 import { useState } from "react";
 import ChoseDateTime from "./choseDateTime";
-
-interface Branch {
-  inStock: string;
-  address: string;
-  phoneNumbers: string[];
-}
-interface Product {
-  docID: string;
-  brandDocID: string;
-  name: string;
-  description: string;
-  price: number;
-  category: string;
-  images: string[];
-  branches: {[key: string]: Branch};
-}
+import { Product, VendorBranch } from "@/types/products";
 
 interface Vendor {
   docID: string;
   name: string;
+  branchesNew: {[key: string]: VendorBranch}
 }
 interface Props {
   setAppointment: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +15,7 @@ interface Props {
 }
 function ChoseBranch({ setAppointment, userId, vendor, product }: Props) {
   const [next, setNext] = useState(false);
-  const [choseBranchInfo, setChosenBranchInfo] = useState<Branch | null>(null);
+  const [choseBranchInfo, setChosenBranchInfo] = useState<VendorBranch | null>(null);
 
   return (
     <div className="w-[600px] max-w-full h-[500px] bg-white rounded-md flex flex-col relative">
@@ -45,23 +31,28 @@ function ChoseBranch({ setAppointment, userId, vendor, product }: Props) {
       </div>
 
       {/* Branch Choices */}
-      <div className="flex-1 px-5 w-full mt-10 flex justify-between items-start text-[12px] md:text-[16px]">
-        {Object.entries(product.branches).map(([location, branch], index) => {
-          const isSelected = choseBranchInfo === branch;
-          return (
-            <div
-              onClick={() => setChosenBranchInfo(branch)}
-              key={index}
-              className={`
-                p-5 w-[49%] rounded-md cursor-pointer 
-                ${isSelected ? 'bg-green-300' : 'bg-gray-300'}
-              `}
-            >
-              <p>{location}</p>
-              <p>{branch.address}</p>
-              {branch.phoneNumbers?.map((number, index) => (<p key={index}>{number}</p>))}
-            </div>
-          );
+      <div className="flex-1 px-5 w-full mt-10 text-[12px] md:text-[16px] flex flex-wrap justify-center">
+        {Object.entries(vendor.branchesNew).map(([number, info]) => {
+          const isSelected = choseBranchInfo === info;
+
+          const inStock = product.branches[info.name]?.inStock;
+          if (inStock > 0) {
+            return (
+              <div
+                onClick={() => setChosenBranchInfo(info)}
+                key={number}
+                className={`
+                  p-5 w-[45%] h-[120px] m-1 rounded-md cursor-pointer 
+                  ${isSelected ? 'bg-green-300' : 'bg-gray-300'}
+                `}
+              >
+                <p>{info?.name}</p>
+                <p>{info?.address}</p>
+                {info.numbers?.map((number, index) => (<p key={index}>{number}</p>))}
+              </div>
+            );
+
+          }
         })}
       </div>
 
