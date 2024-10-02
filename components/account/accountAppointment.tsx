@@ -51,7 +51,7 @@ function AccountAppointment({appointment, status}:Props) {
             <p>{appointment.branchInfo.address}</p>
             {
               appointment.branchInfo.maps &&
-              <Link href={appointment.branchInfo.maps} className={`
+              <Link target="_blank" rel="noopener noreferrer" href={appointment.branchInfo.maps} className={`
                 underline
                 font-bold
               `}>View in Maps</Link>
