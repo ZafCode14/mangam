@@ -24,10 +24,6 @@ interface ProductPageProps {
   };
 }
 
-interface CartItem {
-  product: Product; // The product object
-  amount: number; // The quantity of the product in the cart
-}
 const Page = ({ params }: ProductPageProps) => {
   const { productId } = params;
   const [product, setProduct] = useState<Product | null>(null);
