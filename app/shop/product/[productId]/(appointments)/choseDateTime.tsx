@@ -1,6 +1,6 @@
 import useAuthUser from "@/hooks/user";
 import { firestore } from "@/lib/firebase";
-import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Product, VendorBranch } from "@/types/products";
 
@@ -83,24 +83,15 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
     setSelectedTimeSlot(time); // Set the selected time slot
   };
 
-  // Function to combine date and time into a single Date object
-  const getExactDateTime = (dateStr: string, timeStr: string) => {
+  // Function to combine date and time into a Firestore Timestamp
+  const getExactDateTime = (dateStr: string, timeStr: string): Timestamp => {
     const [startTime] = timeStr.split(" - "); // Get the start time only (ignoring the end time)
+
+    // Combine date and time into a single Date object
     const combinedDateTime = new Date(`${dateStr}T${startTime}:00`);
 
-    // Format the date to your desired format
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      timeZone: 'UTC',
-      timeZoneName: 'short',
-    };
-    
-    return new Intl.DateTimeFormat('en-US', options).format(combinedDateTime);
+    // Convert the Date object to a Firestore Timestamp
+    return Timestamp.fromDate(combinedDateTime);
   };
 
 
@@ -127,7 +118,8 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
         clientName: theuser?.firstName,
         clientNumber: theuser?.phone,
         exactDate,
-        vendorId: vendor.docID,
+        vendorID: vendor.docID,
+        branch: branchInfo?.name,
         date: selectedDate,
         time: selectedTimeSlot,
         vendorName: vendor.name,
