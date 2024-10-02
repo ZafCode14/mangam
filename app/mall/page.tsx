@@ -7,6 +7,9 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Vendors } from "@/types/products";
 import Loading from "@/components/loading";
+import useWindowDimensions from "@/hooks/dimentions";
+import Image from "next/image";
+import FlipPhone from "@/components/mall/flipPhone";
 
 interface GroupedVendors {
   gold: Vendors[];
@@ -23,6 +26,8 @@ function Page() {
     silver: [],
     raw: []
   });
+
+  const {width, height} = useWindowDimensions();
 
   useEffect(() => {
     const getVendors = async () => {
@@ -76,6 +81,7 @@ function Page() {
           height: "calc(100vh - 70px)"
         }}
       >
+        {height > width && <FlipPhone/>}
         <Perspective2 
           setElev={setElev}
           floor={floor}
@@ -92,8 +98,8 @@ function Page() {
           }}
           className={`
             absolute 
-            w-[200px]
-            h-[150px]
+            w-[200px] h-[150px]
+            bg-[yellow]
             z-10
           `}
         ></button>

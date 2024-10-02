@@ -3,6 +3,7 @@ export interface Branch {
   address: string;
   phoneNumbers: string[];
   location: string;
+  maps: string;
 }
 export interface VendorBranch {
   active: boolean;

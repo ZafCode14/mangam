@@ -24,6 +24,10 @@ interface ProductPageProps {
   };
 }
 
+interface CartItem {
+  product: Product; // The product object
+  amount: number; // The quantity of the product in the cart
+}
 const Page = ({ params }: ProductPageProps) => {
   const { productId } = params;
   const [product, setProduct] = useState<Product | null>(null);
@@ -31,7 +35,28 @@ const Page = ({ params }: ProductPageProps) => {
   const [appointment, setAppointment] = useState(false);
   const [cart, setCart] = useState(false);
   const [theuser] = useAuthUser();
+  const [totalInStock, setTotalInStock] = useState<number>(0);
+  const [amount, setAmount] = useState(1);
   const router = useRouter();
+
+  useEffect(() => {
+    if (product) {
+      const cart: CartItem[] = JSON.parse(localStorage.getItem("cart") || "[]");
+      const existingProduct = cart.find(item => item.product.docID === product.docID); // Use your product's unique identifier
+
+      // Calculate total stock from all branches
+      const totalStock = Object.values(product.branches)
+        .map((branch) => branch.inStock)
+        .reduce((acc, inStock) => acc + inStock, 0);
+
+      setTotalInStock(totalStock);
+
+      if (existingProduct) {
+        setAmount(existingProduct.amount); // Set amount to the existing amount in the cart
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product]);
 
   useEffect(() => {
     const getVendorandProduct = async () => {
@@ -134,21 +159,28 @@ const Page = ({ params }: ProductPageProps) => {
                     w-[140px] h-[50px] lg:w-[160px]
                     rounded-md mb-2 lg:mb-0 lg:mr-3
                   `}>Add to Whishlist</button>
-                  <button onClick={() => handleUnauthUser(handleAppointment)} className={`
-                    bg-[#2A1C1B] 
-                    text-[12px] lg:text-[16px] lg:w-[160px]
-                    w-[140px] h-[50px]
-                    rounded-md 
-                  `}>Book Appointment</button>
+                  {
+                    totalInStock > 0 &&
+                    <button onClick={() => handleUnauthUser(handleAppointment)} className={`
+                      bg-[#2A1C1B] 
+                      text-[12px] lg:text-[16px] lg:w-[160px]
+                      w-[140px] h-[50px]
+                      rounded-md 
+                    `}>Book Appointment</button>
+                  }
                 </div>
-                <button onClick={() => handleUnauthUser(handleCart)} className={`
-                  self-end
-                  bg-gradient-to-r
-                  from-[#796640] via-[#C1A875] to-[#796640] 
-                  text-[12px] lg:text-[16px]
-                  w-[120px] h-[50px]
-                  rounded-md
-                `}>Add to Cart</button>
+                {
+                  totalInStock > 0 ?
+                  <button onClick={() => handleUnauthUser(handleCart)} className={`
+                    self-end
+                    bg-gradient-to-r
+                    from-[#796640] via-[#C1A875] to-[#796640] 
+                    text-[12px] lg:text-[16px]
+                    w-[120px] h-[50px]
+                    rounded-md
+                  `}>Add to Cart</button> :
+                  <p className='text-[red] flex items-center'>Out of Stock</p>
+                }
               </div>
             </div>
 

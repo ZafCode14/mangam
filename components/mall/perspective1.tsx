@@ -161,7 +161,7 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
       </div>
       <button
         onClick={() => setElev((prev) => !prev)}
-        className={`relative right-[17%] top-[-20px] h-[14vw] w-[4vw]`}
+        className={`relative right-[17%] top-[-20px] h-[14vw] w-[4vw] bg-[green]`}
       ></button>
     </div>
   );

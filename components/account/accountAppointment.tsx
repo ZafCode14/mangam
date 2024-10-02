@@ -49,6 +49,13 @@ function AccountAppointment({appointment, status}:Props) {
             <p className={`font-bold`}>{appointment.vendorName}</p> 
             <p>{appointment.branchInfo.location}</p>
             <p>{appointment.branchInfo.address}</p>
+            {
+              appointment.branchInfo.maps &&
+              <Link href={appointment.branchInfo.maps} className={`
+                underline
+                font-bold
+              `}>View in Maps</Link>
+            }
           </div>
           <div className={`flex`}>
             <Image
