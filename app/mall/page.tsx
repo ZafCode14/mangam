@@ -1,55 +1,113 @@
 "use client";
-import Elevator from "@/components/elevator";
-import Perspective1 from "@/components/perspective1";
-import Perspective2 from "@/components/perspective2";
-import { useState } from "react";
+import Elevator from "@/components/mall/elevator";
+import Perspective1 from "@/components/mall/perspective1";
+import Perspective2 from "@/components/mall/perspective2";
+import { firestore } from "@/lib/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { Vendors } from "@/types/products";
+import Loading from "@/components/loading";
 
+interface GroupedVendors {
+  gold: Vendors[];
+  silver: Vendors[];
+  raw: Vendors[];
+}
 function Page() {
   const [middleButton, setMiddleButton] = useState<boolean>(false);
   const [elev, setElev] = useState<boolean>(false);
   const [floor, setFloor] = useState<string>("gold");
+  const [styledVendors, setStyledVendors] = useState<Vendors[]>([]);
+  const [groupedVendors, setGroupedVendors] = useState<GroupedVendors>({
+    gold: [],
+    silver: [],
+    raw: []
+  });
 
-  return (
-    <main
-      className={`
-        relative 
-        overflow-hidden 
-        flex justify-center items-center
-        w-full top-[70px] 
-      `}
-      style={{
-        height: "calc(100vh - 70px)"
-      }}
-    >
-      <Perspective2 
-        setElev={setElev}
-        floor={floor}
-      />
-      <Perspective1
-        middleButton={middleButton}
-        setElev={setElev}
-        floor={floor}
-      />
-      <button
-        onClick={() => {
-          setMiddleButton(prev => !prev);
-        }}
+  useEffect(() => {
+    const getVendors = async () => {
+      const vendorsCollection = collection(firestore, 'vendors');
+      const q = query(vendorsCollection, where('chosenShopStyle', '!=', null));
+
+      try {
+        const querySnapshot = await getDocs(q);
+        
+        // Map the documents and include the id
+        const vendors: Vendors[] = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }) as Vendors);
+
+        // Group vendors by chosenShopStyle
+        const groupedVendors = vendors.reduce((acc, vendor) => {
+          const style = vendor.chosenShopStyle.split('/')[2]; // Extract style part (gold/silver/raw)
+          if (style === 'gold') {
+            acc.gold.push(vendor);
+          } else if (style === 'silver') {
+            acc.silver.push(vendor);
+          } else if (style === 'raw') {
+            acc.raw.push(vendor);
+          }
+          return acc;
+        }, { gold: [], silver: [], raw: [] } as GroupedVendors);
+
+        // Set the state for each vendor group
+        setStyledVendors(vendors); // Set all vendors if needed
+        setGroupedVendors(groupedVendors);
+
+      } catch (error) {
+        console.error("Error fetching vendors: ", error);
+      }
+    };
+
+    getVendors();
+  }, []);
+
+  if (styledVendors.length > 0) {
+    return (
+      <main
         className={`
-          absolute 
-          w-[200px]
-          h-[150px]
-          z-10
+          relative 
+          overflow-hidden 
+          flex justify-center items-center
+          w-full top-[70px] 
         `}
-      ></button>
-      <Elevator
-        elev={elev}
-        setElev={setElev}
-        setFloor={setFloor}
-        floor={floor}
-        setMiddleButton={setMiddleButton}
-      />
-    </main>
-  );
+        style={{
+          height: "calc(100vh - 70px)"
+        }}
+      >
+        <Perspective2 
+          setElev={setElev}
+          floor={floor}
+        />
+        <Perspective1
+          middleButton={middleButton}
+          setElev={setElev}
+          groupedVendors={groupedVendors}
+          floor={floor}
+        />
+        <button
+          onClick={() => {
+            setMiddleButton(prev => !prev);
+          }}
+          className={`
+            absolute 
+            w-[200px]
+            h-[150px]
+            z-10
+          `}
+        ></button>
+        <Elevator
+          elev={elev}
+          setElev={setElev}
+          setFloor={setFloor}
+          floor={floor}
+          setMiddleButton={setMiddleButton}
+        />
+      </main>
+    );
+  }
+  return <Loading/> 
 }
 
 export default Page;

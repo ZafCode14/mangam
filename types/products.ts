@@ -20,3 +20,7 @@ export interface Product {
   images: string[];
   branches: {[key: string]: Branch};
 }
+export interface Vendors {
+  id: string;
+  chosenShopStyle: string;
+}
