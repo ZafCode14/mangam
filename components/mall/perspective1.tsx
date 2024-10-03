@@ -26,9 +26,9 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
   vendorCategories.forEach((category) => {
     // Adjust the corridor path for each category
     const corridorPathMap: Record<string, string> = {
-      gold: `/images/mall/perspective1/corridor.jpeg`,
-      silver: `/images/mall/Sperspective1/Corridor.jpeg`,
-      raw: `/images/mall/Rperspective1/C-I.jpeg`,
+      gold: `/images/mall/perspective1/gold/corridor.jpeg`,
+      silver: `/images/mall/perspective1/silver/Corridor.jpeg`,
+      raw: `/images/mall/Rperspective1/raw/C-I.jpeg`,
     };
 
     if (groupedVendors[category]) {
@@ -190,7 +190,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
       {/** P1 arrow */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={"/images/mall/perspective1/arrow.png"}
+          src={"/images/mall/perspective1/gold/arrow.png"}
           alt="floor plan"
           width={3000}
           height={3000}
@@ -200,7 +200,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
       {/** Eelevator arrow */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={"/images/mall/perspective1/earrow.png"}
+          src={"/images/mall/perspective1/gold/earrow.png"}
           alt="floor plan"
           width={3000}
           height={3000}
