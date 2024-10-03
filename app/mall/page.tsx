@@ -55,6 +55,16 @@ function Page() {
           return acc;
         }, { gold: [], silver: [], raw: [] } as GroupedVendors);
 
+        // Sort each group by JoinDate (assuming it's a timestamp)
+        const sortByJoinDate = (vendors: Vendors[]) => {
+          return vendors.sort((a, b) => b.joinDate.seconds - a.joinDate.seconds);
+        };
+
+        // Apply sorting to each group
+        groupedVendors.gold = sortByJoinDate(groupedVendors.gold);
+        groupedVendors.silver = sortByJoinDate(groupedVendors.silver);
+        groupedVendors.raw = sortByJoinDate(groupedVendors.raw);
+
         // Set the state for each vendor group
         setStyledVendors(vendors); // Set all vendors if needed
         setGroupedVendors(groupedVendors);

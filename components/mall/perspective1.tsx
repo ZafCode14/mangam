@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Vendors } from "@/types/products";
 import ContiueMall from "./contiueMall";
+import Vendor from "./vendor";
 
 interface GroupedVendors {
   gold: Vendors[];
@@ -42,12 +43,13 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
         const viewIndex = (index % 4) + 1;
 
         vendorImages[category][`vendor${index + 1}`] = {
+          vendor: vendor,
           mallView: `/images/mall/perspective1/${shopFloor}/${shopStyle}${viewIndex}.png`,
-          frontView: `/images/mall/interior/${shopStyle}/front.jpeg`,
-          rightView: `/images/mall/interior/${shopStyle}/right.jpeg`,
-          leftView: `/images/mall/interior/${shopStyle}/left.jpeg`,
-          middleView: `/images/mall/interior/${shopStyle}/middle.jpeg`,
-          endView: `/images/mall/interior/${shopStyle}/end.jpeg`,
+          frontView: `/images/mall/interior/${shopFloor}/${shopStyle}/front.jpeg`,
+          rightView: `/images/mall/interior/${shopFloor}/${shopStyle}/right.jpeg`,
+          leftView: `/images/mall/interior/${shopFloor}/${shopStyle}/left.jpeg`,
+          middleView: `/images/mall/interior/${shopFloor}/${shopStyle}/middle.jpeg`,
+          endView: `/images/mall/interior/${shopFloor}/${shopStyle}/end.jpeg`,
           banner: vendor.spots[`${vendor.chosenShopStyle}2.jpg`]?.[0].image,
         };
       });
@@ -93,6 +95,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
         pointerEvents: middleButton ? "none" : "auto", // Disable interaction when opacity is 0
       }}
     >
+      {/** Corridor */}
       <Image
         src={vendorImages[floor].corridor}
         alt="floor plan"
@@ -101,62 +104,89 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
         priority
         className={`absolute w-full object-cover`}
       />
-      {/** Left Close */}
-      <div className={`absolute w-full object-cover`}>
-        <Image
-          src={vendorImages[floor].vendor3.mallView}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          className={`w-full h-full`}
-        />
-        <div className={`
+
+      <Vendor 
+        vendor={vendorImages[floor].vendor1}
+        bannerClassName={`
           absolute top-[12vw] right-[10vw] z-20
           flex justify-center
           w-[20vw] h-[5vw]
-        `} style={{
-          transform: "skewY(-25deg)"
-        }}>
-          <Image
-            src={vendorImages[floor].vendor3.banner}
-            alt="floor plan"
-            width={3000}
-            height={3000}
-            className={`w-full h-full object-contain`}
-          />
-        </div>
-      </div>
+        `}
+        bannerStyle={{
+          transform: "skewY(-22deg)"
+        }}
+        buttonClassName={`
+          absolute top-[-49vw] right-[4vw]
+          w-[28vw] h-[35vw] cursor-pointer
+          z-10
+        `}
+        buttonStyle={{
+          clipPath: "polygon(0% 39%, 100% 0%, 100% 100%, 0 78%)"
+        }}
+      />
 
-      {/** Right Close */}
-      <div className={`absolute w-full object-cover`}>
-        <Image
-          src={vendorImages[floor].vendor2.mallView}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          className={`w-full h-full`}
-        />
-      </div>
-      {/** Right Far  */}
-      <div className={`absolute w-full object-cover`}>
-        <Image
-          src={vendorImages[floor].vendor1.mallView}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          className={`w-full h-full`}
-        />
-      </div>
-      {/** Left Far */}
-      <div className={`absolute w-full object-cover`}>
-        <Image
-          src={vendorImages[floor].vendor4.mallView}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          className={`w-full h-full`}
-        />
-      </div>
+      <Vendor 
+        vendor={vendorImages[floor].vendor2}
+        bannerClassName={`
+          absolute top-[11vw] left-[10vw] z-20
+          flex justify-center
+          w-[20vw] h-[5vw]
+        `}
+        bannerStyle={{
+          transform: "skewY(24deg)"
+        }}
+        buttonClassName={`
+          absolute top-[-48.5vw] left-[4vw]
+          w-[28vw] h-[35vw] cursor-pointer
+          z-10
+        `}
+        buttonStyle={{
+          clipPath: "polygon(0% 0, 100% 40%, 100% 78%, 0 100%)"
+        }}
+      />
+
+      <Vendor 
+        vendor={vendorImages[floor].vendor3}
+        bannerClassName={`
+          absolute 
+          top-[19vw] right-[32.5vw] z-20
+          w-[5vw] h-[2vw]
+          flex justify-center
+        `}
+        bannerStyle={{
+          transform: "skewY(-20deg)"
+        }}
+        buttonClassName={`
+          absolute top-[-36vw] right-[32vw]
+          w-[7vw] h-[15vw] cursor-pointer
+          z-10
+        `}
+        buttonStyle={{
+          clipPath: "polygon(0% 25%, 100% 0%, 100% 100%, 0 85%)"
+        }}
+      />
+
+      <Vendor 
+        vendor={vendorImages[floor].vendor4}
+        bannerClassName={`
+          absolute 
+          top-[18.3vw] left-[35vw] z-20
+          w-[5vw] h-[2.3vw]
+          flex justify-center
+        `}
+        bannerStyle={{
+          transform: "skewY(27deg)"
+        }}
+        buttonClassName={`
+          absolute top-[-34vw] left-[35vw]
+          w-[5vw] h-[12vw] cursor-pointer
+          z-10
+        `}
+        buttonStyle={{
+          clipPath: "polygon(0% 0, 100% 20%, 100% 87%, 0 100%)"
+        }}
+      />
+
       {/** P1 arrow */}
       <div className={`absolute w-full object-cover`}>
         <Image
@@ -205,70 +235,6 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
             `} 
             style={{
               clipPath: "polygon(40% 0, 70% 0, 100% 100%, 0 100%)"
-            }}
-          ></button>
-        </div>
-
-        {/** botton for the left close vendor */}
-        <div className="relative">
-          <button
-            onClick={() => {
-            }}
-            className={`
-              absolute top-[-22vw] left-[4vw]
-              w-[28vw] h-[35vw] cursor-pointer
-              z-10
-            `} 
-            style={{
-              clipPath: "polygon(0% 0, 100% 40%, 100% 78%, 0 100%)"
-            }}
-          ></button>
-        </div>
-
-        {/** botton for the right close vendor */}
-        <div className="relative">
-          <button
-            onClick={() => {
-            }}
-            className={`
-              absolute top-[-22vw] right-[4vw]
-              w-[28vw] h-[35vw] cursor-pointer
-              z-10
-            `} 
-            style={{
-              clipPath: "polygon(0% 39%, 100% 0%, 100% 100%, 0 78%)"
-            }}
-          ></button>
-        </div>
-
-        {/** botton for the right far vendor */}
-        <div className="relative">
-          <button
-            onClick={() => {
-            }}
-            className={`
-              absolute top-[-10vw] right-[32vw]
-              w-[7vw] h-[15vw] cursor-pointer
-              z-10
-            `} 
-            style={{
-              clipPath: "polygon(0% 25%, 100% 0%, 100% 100%, 0 85%)"
-            }}
-          ></button>
-        </div>
-
-        {/** botton for the left close vendor */}
-        <div className="relative">
-          <button
-            onClick={() => {
-            }}
-            className={`
-              absolute top-[-8vw] left-[35vw]
-              w-[5vw] h-[12vw] cursor-pointer
-              z-10
-            `} 
-            style={{
-              clipPath: "polygon(0% 0, 100% 20%, 100% 87%, 0 100%)"
             }}
           ></button>
         </div>

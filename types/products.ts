@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface Branch {
   inStock: number;
   address: string;
@@ -26,4 +28,5 @@ export interface Vendors {
   id: string;
   chosenShopStyle: string;
   spots: {[key: string]: {[key:string]: {image: string}}}
+  joinDate: Timestamp;
 }
