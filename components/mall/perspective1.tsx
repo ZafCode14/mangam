@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Vendors } from "@/types/products";
+import ContiueMall from "./contiueMall";
 
 interface GroupedVendors {
   gold: Vendors[];
@@ -8,36 +9,49 @@ interface GroupedVendors {
 }
 interface PerspectiveProp {
   setElev: React.Dispatch<React.SetStateAction<boolean>>;
+  setMiddleButton: React.Dispatch<React.SetStateAction<boolean>>;
   floor: string;
   middleButton: boolean;
   groupedVendors: GroupedVendors;
 }
 
-function Perspective1({ middleButton, setElev, floor, groupedVendors }: PerspectiveProp) {
-  let corridor = "";
-  let vendor1 = "";
-  let vendor2 = "";
-  let vendor3 = "";
-  let vendor4 = "";
-  let raw = "";
+function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVendors }: PerspectiveProp) {
+  const vendorCategories: Array<keyof GroupedVendors> = ['gold', 'silver', 'raw'];
+  const vendorImages: any = {};
 
-  if (groupedVendors.gold.length > 0) {
-    if (floor === "gold") {
-      corridor = `/images/mall/perspective1/corridor.jpeg`;
-      vendor1 = `/images/mall/perspective1/${groupedVendors.gold[0]?.chosenShopStyle.split('/')[3] || "modern1"}1.png`;
-      vendor2 = `/images/mall/perspective1/${groupedVendors.gold[1]?.chosenShopStyle.split('/')[3] || "modern2"}2.png`;
-      vendor3 = `/images/mall/perspective1/${groupedVendors.gold[2]?.chosenShopStyle.split('/')[3] || "modern3"}3.png`;
-      vendor4 = `/images/mall/perspective1/${groupedVendors.gold[3]?.chosenShopStyle.split('/')[3] || 'modern4'}4.png`;
-    } else if (floor === "silver") {
-      corridor = "/images/mall/Sperspective1/Corridor.jpeg";
-      vendor1 = "/images/mall/Sperspective1/Modern1.png";
-      vendor2 = "/images/mall/Sperspective1/Classic2.png";
-      vendor3 = "/images/mall/Sperspective1/Classic3.png";
-      vendor4 = "/images/mall/Sperspective1/Modern4.png";
-    } else if (floor === "raw") {
-      raw = "/images/mall/Rperspective1/C-I.jpeg";
+  vendorCategories.forEach((category) => {
+    // Adjust the corridor path for each category
+    const corridorPathMap: Record<string, string> = {
+      gold: `/images/mall/perspective1/corridor.jpeg`,
+      silver: `/images/mall/Sperspective1/Corridor.jpeg`,
+      raw: `/images/mall/Rperspective1/C-I.jpeg`,
+    };
+
+    if (groupedVendors[category]) {
+      vendorImages[category] = {
+        corridor: corridorPathMap[category], // Dynamically assign the corridor path
+      };
+
+      groupedVendors[category].forEach((vendor: any, index: number) => {
+        const shopStyle = vendor.chosenShopStyle.split('/')[3];
+        const shopFloor = vendor.chosenShopStyle.split('/')[2];
+        // Reset index + 1 to cycle between 1 and 4
+        const viewIndex = (index % 4) + 1;
+
+        vendorImages[category][`vendor${index + 1}`] = {
+          mallView: `/images/mall/perspective1/${shopFloor}/${shopStyle}${viewIndex}.png`,
+          FrontView: `/images/mall/interior/${shopStyle}/front.jpeg`,
+          rightView: `/images/mall/interior/${shopStyle}/right.jpeg`,
+          leftView: `/images/mall/interior/${shopStyle}/left.jpeg`,
+          middleView: `/images/mall/interior/${shopStyle}/middle.jpeg`,
+          endView: `/images/mall/interior/${shopStyle}/end.jpeg`,
+          banner: vendor.spots[`${vendor.chosenShopStyle}2.jpg`]?.[0].image,
+        };
+      });
     }
-  }
+  });
+
+  console.log(vendorImages);
 
   if (floor === "raw") {
     return (
@@ -51,7 +65,7 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
         }}
       >
         <Image
-          src={raw}
+          src={vendorImages.raw.corridor}
           alt="floor plan"
           width={3000}
           height={3000}
@@ -77,7 +91,7 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
       }}
     >
       <Image
-        src={corridor}
+        src={vendorImages[floor].corridor}
         alt="floor plan"
         width={3000}
         height={3000}
@@ -87,7 +101,7 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
       {/** Left Close */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={vendor1}
+          src={vendorImages[floor].vendor3.mallView}
           alt="floor plan"
           width={3000}
           height={3000}
@@ -98,10 +112,10 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
           flex justify-center
           w-[20vw] h-[5vw]
         `} style={{
-          transform: "skewY(-20deg)"
+          transform: "skewY(-25deg)"
         }}>
           <Image
-            src={"/icons/logo.png"}
+            src={vendorImages[floor].vendor3.banner}
             alt="floor plan"
             width={3000}
             height={3000}
@@ -113,7 +127,7 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
       {/** Right Close */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={vendor2}
+          src={vendorImages[floor].vendor2.mallView}
           alt="floor plan"
           width={3000}
           height={3000}
@@ -123,7 +137,7 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
       {/** Right Far  */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={vendor3}
+          src={vendorImages[floor].vendor1.mallView}
           alt="floor plan"
           width={3000}
           height={3000}
@@ -133,7 +147,7 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
       {/** Left Far */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={vendor4}
+          src={vendorImages[floor].vendor4.mallView}
           alt="floor plan"
           width={3000}
           height={3000}
@@ -150,6 +164,7 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
           className={`w-full h-full`}
         />
       </div>
+      {/** Eelevator arrow */}
       <div className={`absolute w-full object-cover`}>
         <Image
           src={"/images/mall/perspective1/earrow.png"}
@@ -159,12 +174,143 @@ function Perspective1({ middleButton, setElev, floor, groupedVendors }: Perspect
           className={`w-full h-full scale-[45%]`}
         />
       </div>
-      <button
-        onClick={() => setElev((prev) => !prev)}
-        className={`relative right-[17%] top-[-20px] h-[14vw] w-[4vw] bg-[green]`}
-      ></button>
+      <div className="w-full">
+
+        {/** botton for the Elevator */}
+        <div className="relative">
+          <button
+            onClick={() => setElev((prev) => !prev)}
+            className={`
+              absolute 
+              left-[32vw] top-[4vw] 
+              h-[2vw] w-[10vw] 
+              cursor-pointer
+            `}
+          ></button>
+        </div>
+
+        {/** botton for the forward arrow P1 */}
+        <div className="relative">
+          <button
+            onClick={() => {
+              setMiddleButton(prev => !prev);
+            }}
+            className={`
+              absolute top-[6vw] left-[35vw]
+              w-[30vw] h-[12vw] cursor-pointer
+              z-10
+            `} 
+            style={{
+              clipPath: "polygon(40% 0, 70% 0, 100% 100%, 0 100%)"
+            }}
+          ></button>
+        </div>
+
+        {/** botton for the left close vendor */}
+        <div className="relative">
+          <button
+            onClick={() => {
+            }}
+            className={`
+              absolute top-[-22vw] left-[4vw]
+              w-[28vw] h-[35vw] cursor-pointer
+              z-10
+            `} 
+            style={{
+              clipPath: "polygon(0% 0, 100% 40%, 100% 78%, 0 100%)"
+            }}
+          ></button>
+        </div>
+
+        {/** botton for the right close vendor */}
+        <div className="relative">
+          <button
+            onClick={() => {
+            }}
+            className={`
+              absolute top-[-22vw] right-[4vw]
+              w-[28vw] h-[35vw] cursor-pointer
+              z-10
+            `} 
+            style={{
+              clipPath: "polygon(0% 39%, 100% 0%, 100% 100%, 0 78%)"
+            }}
+          ></button>
+        </div>
+
+        {/** botton for the right far vendor */}
+        <div className="relative">
+          <button
+            onClick={() => {
+            }}
+            className={`
+              absolute top-[-10vw] right-[32vw]
+              w-[7vw] h-[15vw] cursor-pointer
+              z-10
+            `} 
+            style={{
+              clipPath: "polygon(0% 25%, 100% 0%, 100% 100%, 0 85%)"
+            }}
+          ></button>
+        </div>
+
+        {/** botton for the left close vendor */}
+        <div className="relative">
+          <button
+            onClick={() => {
+            }}
+            className={`
+              absolute top-[-8vw] left-[35vw]
+              w-[5vw] h-[12vw] cursor-pointer
+              z-10
+            `} 
+            style={{
+              clipPath: "polygon(0% 0, 100% 20%, 100% 87%, 0 100%)"
+            }}
+          ></button>
+        </div>
+
+        {/** Continue mall once */}
+        {
+          groupedVendors.gold.length > 4 &&
+          <div className="relative">
+            <button
+              onClick={() => {
+              }}
+              className={`
+                absolute top-[-6vw] left-[40vw]
+                w-[21vw] h-[8vw] cursor-pointer
+                overflow-hidden
+                z-10
+              `} 
+            >
+              <ContiueMall/>
+            </button>
+          </div>
+        }
+
+        {/** Continue mall twice */}
+        {
+          groupedVendors.gold.length > 8 &&
+        <div className="relative">
+          <button
+            onClick={() => {
+            }}
+            className={`
+              absolute top-[-2vw] left-[48.5vw]
+              w-[4.5vw] h-[2vw] cursor-pointer
+              overflow-hidden
+              bg-[#9b9b098c]
+              z-10
+            `} 
+          >
+            <ContiueMall/>
+          </button>
+        </div>
+        }
+
+      </div>
     </div>
   );
 }
-
 export default Perspective1;

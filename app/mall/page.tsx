@@ -87,21 +87,11 @@ function Page() {
         />
         <Perspective1
           middleButton={middleButton}
+          setMiddleButton={setMiddleButton}
           setElev={setElev}
           groupedVendors={groupedVendors}
           floor={floor}
         />
-        <button
-          onClick={() => {
-            setMiddleButton(prev => !prev);
-          }}
-          className={`
-            absolute 
-            w-[200px] h-[150px]
-            bg-[yellow]
-            z-10
-          `}
-        ></button>
         <Elevator
           elev={elev}
           setElev={setElev}

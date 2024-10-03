@@ -51,7 +51,7 @@ function Header() {
   return (
     <header
       className={`
-        fixed top-0 z-20
+        fixed top-0 z-30
         flex flex-col justify-center items-center
         md:flex-row md:justify-around
         h-[80px] w-full md:px-20
@@ -75,11 +75,11 @@ function Header() {
           priority
         />
       </Link>
-      <div className="flex items-center flex-1 justify-around">
+      <div className="flex items-center flex-1 justify-around w-full">
         <div className="flex flex-1 justify-around md:justify-center">
           <Link href="/" className={`
-            mx-5 
-            text-[10px] sm:text-[14px] md:text-[16px]
+            sm:mx-5 
+            text-[14px] md:text-[16px]
             ${p === "/" && "text-[#C4A153]"}
             `}>
             Homepage
@@ -87,24 +87,24 @@ function Header() {
           <Link
             href={{ pathname: "/shop", query: { show: "brand" } }}
             className={`
-              mx-5 
-              text-[10px] sm:text-[14px] md:text-[16px]
+              sm:mx-5 
+              text-[14px] md:text-[16px]
               ${p.startsWith("/shop") && "text-[#C4A153]"}
             `}
           >
             Shop Now
           </Link>
           <Link href="/mall" className={`
-            mx-5 
-            text-[10px] sm:text-[14px] md:text-[16px]
+            sm:mx-5 
+            text-[14px] md:text-[16px]
             ${p.startsWith("/mall") && "text-[#C4A153]"}
           `}>
             Mall
           </Link>
           <div className="relative flex items-center">
             <Link href="/cart" className={`
-              mx-5 relative 
-              text-[10px] sm:text-[14px] md:text-[16px]
+              sm:mx-5 relative 
+              text-[14px] md:text-[16px]
               ${p.startsWith("/cart") && "text-[#C4A153]"}
               `}>
               Cart {cartCount > 0 && <span className="ml-1 absolute bg-[#C1A875] rounded-full w-5 h-5 text-[white] flex justify-center items-center -top-2 -right-5">{cartCount}</span>}

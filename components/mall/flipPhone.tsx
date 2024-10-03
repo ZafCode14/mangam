@@ -2,7 +2,7 @@ import Image from "next/image";
 
 function FlipPhone() {
   return (
-    <div className="bg-[white] w-full h-screen flex items-center justify-center relative z-20">
+    <div className="bg-[white] absolute w-full h-screen flex items-center justify-center z-20">
       <Image
         alt="flip phone"
         src={"/images/flipPhone/arrowLeft.png"}

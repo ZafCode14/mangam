@@ -12,15 +12,16 @@ function Elevator({ elev, setElev, setMiddleButton, setFloor, floor }: elevProp)
   return (
     <div className={`
       absolute
-      z-10
-      ${!elev ? "top-[-300%]" : "top-[10%]"}
+      z-20
+      top-[10%]
       flex flex-col justify-center
-      w-[450px] pb-10 px-10
+      w-[35vw] h-[80%] pb-10 px-10
       bg-[#ffffffb2]
     `}
     style={{
       opacity: elev ? "100" : "0",
-      transition: "1s ease"
+      transition: "1s ease",
+      pointerEvents: elev ? "auto" : "none",
     }}
     >
       <Image
@@ -30,11 +31,9 @@ function Elevator({ elev, setElev, setMiddleButton, setFloor, floor }: elevProp)
         height={3000}
         onClick={() => {
           setElev(prev => !prev)
-          setMiddleButton(true)
           setFloor("gold")
         }}
         className={`
-          w-full
           object-cover
           cursor-pointer
           ${floor === "gold" && "mb-5"}
@@ -51,11 +50,9 @@ function Elevator({ elev, setElev, setMiddleButton, setFloor, floor }: elevProp)
         height={3000}
         onClick={() => {
           setElev(prev => !prev);
-          setMiddleButton(true)
           setFloor("silver");
         }}
         className={`
-          w-full
           object-cover
           cursor-pointer
         `}
@@ -72,11 +69,9 @@ function Elevator({ elev, setElev, setMiddleButton, setFloor, floor }: elevProp)
         height={3000}
         onClick={() => {
           setElev(prev => !prev);
-          setMiddleButton(true)
           setFloor("raw");
         }}
         className={`
-          w-full
           object-cover
           cursor-pointer
           ${floor !== "gold" && floor !== "raw" && "mt-5"}
