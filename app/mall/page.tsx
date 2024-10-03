@@ -80,30 +80,36 @@ function Page() {
     return (
       <main
         className={`
-          absolute
-          flex justify-center items-center
-          w-full overflow-hidden
-          ${height < 450 ? "z-30 bottom-0" : "top-[80px]"} 
+          h-[100vh] w-[100vw]
+          flex items-end
         `}
-        style={{
-          height: "calc(100vh - 80px)"
-        }}
       >
-        {height > width && <FlipPhone/>}
-        <Perspective1
-          middleButton={middleButton}
-          setMiddleButton={setMiddleButton}
-          setElev={setElev}
-          groupedVendors={groupedVendors}
-          floor={floor}
-        />
-        <Elevator
-          elev={elev}
-          setElev={setElev}
-          setFloor={setFloor}
-          floor={floor}
-          setMiddleButton={setMiddleButton}
-        />
+        <div className={`
+          fixed
+          ${height < 450 && "z-30"}
+        `} style={{
+          height: height < 450 ? "100vh" : "calc(100vh - 80px)"
+        }}>
+          {
+          height > width ? <FlipPhone/> :
+          <div className="h-full w-full flex items-center justify-center">
+            <Perspective1
+              middleButton={middleButton}
+              setMiddleButton={setMiddleButton}
+              setElev={setElev}
+              groupedVendors={groupedVendors}
+              floor={floor}
+            />
+            <Elevator
+              elev={elev}
+              setElev={setElev}
+              setFloor={setFloor}
+              floor={floor}
+              setMiddleButton={setMiddleButton}
+            />
+          </div>
+          }
+        </div>
       </main>
     );
   }
