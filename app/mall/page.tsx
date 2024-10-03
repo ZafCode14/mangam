@@ -1,7 +1,6 @@
 "use client";
 import Elevator from "@/components/mall/elevator";
 import Perspective1 from "@/components/mall/perspective1";
-import Perspective2 from "@/components/mall/perspective2";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -81,20 +80,16 @@ function Page() {
     return (
       <main
         className={`
-          relative 
-          overflow-hidden 
+          absolute
           flex justify-center items-center
-          w-full top-[70px] 
+          w-full overflow-hidden
+          ${height < 450 ? "z-30 bottom-0" : "top-[80px]"} 
         `}
         style={{
-          height: "calc(100vh - 70px)"
+          height: "calc(100vh - 80px)"
         }}
       >
         {height > width && <FlipPhone/>}
-        <Perspective2 
-          setElev={setElev}
-          floor={floor}
-        />
         <Perspective1
           middleButton={middleButton}
           setMiddleButton={setMiddleButton}

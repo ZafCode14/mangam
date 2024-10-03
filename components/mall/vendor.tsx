@@ -9,6 +9,7 @@ interface Props {
   buttonStyle: {[key: string]: string}
   bannerClassName: string;
   bannerStyle: {[key: string]: string}
+  floor: string
 }
 function Vendor({ vendor, buttonClassName, buttonStyle, bannerClassName, bannerStyle }: Props) {
   const [showFront, setShowFront] = useState<boolean>(false);
@@ -16,7 +17,7 @@ function Vendor({ vendor, buttonClassName, buttonStyle, bannerClassName, bannerS
   return (
     <div className={`absolute w-full object-cover`}>
       <Image
-        src={vendor?.mallView || "/"}
+        src={vendor.mallView}
         alt="floor plan"
         width={3000}
         height={3000}
@@ -26,7 +27,7 @@ function Vendor({ vendor, buttonClassName, buttonStyle, bannerClassName, bannerS
         vendor?.banner &&
         <div className={bannerClassName} style={bannerStyle}>
           <Image
-            src={vendor?.banner || ""}
+            src={vendor.banner}
             alt="floor plan"
             width={3000}
             height={3000}
@@ -42,11 +43,13 @@ function Vendor({ vendor, buttonClassName, buttonStyle, bannerClassName, bannerS
           style={buttonStyle}
         ></button>
       </div>
-      <FrontView
-        frontView={vendor?.frontView}
-        showFront={showFront}
-        setShowFront={setShowFront}
-      />
+      {vendor.frontView &&
+        <FrontView
+          frontView={vendor.frontView}
+          showFront={showFront}
+          setShowFront={setShowFront}
+        />
+      }
     </div>
   );
 }

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Vendors } from "@/types/products";
 import ContiueMall from "./contiueMall";
 import Vendor from "./vendor";
+import Perspective2 from "./perspective2";
 
 interface GroupedVendors {
   gold: Vendors[];
@@ -27,13 +28,17 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
     // Adjust the corridor path for each category
     const corridorPathMap: Record<string, string> = {
       gold: `/images/mall/perspective1/gold/corridor.jpeg`,
-      silver: `/images/mall/perspective1/silver/Corridor.jpeg`,
-      raw: `/images/mall/Rperspective1/raw/C-I.jpeg`,
+      silver: `/images/mall/perspective1/silver/corridor.jpeg`,
+      raw: `/images/mall/perspective1/raw/C-I.jpeg`,
     };
 
     if (groupedVendors[category]) {
       vendorImages[category] = {
         corridor: corridorPathMap[category], // Dynamically assign the corridor path
+        vendor1: { mallView: `/images/mall/perspective1/${floor}/classic1.png` },
+        vendor2: { mallView: `/images/mall/perspective1/${floor}/classic2.png` },
+        vendor3: { mallView: `/images/mall/perspective1/${floor}/classic3.png` },
+        vendor4: { mallView: `/images/mall/perspective1/${floor}/classic4.png` },
       };
 
       groupedVendors[category].forEach((vendor: Vendors, index: number) => {
@@ -56,19 +61,18 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
     }
   });
 
-  console.log(vendorImages);
-
   if (floor === "raw") {
     return (
       <div
-        className={`absolute z-10 h-full`}
-        style={{
-          opacity: middleButton ? "1" : "0",
-          width: middleButton ? "100vw" : "120vw",
-          transition: "1s ease",
-          pointerEvents: middleButton ? "auto" : "none", // Disable interaction when middleButton is false
-        }}
+        className={`relative h-full w-screen flex justify-center items-center overflow-hidden`}
       >
+        <div className="absolute h-full flex items-center justify-center"
+        style={{
+          width: middleButton ? "153vw" : "100vw",
+          opacity: middleButton ? "0" : "1",
+          transition: "1s ease",
+        }}
+        >
         <Image
           src={vendorImages.raw.corridor}
           alt="floor plan"
@@ -77,25 +81,61 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
           priority
           className={`absolute w-full object-cover`}
         />
-        <button
-          onClick={() => setElev((prev) => !prev)}
-          className={`relative right-[-33vw] top-[10vw] h-[25vw] w-[8vw]`}
-        ></button>
+        {/** P1 arrow */}
+        <div className={`absolute w-full object-cover top-0 right-0`}>
+          <Image
+            src={`/images/mall/arrows/raw/P1.png`}
+            alt="floor plan"
+            width={3000}
+            height={3000}
+            className={`w-full h-full`}
+          />
+        </div>
+
+        {/** botton for the forward arrow P1 */}
+        <div className="relative">
+          <button
+            onClick={() => {
+              setMiddleButton(prev => !prev);
+            }}
+            className={`
+              absolute top-[10vw] left-[-10vw]
+              w-[15vw] h-[12vw] cursor-pointer
+              z-10
+            `} 
+          ></button>
+        </div>
+
+        </div>
+        <div className={`
+          absolute
+          z-30 w-full flex justify-center items-center
+        `} style={{
+          opacity: middleButton ? "1" : "0",
+          transition: "1s ease",
+          pointerEvents: middleButton ? "auto" : "none",
+        }}>
+          <Perspective2 
+            setMiddleButton={setMiddleButton}
+            groupedVendors={groupedVendors}
+            setElev={setElev}
+            floor={floor}
+          />
+        </div>
       </div>
     );
   }
 
   return (
-    <div
-      className={`absolute z-10 h-full flex justify-center items-center`}
-      style={{
-        opacity: middleButton ? "0" : "1",
-        width: middleButton ? "150vw" : "100vw",
-        transition: "1s ease",
-        pointerEvents: middleButton ? "none" : "auto", // Disable interaction when opacity is 0
-      }}
-    >
+    <div className={`relative h-full w-screen flex justify-center items-center overflow-hidden`} >
       {/** Corridor */}
+      <div className="absolute h-full flex items-center justify-center"
+      style={{
+        width: middleButton ? "153vw" : "100vw",
+        opacity: middleButton ? "0" : "1",
+        transition: "1s ease",
+      }}
+      >
       <Image
         src={vendorImages[floor].corridor}
         alt="floor plan"
@@ -107,6 +147,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
 
       <Vendor 
         vendor={vendorImages[floor].vendor1}
+        floor={floor}
         bannerClassName={`
           absolute top-[12vw] right-[10vw] z-20
           flex justify-center
@@ -117,16 +158,17 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
         }}
         buttonClassName={`
           absolute top-[-49vw] right-[4vw]
-          w-[28vw] h-[35vw] cursor-pointer
+          w-[32vw] h-[35vw] cursor-pointer
           z-10
         `}
         buttonStyle={{
-          clipPath: "polygon(0% 39%, 100% 0%, 100% 100%, 0 78%)"
+          clipPath: "polygon(15% 39%, 100% 0%, 100% 100%, 0 95%)"
         }}
       />
 
       <Vendor 
         vendor={vendorImages[floor].vendor2}
+        floor={floor}
         bannerClassName={`
           absolute top-[11vw] left-[10vw] z-20
           flex justify-center
@@ -137,16 +179,18 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
         }}
         buttonClassName={`
           absolute top-[-48.5vw] left-[4vw]
-          w-[28vw] h-[35vw] cursor-pointer
+          w-[32vw] h-[35vw] cursor-pointer
+          opacity-[0.4]
           z-10
         `}
         buttonStyle={{
-          clipPath: "polygon(0% 0, 100% 40%, 100% 78%, 0 100%)"
+          clipPath: "polygon(0% 0, 60% 30%, 100% 90%, 0 100%)"
         }}
       />
 
       <Vendor 
         vendor={vendorImages[floor].vendor3}
+        floor={floor}
         bannerClassName={`
           absolute 
           top-[19vw] right-[32.5vw] z-20
@@ -168,6 +212,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
 
       <Vendor 
         vendor={vendorImages[floor].vendor4}
+        floor={floor}
         bannerClassName={`
           absolute 
           top-[18.3vw] left-[35vw] z-20
@@ -190,23 +235,14 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
       {/** P1 arrow */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={"/images/mall/perspective1/gold/arrow.png"}
+          src={`/images/mall/arrows/${floor}/P1.png`}
           alt="floor plan"
           width={3000}
           height={3000}
           className={`w-full h-full`}
         />
       </div>
-      {/** Eelevator arrow */}
-      <div className={`absolute w-full object-cover`}>
-        <Image
-          src={"/images/mall/perspective1/gold/earrow.png"}
-          alt="floor plan"
-          width={3000}
-          height={3000}
-          className={`w-full h-full scale-[45%]`}
-        />
-      </div>
+
       <div className="w-full">
 
         {/** botton for the Elevator */}
@@ -215,8 +251,8 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
             onClick={() => setElev((prev) => !prev)}
             className={`
               absolute 
-              left-[32vw] top-[4vw] 
-              h-[2vw] w-[10vw] 
+              left-[32vw] top-[-8vw] 
+              h-[12vw] w-[4vw] 
               cursor-pointer
             `}
           ></button>
@@ -229,13 +265,10 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
               setMiddleButton(prev => !prev);
             }}
             className={`
-              absolute top-[6vw] left-[35vw]
-              w-[30vw] h-[12vw] cursor-pointer
+              absolute top-[6vw] left-[43vw]
+              w-[15vw] h-[12vw] cursor-pointer
               z-10
             `} 
-            style={{
-              clipPath: "polygon(40% 0, 70% 0, 100% 100%, 0 100%)"
-            }}
           ></button>
         </div>
 
@@ -277,7 +310,22 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
           </button>
         </div>
         }
+      </div>
+      </div>
 
+      <div className={`
+        z-30 w-full flex justify-center items-center
+      `} style={{
+        opacity: middleButton ? "1" : "0",
+        transition: "1s ease",
+        pointerEvents: middleButton ? "auto" : "none",
+      }}>
+        <Perspective2 
+          setMiddleButton={setMiddleButton}
+          groupedVendors={groupedVendors}
+          setElev={setElev}
+          floor={floor}
+        />
       </div>
     </div>
   );

@@ -12,11 +12,10 @@ function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
   return (
     <div className={`
       absolute
-      z-20
+      z-30
       top-[10%]
       flex flex-col justify-center
       w-[35vw] h-[80%] pb-10 px-10
-      bg-[#ffffffb2]
     `}
     style={{
       opacity: elev ? "100" : "0",
