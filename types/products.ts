@@ -25,4 +25,5 @@ export interface Product {
 export interface Vendors {
   id: string;
   chosenShopStyle: string;
+  spots: {[key: string]: {[key:string]: {image: string}}}
 }

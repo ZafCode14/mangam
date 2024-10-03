@@ -7,7 +7,7 @@ interface elevProp {
   setMiddleButton: React.Dispatch<React.SetStateAction<boolean>>;
   setFloor: React.Dispatch<React.SetStateAction<string>>;
 }
-function Elevator({ elev, setElev, setMiddleButton, setFloor, floor }: elevProp) {
+function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
 
   return (
     <div className={`

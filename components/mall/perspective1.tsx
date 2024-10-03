@@ -7,6 +7,7 @@ interface GroupedVendors {
   silver: Vendors[];
   raw: Vendors[];
 }
+
 interface PerspectiveProp {
   setElev: React.Dispatch<React.SetStateAction<boolean>>;
   setMiddleButton: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,6 +18,8 @@ interface PerspectiveProp {
 
 function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVendors }: PerspectiveProp) {
   const vendorCategories: Array<keyof GroupedVendors> = ['gold', 'silver', 'raw'];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const vendorImages: any = {};
 
   vendorCategories.forEach((category) => {
@@ -32,7 +35,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
         corridor: corridorPathMap[category], // Dynamically assign the corridor path
       };
 
-      groupedVendors[category].forEach((vendor: any, index: number) => {
+      groupedVendors[category].forEach((vendor: Vendors, index: number) => {
         const shopStyle = vendor.chosenShopStyle.split('/')[3];
         const shopFloor = vendor.chosenShopStyle.split('/')[2];
         // Reset index + 1 to cycle between 1 and 4
@@ -40,7 +43,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
 
         vendorImages[category][`vendor${index + 1}`] = {
           mallView: `/images/mall/perspective1/${shopFloor}/${shopStyle}${viewIndex}.png`,
-          FrontView: `/images/mall/interior/${shopStyle}/front.jpeg`,
+          frontView: `/images/mall/interior/${shopStyle}/front.jpeg`,
           rightView: `/images/mall/interior/${shopStyle}/right.jpeg`,
           leftView: `/images/mall/interior/${shopStyle}/left.jpeg`,
           middleView: `/images/mall/interior/${shopStyle}/middle.jpeg`,
