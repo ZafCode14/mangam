@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { auth } from "@/lib/firebase"; // Make sure this path points to your Firebase configuration
 import { onAuthStateChanged, User } from "firebase/auth";
 import useAuthUser from "@/hooks/user";
+import useWindowDimensions from "@/hooks/dimentions";
 
 function Header() {
   const [theuser] = useAuthUser();
@@ -47,6 +48,11 @@ function Header() {
       window.removeEventListener("cart-updated", handleStorageChange); // Cleanup event listener
     };
   }, []);
+  const {height} = useWindowDimensions();
+
+  if (height < 450 && p === '/mall') {
+    return;
+  }
 
   return (
     <header
