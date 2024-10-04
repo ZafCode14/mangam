@@ -14,7 +14,6 @@ interface Props {
 function Vendor({ vendor, buttonClassName, buttonStyle, bannerClassName, bannerStyle }: Props) {
   const [showFront, setShowFront] = useState<boolean>(false);
 
-  console.log(vendor.frontView)
   return (
     <div className={`absolute w-full object-cover`}>
       <Image
@@ -47,8 +46,10 @@ function Vendor({ vendor, buttonClassName, buttonStyle, bannerClassName, bannerS
           disabled={!vendor.frontView}
         ></button>
       </div>
+      
       {vendor.frontView &&
         <FrontView
+          vendor={vendor}
           frontView={vendor.frontView}
           showFront={showFront}
           setShowFront={setShowFront}

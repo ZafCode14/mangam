@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { auth } from "@/lib/firebase"; // Make sure this path points to your Firebase configuration
+import { auth } from "@/lib/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import useAuthUser from "@/hooks/user";
 import useWindowDimensions from "@/hooks/dimentions";
@@ -12,7 +12,10 @@ function Header() {
   const [theuser] = useAuthUser();
   const [user, setUser] = useState<User | null>(null); // Store the authenticated user
   const [cartCount, setCartCount] = useState(0); // Track the number of items in the cart
+  const [isMounted, setIsMounted] = useState(false); // To ensure component is mounted
   const p = usePathname();
+
+  const { height } = useWindowDimensions();
 
   // Check if user is authenticated
   useEffect(() => {
@@ -48,10 +51,15 @@ function Header() {
       window.removeEventListener("cart-updated", handleStorageChange); // Cleanup event listener
     };
   }, []);
-  const {height} = useWindowDimensions();
 
-  if (height < 450 && p === '/mall') {
-    return;
+  // Set isMounted to true after the component mounts
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Return null if height < 450 and path is "/mall" (client-side only)
+  if (!isMounted || (height < 450 && p === "/mall")) {
+    return null;
   }
 
   return (

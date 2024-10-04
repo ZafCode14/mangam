@@ -56,8 +56,6 @@ function Perspective2({ setMiddleButton, setElev, floor, groupedVendors }: Persp
     }
   });
 
-  console.log(vendorImages2);
-
   if (floor === "raw") {
   return (
     <div className={`
