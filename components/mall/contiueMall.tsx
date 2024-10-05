@@ -1,10 +1,13 @@
 import Image from "next/image";
 
-function ContiueMall() {
+interface Props {
+  floor: string;
+}
+function ContiueMall({ floor }: Props) {
   return (
-    <div className="w-full h-full">
+    <div className="relative w-full h-full">
       <Image
-        src={'/images/mall/perspective1/corridor.jpeg'}
+        src={`/images/mall/perspective1/${floor}/corridor.jpeg`}
         alt="floor plan"
         width={3000}
         height={3000}
@@ -14,33 +17,18 @@ function ContiueMall() {
       {/** Left Close */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={'/images/mall/perspective1/modern1.png'}
+          src={`/images/mall/perspective1/${floor}/modern1.png`}
           alt="floor plan"
           width={3000}
           height={3000}
           className={`w-full h-full`}
         />
-        <div className={`
-          absolute top-[12vw] right-[10vw] z-20
-          flex justify-center
-          w-[20vw] h-[5vw]
-        `} style={{
-          transform: "skewY(-25deg)"
-        }}>
-          <Image
-            src={"/icons/logo.png"}
-            alt="floor plan"
-            width={3000}
-            height={3000}
-            className={`w-full h-full object-contain`}
-          />
-        </div>
       </div>
 
       {/** Right Close */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={'/images/mall/perspective1/classic2.png'}
+          src={`/images/mall/perspective1/${floor}/classic2.png`}
           alt="floor plan"
           width={3000}
           height={3000}
@@ -50,7 +38,7 @@ function ContiueMall() {
       {/** Right Far  */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={'/images/mall/perspective1/modern3.png'}
+          src={`/images/mall/perspective1/${floor}/modern3.png`}
           alt="floor plan"
           width={3000}
           height={3000}
@@ -60,7 +48,7 @@ function ContiueMall() {
       {/** Left Far */}
       <div className={`absolute w-full object-cover`}>
         <Image
-          src={'/images/mall/perspective1/modern4.png'}
+          src={`/images/mall/perspective1/${floor}/modern4.png`}
           alt="floor plan"
           width={3000}
           height={3000}

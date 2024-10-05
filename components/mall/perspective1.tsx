@@ -1,70 +1,32 @@
 import Image from "next/image";
-import { Vendors } from "@/types/products";
 import ContiueMall from "./contiueMall";
 import Vendor from "./vendor";
 import Perspective2 from "./perspective2";
 
-interface GroupedVendors {
-  gold: Vendors[];
-  silver: Vendors[];
-  raw: Vendors[];
-}
-
 interface PerspectiveProp {
   setElev: React.Dispatch<React.SetStateAction<boolean>>;
   setMiddleButton: React.Dispatch<React.SetStateAction<boolean>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  p1: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  p2: any;
   floor: string;
   middleButton: boolean;
-  groupedVendors: GroupedVendors;
+  fromTo: {from: number, to: number}
+  setFromTo: React.Dispatch<React.SetStateAction<{from: number, to: number}>>;
 }
 
-function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVendors }: PerspectiveProp) {
-  const vendorCategories: Array<keyof GroupedVendors> = ['gold', 'silver', 'raw'];
+function Perspective1({ fromTo, setFromTo, middleButton, setMiddleButton, setElev, floor, p1, p2 }: PerspectiveProp) {
+  const vendors = Object.values(p1[floor]).slice(1);
+  const vendorSet = vendors.slice(fromTo.from, fromTo.to)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const vendorImages: any = {};
-
-  vendorCategories.forEach((category) => {
-    // Adjust the corridor path for each category
-    const corridorPathMap: Record<string, string> = {
-      gold: `/images/mall/perspective1/gold/corridor.jpeg`,
-      silver: `/images/mall/perspective1/silver/corridor.jpeg`,
-      raw: `/images/mall/perspective1/raw/C-I.jpeg`,
-    };
-
-    if (groupedVendors[category]) {
-      vendorImages[category] = {
-        corridor: corridorPathMap[category], // Dynamically assign the corridor path
-        vendor1: { mallView: `/images/mall/perspective1/${floor}/classic1.png` },
-        vendor2: { mallView: `/images/mall/perspective1/${floor}/classic2.png` },
-        vendor3: { mallView: `/images/mall/perspective1/${floor}/classic3.png` },
-        vendor4: { mallView: `/images/mall/perspective1/${floor}/classic4.png` },
-      };
-
-      groupedVendors[category].forEach((vendor: Vendors, index: number) => {
-        const shopStyle = vendor.chosenShopStyle.split('/')[3];
-        const shopFloor = vendor.chosenShopStyle.split('/')[2];
-        // Reset index + 1 to cycle between 1 and 4
-        const viewIndex = (index % 4) + 1;
-
-        vendorImages[category][`vendor${index + 1}`] = {
-          vendor: vendor,
-          mallView: `/images/mall/perspective1/${shopFloor}/${shopStyle}${viewIndex}.png`,
-          frontView: `/images/mall/interior/${shopFloor}/${shopStyle}/front.jpeg`,
-          rightView: `/images/mall/interior/${shopFloor}/${shopStyle}/right.jpeg`,
-          leftView: `/images/mall/interior/${shopFloor}/${shopStyle}/left.jpeg`,
-          middleView: `/images/mall/interior/${shopFloor}/${shopStyle}/middle.jpeg`,
-          endView: `/images/mall/interior/${shopFloor}/${shopStyle}/end.jpeg`,
-          banner: vendor.spots[`${vendor.chosenShopStyle}2.jpg`]?.[0].image,
-        };
-      });
-    }
-  });
+  console.log("Vendors", vendors)
+  console.log("to", fromTo.to);
 
   if (floor === "raw") {
     return (
       <div
-        className={`relative h-full w-screen flex justify-center items-center overflow-hidden`}
+        className={`relative h-full w-full flex justify-center items-center overflow-hidden`}
       >
         <div className="absolute h-full flex items-center justify-center"
         style={{
@@ -74,7 +36,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
         }}
         >
         <Image
-          src={vendorImages.raw.corridor}
+          src={p1.raw.corridor}
           alt="floor plan"
           width={3000}
           height={3000}
@@ -107,6 +69,8 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
         </div>
 
         </div>
+
+        {/** Perspective 2 */}
         <div className={`
           absolute
           z-30 w-full flex justify-center items-center
@@ -117,27 +81,31 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
         }}>
           <Perspective2 
             setMiddleButton={setMiddleButton}
-            groupedVendors={groupedVendors}
+            middleButton={middleButton}
             setElev={setElev}
             floor={floor}
+            fromTo={fromTo}
+            setFromTo={setFromTo}
+            p2={p2}
           />
         </div>
       </div>
     );
   }
 
+
   return (
-    <div className={`relative h-full w-screen flex justify-center items-center overflow-hidden`} >
+    <div className={`relative h-[50vw] w-full flex justify-center items-center overflow-hidden`} >
       {/** Corridor */}
-      <div className="absolute h-full flex items-center justify-center"
+      <div className="absolute h-[50vw] w-full flex items-center justify-center overflow-hidden"
       style={{
-        width: middleButton ? "153vw" : "100vw",
+        scale: middleButton ? "160%" : "100%",
         opacity: middleButton ? "0" : "1",
         transition: "1s ease",
       }}
       >
       <Image
-        src={vendorImages[floor].corridor}
+        src={p1[floor].corridor}
         alt="floor plan"
         width={3000}
         height={3000}
@@ -146,7 +114,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
       />
 
       <Vendor 
-        vendor={vendorImages[floor].vendor1}
+        vendor={vendorSet[0] || {mallView: `/images/mall/perspective1/${floor}/classic1.png`}}
         floor={floor}
         bannerClassName={`
           absolute top-[12vw] right-[10vw] z-20
@@ -167,15 +135,16 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
       />
 
       <Vendor 
-        vendor={vendorImages[floor].vendor2}
+        vendor={vendorSet[1] || {mallView: `/images/mall/perspective1/${floor}/classic2.png`}}
         floor={floor}
         bannerClassName={`
-          absolute top-[11vw] left-[10vw] z-20
+          absolute 
+          top-[14vw] left-[20vw] z-20
+          w-[12vw] h-[5vw]
           flex justify-center
-          w-[20vw] h-[5vw]
         `}
         bannerStyle={{
-          transform: "skewY(24deg)"
+          transform: "skewY(21deg)"
         }}
         buttonClassName={`
           absolute top-[-48.5vw] left-[4vw]
@@ -189,7 +158,7 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
       />
 
       <Vendor 
-        vendor={vendorImages[floor].vendor3}
+        vendor={vendorSet[2] || {mallView: `/images/mall/perspective1/${floor}/classic3.png`}}
         floor={floor}
         bannerClassName={`
           absolute 
@@ -211,16 +180,16 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
       />
 
       <Vendor 
-        vendor={vendorImages[floor].vendor4}
+        vendor={vendorSet[3] || {mallView: `/images/mall/perspective1/${floor}/classic4.png`}}
         floor={floor}
         bannerClassName={`
           absolute 
-          top-[18.3vw] left-[35vw] z-20
-          w-[5vw] h-[2.3vw]
+          top-[20.3vw] left-[37vw] z-20
+          w-[2.8vw] h-[2.3vw]
           flex justify-center
         `}
         bannerStyle={{
-          transform: "skewY(27deg)"
+          transform: "skewY(21deg)"
         }}
         buttonClassName={`
           absolute top-[-34vw] left-[35vw]
@@ -258,57 +227,57 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
           ></button>
         </div>
 
-        {/** botton for the forward arrow P1 */}
+        {/** button for the forward arrow P1 */}
         <div className="relative">
           <button
             onClick={() => {
               setMiddleButton(prev => !prev);
             }}
             className={`
-              absolute top-[6vw] left-[43vw]
+              absolute 
+              top-[6vw] left-[43vw]
               w-[15vw] h-[12vw] cursor-pointer
-              z-10
+              z-10 bg-[green]
             `} 
           ></button>
         </div>
+        
+        {/** button go to the prev set */}
+        {
+          fromTo.to > vendors.length &&
+          <div className="relative">
+            <button
+              onClick={() => {
+                setMiddleButton(prev => !prev);
+                setFromTo({from: fromTo.from - 4, to: fromTo.from})
+              }}
+              className={`
+                absolute 
+                top-[15vw] left-[43vw]
+                w-[15vw] h-[12vw] cursor-pointer
+                z-10 bg-[red]
+              `} 
+            ></button>
+          </div>
+        }
 
         {/** Continue mall once */}
         {
-          groupedVendors.gold.length > 4 &&
+          fromTo.to < vendors.length &&
           <div className="relative">
             <button
               onClick={() => {
               }}
               className={`
-                absolute top-[-6vw] left-[40vw]
-                w-[21vw] h-[8vw] cursor-pointer
+                absolute top-[-5.8vw] left-[40vw]
+                w-[21.2vw] h-[8.3vw] cursor-pointer
                 overflow-hidden
                 z-10
               `} 
             >
-              <ContiueMall/>
+              <ContiueMall floor={floor}/>
             </button>
           </div>
-        }
-
-        {/** Continue mall twice */}
-        {
-          groupedVendors.gold.length > 8 &&
-        <div className="relative">
-          <button
-            onClick={() => {
-            }}
-            className={`
-              absolute top-[-2vw] left-[48.5vw]
-              w-[4.5vw] h-[2vw] cursor-pointer
-              overflow-hidden
-              bg-[#9b9b098c]
-              z-10
-            `} 
-          >
-            <ContiueMall/>
-          </button>
-        </div>
         }
       </div>
       </div>
@@ -322,7 +291,10 @@ function Perspective1({ middleButton, setMiddleButton, setElev, floor, groupedVe
       }}>
         <Perspective2 
           setMiddleButton={setMiddleButton}
-          groupedVendors={groupedVendors}
+          middleButton={middleButton}
+          p2={p2}
+          fromTo={fromTo}
+          setFromTo={setFromTo}
           setElev={setElev}
           floor={floor}
         />

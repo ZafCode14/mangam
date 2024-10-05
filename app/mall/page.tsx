@@ -19,6 +19,7 @@ function Page() {
   const [elev, setElev] = useState<boolean>(false);
   const [floor, setFloor] = useState<string>("gold");
   const [styledVendors, setStyledVendors] = useState<Vendors[]>([]);
+  const [fromTo, setFromTo] = useState<{from: number, to: number}>({from: 0, to: 4})
   const [groupedVendors, setGroupedVendors] = useState<GroupedVendors>({
     gold: [],
     silver: [],
@@ -76,6 +77,87 @@ function Page() {
     getVendors();
   }, []);
 
+  const p1VendorCategories: Array<keyof GroupedVendors> = ['gold', 'silver', 'raw'];
+  const p2VendorCategories: Array<keyof GroupedVendors> = ['gold', 'silver', 'raw'];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const vendorImages: any = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const vendorImages2: any = {};
+
+
+  p1VendorCategories.forEach((category) => {
+    // Adjust the corridor path for each category
+    const corridorPathMap: Record<string, string> = {
+      gold: `/images/mall/perspective1/gold/corridor.jpeg`,
+      silver: `/images/mall/perspective1/silver/corridor.jpeg`,
+      raw: `/images/mall/perspective1/raw/C-I.jpeg`,
+    };
+
+    if (groupedVendors[category]) {
+      vendorImages[category] = {
+        corridor: corridorPathMap[category], // Dynamically assign the corridor path
+        vendor1: { mallView: `/images/mall/perspective1/${floor}/classic1.png` },
+        vendor2: { mallView: `/images/mall/perspective1/${floor}/classic2.png` },
+        vendor3: { mallView: `/images/mall/perspective1/${floor}/classic3.png` },
+        vendor4: { mallView: `/images/mall/perspective1/${floor}/classic4.png` },
+      };
+
+      groupedVendors[category].forEach((vendor: Vendors, index: number) => {
+        const shopStyle = vendor.chosenShopStyle.split('/')[3];
+        const shopFloor = vendor.chosenShopStyle.split('/')[2];
+        // Reset index + 1 to cycle between 1 and 4
+        const viewIndex = (index % 4) + 1;
+
+        vendorImages[category][`vendor${index + 1}`] = {
+          vendor: vendor,
+          mallView: `/images/mall/perspective1/${shopFloor}/${shopStyle}${viewIndex}.png`,
+          frontView: `/images/mall/interior/${shopFloor}/${shopStyle}/front.jpeg`,
+          rightView: `/images/mall/interior/${shopFloor}/${shopStyle}/right.jpeg`,
+          leftView: `/images/mall/interior/${shopFloor}/${shopStyle}/left.jpeg`,
+          middleView: `/images/mall/interior/${shopFloor}/${shopStyle}/middle.jpeg`,
+          endView: `/images/mall/interior/${shopFloor}/${shopStyle}/end.jpeg`,
+          banner: vendor.spots[`${vendor.chosenShopStyle}2.jpg`]?.[0].image,
+        };
+      });
+    }
+  });
+
+  p2VendorCategories.forEach((category) => {
+    // Adjust the corridor path for each category
+    const corridorPathMap: Record<string, string> = {
+      gold: `/images/mall/perspective2/gold/corridor.jpeg`,
+      silver: `/images/mall/perspective2/silver/corridor.jpeg`,
+      raw: `/images/mall/perspective2/raw/i.jpeg`,
+    };
+
+    if (groupedVendors[category]) {
+      vendorImages2[category] = {
+        corridor: corridorPathMap[category], // Dynamically assign the corridor path
+        vendor3: { mallView: `/images/mall/perspective2/${floor}/classic1.png` },
+        vendor4: { mallView: `/images/mall/perspective2/${floor}/classic2.png` },
+      };
+
+      groupedVendors[category].forEach((vendor: Vendors, index: number) => {
+        const shopStyle = vendor.chosenShopStyle.split('/')[3];
+        const shopFloor = vendor.chosenShopStyle.split('/')[2];
+        // Reset index + 1 to cycle between 1 and 4
+        const viewIndex = (index % 2) + 1;
+
+        vendorImages2[category][`vendor${index + 1}`] = {
+          vendor: vendor,
+          mallView: `/images/mall/perspective2/${shopFloor}/${shopStyle}${viewIndex}.png`,
+          frontView: `/images/mall/interior/${shopFloor}/${shopStyle}/front.jpeg`,
+          rightView: `/images/mall/interior/${shopFloor}/${shopStyle}/right.jpeg`,
+          leftView: `/images/mall/interior/${shopFloor}/${shopStyle}/left.jpeg`,
+          middleView: `/images/mall/interior/${shopFloor}/${shopStyle}/middle.jpeg`,
+          endView: `/images/mall/interior/${shopFloor}/${shopStyle}/end.jpeg`,
+          banner: vendor.spots[`${vendor.chosenShopStyle}2.jpg`]?.[0].image,
+        };
+      });
+    }
+  });
+
   if (styledVendors.length > 0) {
     return (
       <main
@@ -92,12 +174,15 @@ function Page() {
         }}>
           {
           height > width ? <FlipPhone/> :
-          <div className="h-full w-full flex items-center justify-center">
+          <div className="h-full w-screen flex items-center justify-center">
             <Perspective1
+              fromTo={fromTo}
+              setFromTo={setFromTo}
               middleButton={middleButton}
               setMiddleButton={setMiddleButton}
               setElev={setElev}
-              groupedVendors={groupedVendors}
+              p1={vendorImages}
+              p2={vendorImages2}
               floor={floor}
             />
             <Elevator
