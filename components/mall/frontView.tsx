@@ -10,7 +10,6 @@ interface FrontView {
   showFront: boolean;
 }
 function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
-  const style = vendor.vendor.chosenShopStyle.split('/')[3] 
   const [showMiddle, setShowMiddle] = useState<boolean>(false);
 
   return (
@@ -33,27 +32,14 @@ function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
         }}
       />      
       {/** Enter the shop button */}
-      {style === "classic" ?
-        <div 
-        onClick={() => setShowMiddle(true)}
-        className={`
-          absolute z-20
-          top-[5vw] left-[37vw]
-          w-[27vw] h-[38vw]
-          bg-[green] opacity-5
-        `}>
-        </div>
-      :
-        <div 
-        onClick={() => setShowMiddle(true)}
-        className={`
-          absolute z-20
-          top-[5vw] left-[3vw]
-          w-[27vw] h-[38vw]
-          bg-[green] opacity-5
-        `}>
-        </div>
-      }
+      <div 
+      onClick={() => setShowMiddle(true)}
+      className={`
+        absolute z-20
+        top-[5vw] left-0
+        w-full h-[38vw]
+      `}>
+      </div>
       {/** Enter the shop button */}
       <div 
       onClick={() => setShowFront(false)}
