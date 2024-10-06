@@ -3,6 +3,8 @@ import { useState } from "react";
 import LeftView from "./leftView";
 import EndView from "./endView";
 import RightView from "./rightView";
+import Middle from "./positions/middle";
+import End from "./positions/end";
 
 interface MiddleView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,53 +26,6 @@ function MiddleView({ vendor, middleView, setShowMiddle, showMiddle }:MiddleView
       pointerEvents: showMiddle ? "auto" : "none",
     }}
     >
-      <Image
-        src={middleView}
-        alt="front view"
-        width={2000}
-        height={2000}
-        className="object-cover h-full"
-        style={{
-          scale: showEnd || showLeft || showRight ? "150%" : "100%", // Only scale
-          transformOrigin: showLeft
-            ? "left center" // Zoom from the left
-            : showRight
-            ? "right center" // Zoom from the right
-            : "center", // Zoom from the center (end view)
-          transition: "1s ease",
-        }}
-      />      
-      {/** Enter the shop button */}
-      <div className={`
-        absolute z-20
-        flex
-        top-[5vw] left-0
-        w-full h-[38vw]
-      `}>
-
-        <div 
-        onClick={() => setShowLeft(true)}
-        className="h-full flex-[.7]"></div>
-
-        <div 
-        onClick={() => setShowEnd(true)}
-        className="h-full flex-1"></div>
-
-        <div 
-        onClick={() => setShowRight(true)}
-        className="h-full flex-[.7] "></div>
-
-        </div>
-      {/** Enter the shop button */}
-      <div 
-      onClick={() => setShowMiddle(false)}
-      className={`
-        absolute z-20
-        bottom-0 left-[37vw]
-        w-[27vw] h-[9vw]
-        bg-[red]
-      `}>
-      </div>
       <LeftView
         vendor={vendor}
         leftView={vendor.leftView}
@@ -89,6 +44,64 @@ function MiddleView({ vendor, middleView, setShowMiddle, showMiddle }:MiddleView
         showRight={showRight}
         setShowRight={setShowRight}
       />
+
+      <div className="h-full w-full" style={{
+        scale: showEnd || showLeft || showRight ? "150%" : "100%", // Only scale
+        transformOrigin: showLeft
+          ? "left center" // Zoom from the left
+          : showRight
+          ? "right center" // Zoom from the right
+          : "center", // Zoom from the center (end view)
+        transition: "1s ease",
+      }}>
+        <Image
+          src={middleView}
+          alt="front view"
+          width={2000}
+          height={2000}
+          className="object-cover h-full"
+        />      
+        {/** Enter the shop button */}
+        <div className={`
+          absolute z-20
+          flex
+          top-[5vw] left-0
+          w-full h-[38vw]
+        `}>
+
+          <div 
+          onClick={() => setShowLeft(true)}
+          className="h-full flex-[.7]"></div>
+
+          <div 
+          onClick={() => setShowEnd(true)}
+          className="h-full flex-1"></div>
+
+          <div 
+          onClick={() => setShowRight(true)}
+          className="h-full flex-[.7] "></div>
+
+          </div>
+        {/** Enter the shop button */}
+        <div 
+        onClick={() => setShowMiddle(false)}
+        className={`
+          absolute z-20
+          bottom-0 left-[37vw]
+          w-[27vw] h-[9vw]
+          bg-[red]
+        `}>
+        </div>
+
+        {/** Display The End Items */}
+        <div className="relative top-[-12.3vw] right-[2.8vw]" style={{
+          scale: "60%",
+        }}>
+          <End vendor={vendor}/>
+        </div>
+
+        <Middle vendor={vendor}/>
+      </div>
     </div>
   );
 }

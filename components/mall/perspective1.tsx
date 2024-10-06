@@ -20,9 +20,6 @@ function Perspective1({ fromTo, setFromTo, middleButton, setMiddleButton, setEle
   const vendors = Object.values(p1[floor]).slice(1);
   const vendorSet = vendors.slice(fromTo.from, fromTo.to)
 
-  console.log("Vendors", vendors)
-  console.log("to", fromTo.to);
-
   if (floor === "raw") {
     return (
       <div

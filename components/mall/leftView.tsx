@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Left from "./positions/left";
 
 interface LeftView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -7,7 +8,7 @@ interface LeftView {
   setShowLeft: React.Dispatch<React.SetStateAction<boolean>>;
   showLeft: boolean;
 }
-function LeftView({ leftView, setShowLeft, showLeft }:LeftView) {
+function LeftView({ vendor, leftView, setShowLeft, showLeft }:LeftView) {
   return (
     <div className="h-full w-auto absolute z-30 top-0"
     style={{
@@ -33,6 +34,7 @@ function LeftView({ leftView, setShowLeft, showLeft }:LeftView) {
         bg-[red]
       `}>
       </div>
+      <Left vendor={vendor}/>
     </div>
   );
 }

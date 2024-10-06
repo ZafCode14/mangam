@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import MiddleView from "./middleView";
+import Front from "./positions/front";
 
 interface FrontView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,36 +21,40 @@ function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
       pointerEvents: showFront ? "auto" : "none",
     }}
     >
-      <Image
-        src={frontView}
-        alt="front view"
-        width={2000}
-        height={2000}
-        className="object-cover h-full"
-        style={{
-          scale: showMiddle ? "150%" : "100%",
-          transition: "1s ease",
-        }}
-      />      
-      {/** Enter the shop button */}
-      <div 
-      onClick={() => setShowMiddle(true)}
-      className={`
-        absolute z-20
-        top-[5vw] left-0
-        w-full h-[38vw]
-      `}>
-      </div>
-      {/** Enter the shop button */}
-      <div 
-      onClick={() => setShowFront(false)}
-      className={`
-        absolute z-20
-        bottom-0 left-[37vw]
-        w-[27vw] h-[9vw]
-        bg-[red]
-      `}>
+      <div className="w-full h-full" 
+      style={{
+        scale: showMiddle ? "150%" : "100%",
+        transition: "1s ease",
+      }}>
+        <Image
+          src={frontView}
+          alt="front view"
+          width={2000}
+          height={2000}
+          className="object-cover h-full"
+        />      
+        {/** Enter the shop button */}
+        <div 
+        onClick={() => setShowMiddle(true)}
+        className={`
+          absolute z-20
+          top-[5vw] left-0
+          w-full h-[38vw]
+        `}>
         </div>
+        {/** Exit the shop button */}
+        <div 
+        onClick={() => setShowFront(false)}
+        className={`
+          absolute z-20
+          bottom-0 left-[37vw]
+          w-[27vw] h-[9vw]
+          bg-[red]
+        `}>
+        </div>
+
+        <Front vendor={vendor}/>
+      </div>
       <MiddleView
         vendor={vendor}
         middleView={vendor.middleView}

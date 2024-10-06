@@ -1,4 +1,5 @@
 import Image from "next/image";
+import End from "./positions/end";
 
 interface EndView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,7 +9,7 @@ interface EndView {
   showEnd: boolean;
 }
 
-function EndView({ endView, setShowEnd, showEnd }: EndView) {
+function EndView({ vendor, endView, setShowEnd, showEnd }: EndView) {
   return (
     <div className="h-full w-auto absolute z-30 top-0"
       style={{
@@ -35,6 +36,7 @@ function EndView({ endView, setShowEnd, showEnd }: EndView) {
         `}
       >
       </div>
+      <End vendor={vendor}/>
     </div>
   );
 }

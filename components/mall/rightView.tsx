@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Right from "./positions/right";
 
 interface RightView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,7 +9,7 @@ interface RightView {
   showRight: boolean;
 }
 
-function RightView({ rightView, setShowRight, showRight }: RightView) {
+function RightView({ vendor, rightView, setShowRight, showRight }: RightView) {
   return (
     <div className="h-full w-auto absolute z-30 top-0"
       style={{
@@ -35,6 +36,7 @@ function RightView({ rightView, setShowRight, showRight }: RightView) {
         `}
       >
       </div>
+      <Right vendor={vendor}/>
     </div>
   );
 }
