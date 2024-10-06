@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Right from "./positions/right";
+import ModernRight from "./positions/modern/right";
+import ClassicRight from "./positions/classic/right";
 
 interface RightView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,6 +11,8 @@ interface RightView {
 }
 
 function RightView({ vendor, rightView, setShowRight, showRight }: RightView) {
+  const shopStyle = vendor.vendor.chosenShopStyle.split('/')[3]
+
   return (
     <div className="h-full w-auto absolute z-30 top-0"
       style={{
@@ -36,7 +39,11 @@ function RightView({ vendor, rightView, setShowRight, showRight }: RightView) {
         `}
       >
       </div>
-      <Right vendor={vendor}/>
+      {
+        shopStyle === "classic" ?
+        <ClassicRight vendor={vendor}/> :
+        <ModernRight vendor={vendor}/>
+      }
     </div>
   );
 }

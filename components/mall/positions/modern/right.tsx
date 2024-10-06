@@ -5,7 +5,7 @@ interface Props {
   vendor: any;
 }
 
-function Right({ vendor }: Props) {
+function ModernRight({ vendor }: Props) {
   const shopStyle = vendor.vendor.chosenShopStyle;
 
   const commonStyle = `
@@ -188,4 +188,4 @@ function Right({ vendor }: Props) {
   );
 }
 
-export default Right;
+export default ModernRight;

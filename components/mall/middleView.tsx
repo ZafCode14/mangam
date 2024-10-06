@@ -3,8 +3,11 @@ import { useState } from "react";
 import LeftView from "./leftView";
 import EndView from "./endView";
 import RightView from "./rightView";
-import Middle from "./positions/middle";
-import End from "./positions/end";
+import ModernEnd from "./positions/modern/end";
+import ModernMiddle from "./positions/modern/middle";
+import ClassicEnd from "./positions/classic/end";
+import ClassicMiddle from "./positions/classic/middle";
+import ClassicCenter from "./positions/classic/center";
 
 interface MiddleView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,6 +20,8 @@ function MiddleView({ vendor, middleView, setShowMiddle, showMiddle }:MiddleView
   const [showLeft, setShowLeft] = useState<boolean>(false);
   const [showEnd, setShowEnd] = useState<boolean>(false);
   const [showRight, setShowRight] = useState<boolean>(false);
+
+  const shopStyle = vendor.vendor.chosenShopStyle.split('/')[3]
 
   return (
     <div className="h-full w-auto absolute z-30 top-0"
@@ -94,13 +99,30 @@ function MiddleView({ vendor, middleView, setShowMiddle, showMiddle }:MiddleView
         </div>
 
         {/** Display The End Items */}
-        <div className="relative top-[-12.3vw] right-[2.8vw]" style={{
-          scale: "60%",
-        }}>
-          <End vendor={vendor}/>
-        </div>
+        {
+        shopStyle === "classic" ?
+          <div className="relative top-[-11.5vw] right-[0.2vw]" style={{
+            scale: "55%",
+          }}>
+            <ClassicEnd vendor={vendor}/>
+          </div> :
+          <div className="relative top-[-12.8vw] right-[2.8vw]" style={{
+            scale: "60%",
+          }}>
+            <ModernEnd vendor={vendor}/>
+          </div>
+        }
 
-        <Middle vendor={vendor}/>
+        { 
+        shopStyle === "classic" &&
+            <ClassicCenter vendor={vendor}/>
+        }
+
+        {
+          shopStyle === "classic" ?
+          <ClassicMiddle vendor={vendor}/> :
+          <ModernMiddle vendor={vendor}/>
+        }
       </div>
     </div>
   );

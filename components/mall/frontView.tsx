@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import MiddleView from "./middleView";
-import Front from "./positions/front";
+import ModernFront from "./positions/modern/front";
+import ClassicFront from "./positions/classic/front";
 
 interface FrontView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,6 +13,7 @@ interface FrontView {
 }
 function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
   const [showMiddle, setShowMiddle] = useState<boolean>(false);
+  const shopStyle = vendor.vendor.chosenShopStyle.split('/')[3]
 
   return (
     <div className="h-full w-full absolute z-30 top-0"
@@ -52,8 +54,11 @@ function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
           bg-[red]
         `}>
         </div>
-
-        <Front vendor={vendor}/>
+        {
+          shopStyle === "classic" ?
+          <ClassicFront vendor={vendor}/> :
+          <ModernFront vendor={vendor}/>
+        }
       </div>
       <MiddleView
         vendor={vendor}

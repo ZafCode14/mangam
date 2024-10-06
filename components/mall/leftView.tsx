@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Left from "./positions/left";
+import ModernLeft from "./positions/modern/left";
+import ClassicLeft from "./positions/classic/left";
 
 interface LeftView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -9,6 +10,8 @@ interface LeftView {
   showLeft: boolean;
 }
 function LeftView({ vendor, leftView, setShowLeft, showLeft }:LeftView) {
+  const shopStyle = vendor.vendor.chosenShopStyle.split('/')[3]
+
   return (
     <div className="h-full w-auto absolute z-30 top-0"
     style={{
@@ -34,7 +37,11 @@ function LeftView({ vendor, leftView, setShowLeft, showLeft }:LeftView) {
         bg-[red]
       `}>
       </div>
-      <Left vendor={vendor}/>
+      {
+        shopStyle === "classic" ?
+        <ClassicLeft vendor={vendor}/> :
+        <ModernLeft vendor={vendor}/>
+      }
     </div>
   );
 }

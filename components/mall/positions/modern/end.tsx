@@ -5,7 +5,7 @@ interface Props {
   vendor: any;
 }
 
-function End({ vendor }: Props) {
+function ModernEnd({ vendor }: Props) {
   const shopStyle = vendor.vendor.chosenShopStyle;
 
   const commonStyle = `
@@ -262,4 +262,4 @@ function End({ vendor }: Props) {
   );
 }
 
-export default End;
+export default ModernEnd;

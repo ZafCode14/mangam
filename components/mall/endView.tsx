@@ -1,5 +1,6 @@
 import Image from "next/image";
-import End from "./positions/end";
+import ModernEnd from "./positions/modern/end";
+import ClassicEnd from "./positions/classic/end";
 
 interface EndView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,6 +11,8 @@ interface EndView {
 }
 
 function EndView({ vendor, endView, setShowEnd, showEnd }: EndView) {
+  const shopStyle = vendor.vendor.chosenShopStyle.split('/')[3]
+
   return (
     <div className="h-full w-auto absolute z-30 top-0"
       style={{
@@ -36,7 +39,11 @@ function EndView({ vendor, endView, setShowEnd, showEnd }: EndView) {
         `}
       >
       </div>
-      <End vendor={vendor}/>
+      {
+        shopStyle === "classic" ?
+        <ClassicEnd vendor={vendor}/> :
+        <ModernEnd vendor={vendor}/>
+      }
     </div>
   );
 }
