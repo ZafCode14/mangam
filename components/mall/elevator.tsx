@@ -4,15 +4,16 @@ interface elevProp {
   elev: boolean
   floor: string
   setElev: React.Dispatch<React.SetStateAction<boolean>>;
-  setMiddleButton: React.Dispatch<React.SetStateAction<boolean>>;
   setFloor: React.Dispatch<React.SetStateAction<string>>;
+  setZoomInButton: React.Dispatch<React.SetStateAction<boolean>>;
+  setFromTo: React.Dispatch<React.SetStateAction<{from: number, to: number}>>;
+  zoomInButton: boolean;
 }
-function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
+function Elevator({ elev, setElev, setFloor, floor, setFromTo, setZoomInButton }: elevProp) {
 
   return (
     <div className={`
-      absolute
-      z-30
+      absolute z-30
       top-[10%]
       flex flex-col justify-center
       w-[35vw] h-[80%] pb-10 px-10
@@ -29,8 +30,10 @@ function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
         width={3000}
         height={3000}
         onClick={() => {
-          setElev(prev => !prev)
-          setFloor("gold")
+          setFromTo({from: 0, to: 4});
+          setZoomInButton(false);
+          setElev(prev => !prev);
+          setFloor("gold");
         }}
         className={`
           object-cover
@@ -48,6 +51,8 @@ function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
         width={3000}
         height={3000}
         onClick={() => {
+          setFromTo({from: 0, to: 4});
+          setZoomInButton(false);
           setElev(prev => !prev);
           setFloor("silver");
         }}
@@ -67,6 +72,8 @@ function Elevator({ elev, setElev, setFloor, floor }: elevProp) {
         width={3000}
         height={3000}
         onClick={() => {
+          setFromTo({from: 0, to: 4});
+          setZoomInButton(false);
           setElev(prev => !prev);
           setFloor("raw");
         }}

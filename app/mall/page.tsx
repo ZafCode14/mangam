@@ -15,7 +15,7 @@ interface GroupedVendors {
   raw: Vendors[];
 }
 function Page() {
-  const [middleButton, setMiddleButton] = useState<boolean>(false);
+  const [zoomInButton, setZoomInButton] = useState<boolean>(false);
   const [elev, setElev] = useState<boolean>(false);
   const [floor, setFloor] = useState<string>("gold");
   const [styledVendors, setStyledVendors] = useState<Vendors[]>([]);
@@ -178,8 +178,8 @@ function Page() {
             <Perspective1
               fromTo={fromTo}
               setFromTo={setFromTo}
-              middleButton={middleButton}
-              setMiddleButton={setMiddleButton}
+              zoomInButton={zoomInButton}
+              setZoomInButton={setZoomInButton}
               setElev={setElev}
               p1={vendorImages}
               p2={vendorImages2}
@@ -187,10 +187,12 @@ function Page() {
             />
             <Elevator
               elev={elev}
+              setFromTo={setFromTo}
               setElev={setElev}
               setFloor={setFloor}
               floor={floor}
-              setMiddleButton={setMiddleButton}
+              zoomInButton={zoomInButton}
+              setZoomInButton={setZoomInButton}
             />
           </div>
           }
