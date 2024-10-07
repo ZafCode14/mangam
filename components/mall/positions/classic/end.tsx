@@ -1,4 +1,6 @@
 import Image from "next/image";
+import ProductPage from "../../product";
+import { useState } from "react";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -6,6 +8,8 @@ interface Props {
 }
 
 function ClassicEnd({ vendor }: Props) {
+  const [showProduct, setShowProduct] = useState<boolean>(false);
+  const [productID, setProductID] = useState<string>("");
   const shopStyle = vendor.vendor.chosenShopStyle;
 
   const commonStyle = `
@@ -19,17 +23,32 @@ function ClassicEnd({ vendor }: Props) {
   const image3 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[3]?.image;
   const image4 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[4]?.image;
 
-  const image5 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[4]?.image;
-  const image6 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[5]?.image;
-  const image7 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[6]?.image;
-  const image8 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[7]?.image;
-  const image9 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[8]?.image;
+  const image5 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[5]?.image;
+  const image6 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[6]?.image;
+  const image7 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[7]?.image;
+  const image8 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[8]?.image;
+  const image9 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[9]?.image;
 
+  const id0 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[0]?.productID;
+  const id1 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[1]?.productID;
+  const id2 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[2]?.productID;
+  const id3 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[3]?.productID;
+  const id4 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[4]?.productID;
+
+  const id5 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[5]?.productID;
+  const id6 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[6]?.productID;
+  const id7 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[7]?.productID;
+  const id8 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[8]?.productID;
+  const id9 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[9]?.productID;
   return (
     <div className="h-full w-full absolute top-0 right-0">
       {/** Position 1 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[1vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[1vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id0);
+          setShowProduct(true);
+        }}
       >
         {image0 && (
           <Image
@@ -44,7 +63,11 @@ function ClassicEnd({ vendor }: Props) {
 
       {/** Position 2 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[9vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[9vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id1);
+          setShowProduct(true);
+        }}
       >
         {image1 && (
           <Image
@@ -59,7 +82,11 @@ function ClassicEnd({ vendor }: Props) {
 
       {/** Position 3 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[17vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[17vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id2);
+          setShowProduct(true);
+        }}
       >
         {image2 && (
           <Image
@@ -74,7 +101,11 @@ function ClassicEnd({ vendor }: Props) {
 
       {/** Position 4 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[25vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[25vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id3);
+          setShowProduct(true);
+        }}
       >
         {image3 && (
           <Image
@@ -89,7 +120,11 @@ function ClassicEnd({ vendor }: Props) {
 
       {/** Position 5 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[33vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[33vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id4);
+          setShowProduct(true);
+        }}
       >
         {image4 && (
           <Image
@@ -104,7 +139,11 @@ function ClassicEnd({ vendor }: Props) {
 
       {/** Position 6 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[60vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[60vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id5);
+          setShowProduct(true);
+        }}
       >
         {image5 && (
           <Image
@@ -119,7 +158,11 @@ function ClassicEnd({ vendor }: Props) {
 
       {/** Position 7 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[68vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[68vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id6);
+          setShowProduct(true);
+        }}
       >
         {image6 && (
           <Image
@@ -134,7 +177,11 @@ function ClassicEnd({ vendor }: Props) {
 
       {/** Position 8 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[76vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[76vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id7);
+          setShowProduct(true);
+        }}
       >
         {image7 && (
           <Image
@@ -149,7 +196,11 @@ function ClassicEnd({ vendor }: Props) {
 
       {/** Position 9 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[84vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[84vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id8);
+          setShowProduct(true);
+        }}
       >
         {image8 && (
           <Image
@@ -164,7 +215,11 @@ function ClassicEnd({ vendor }: Props) {
 
       {/** Position 10 */}
       <div
-        className={`${commonStyle} bottom-[18.5vw] left-[92vw] w-[7vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[18.5vw] left-[92vw] w-[7vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id9);
+          setShowProduct(true);
+        }}
       >
         {image9 && (
           <Image
@@ -176,6 +231,26 @@ function ClassicEnd({ vendor }: Props) {
           />
         )}
       </div>
+
+      {productID &&
+        <div onClick={() => setShowProduct(false)} className={`
+          w-full h-full
+          flex justify-center items-center
+          absolute z-40
+        `} style={{
+          pointerEvents: showProduct ? "auto" : "none",
+          opacity: showProduct ? "1" : "0",
+        }}>
+          <div onClick={(e) => e.stopPropagation()} className={`
+            w-[800px] h-[500px]
+            max-w-[90%] max-h-[90vh]
+            bg-[white] rounded-md
+          `} style={{
+          }}>
+            <ProductPage productId={productID}/>
+          </div>
+        </div>
+      }
     </div>
   );
 }

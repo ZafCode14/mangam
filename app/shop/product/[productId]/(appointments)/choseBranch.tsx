@@ -18,7 +18,7 @@ function ChoseBranch({ setAppointment, userId, vendor, product }: Props) {
   const [choseBranchInfo, setChosenBranchInfo] = useState<VendorBranch | null>(null);
 
   return (
-    <div className="w-[600px] max-w-full h-[500px] bg-white rounded-md flex flex-col relative">
+    <div className="w-[600px] max-w-full h-[500px] max-h-[80%] bg-white rounded-md flex flex-col relative">
       {/* Header Section */}
       <div className="flex border-b border-[#bebebe] relative justify-center">
         <p
@@ -70,7 +70,7 @@ function ChoseBranch({ setAppointment, userId, vendor, product }: Props) {
       {next && (
         <div
           className={`
-          absolute right-0 top-0 h-full w-full bg-white
+          absolute right-0 top-0 h-full w-full bg-white rounded-md
         `}
         >
           <ChoseDateTime

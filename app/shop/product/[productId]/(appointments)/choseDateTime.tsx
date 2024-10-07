@@ -137,7 +137,7 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
   console.log(selectedDate);
   console.log(selectedTimeSlot);
   return (
-    <div className="w-[600px] max-w-full h-[500px] bg-white rounded-md flex flex-col">
+    <div className="w-[600px] max-w-full h-full max-h-[80vh] bg-white rounded-md flex flex-col">
       {/* Header Section */}
       <div className="flex border-b border-[#bebebe] relative justify-center">
         <p onClick={() => setNext(false)} className="absolute left-5 top-4 text-[20px]">
@@ -184,7 +184,7 @@ function ChoseDateTime({ setNext, setAppointment, userId, vendor, product, branc
 
       {/* Confirm Button */}
       <button 
-        className={`rounded-md w-[200px] py-3 text-white mx-auto mb-10 ${selectedTimeSlot ? "bg-[green]" : "bg-gray-300"}`}
+        className={`rounded-md w-[200px] py-3 mb-5 text-white mx-auto ${selectedTimeSlot ? "bg-[green]" : "bg-gray-300"}`}
         onClick={handleReservation}
       >
         Confirm Reservation

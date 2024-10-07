@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { useState } from "react";
+import ProductPage from "../../product";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -7,6 +9,8 @@ interface Props {
 
 function ClassicLeft({ vendor }: Props) {
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const [productID, setProductID] = useState<string>("");
+  const [showProduct, setShowProduct] = useState<boolean>(false);
 
   const commonStyle = `
     absolute
@@ -19,11 +23,22 @@ function ClassicLeft({ vendor }: Props) {
   const image4 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[4]?.image;
   const image5 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[5]?.image;
 
+  const id0 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[0]?.productID;
+  const id1 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[1]?.productID;
+  const id2 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[2]?.productID;
+  const id3 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[3]?.productID;
+  const id4 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[4]?.productID;
+  const id5 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[5]?.productID;
+
   return (
     <div className="h-full w-full absolute top-0 right-0">
       {/** Position 1 */}
       <div
-        className={`${commonStyle} bottom-[19vw] left-[20vw] w-[8vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[19vw] left-[20vw] w-[8vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id0);
+          setShowProduct(true);
+        }}
       >
         {image0 && (
           <Image
@@ -38,7 +53,11 @@ function ClassicLeft({ vendor }: Props) {
 
       {/** Position 2 */}
       <div
-        className={`${commonStyle} bottom-[19vw] left-[29vw] w-[8vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[19vw] left-[29vw] w-[8vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id1);
+          setShowProduct(true);
+        }}
       >
         {image1 && (
           <Image
@@ -53,7 +72,11 @@ function ClassicLeft({ vendor }: Props) {
 
       {/** Position 3 */}
       <div
-        className={`${commonStyle} bottom-[19vw] left-[40vw] w-[8vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[19vw] left-[40vw] w-[8vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id2);
+          setShowProduct(true);
+        }}
       >
         {image2 && (
           <Image
@@ -68,7 +91,11 @@ function ClassicLeft({ vendor }: Props) {
 
       {/** Position 4 */}
       <div
-        className={`${commonStyle} bottom-[19vw] left-[49vw] w-[8vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[19vw] left-[49vw] w-[8vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id3);
+          setShowProduct(true);
+        }}
       >
         {image3 && (
           <Image
@@ -83,7 +110,11 @@ function ClassicLeft({ vendor }: Props) {
 
       {/** Position 5 */}
       <div
-        className={`${commonStyle} bottom-[19vw] left-[60vw] w-[8vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[19vw] left-[60vw] w-[8vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id4);
+          setShowProduct(true);
+        }}
       >
         {image4 && (
           <Image
@@ -98,7 +129,11 @@ function ClassicLeft({ vendor }: Props) {
 
       {/** Position 6 */}
       <div
-        className={`${commonStyle} bottom-[19vw] left-[69vw] w-[8vw] h-[12vw]`}
+        className={`${commonStyle} bottom-[19vw] left-[69vw] w-[8vw] h-[12vw] z-20`}
+        onClick={() => {
+          setProductID(id5);
+          setShowProduct(true);
+        }}
       >
         {image5 && (
           <Image
@@ -110,6 +145,26 @@ function ClassicLeft({ vendor }: Props) {
           />
         )}
       </div>
+
+      {productID &&
+        <div onClick={() => setShowProduct(false)} className={`
+          w-full h-full
+          flex justify-center items-center
+          absolute z-40
+        `} style={{
+          pointerEvents: showProduct ? "auto" : "none",
+          opacity: showProduct ? "1" : "0",
+        }}>
+          <div onClick={(e) => e.stopPropagation()} className={`
+            w-[800px] h-[500px]
+            max-w-[90%] max-h-[90vh]
+            bg-[white] rounded-md
+          `} style={{
+          }}>
+            <ProductPage productId={productID}/>
+          </div>
+        </div>
+      }
     </div>
   );
 }

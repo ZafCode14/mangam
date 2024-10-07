@@ -3,11 +3,13 @@ import Elevator from "@/components/mall/elevator";
 import Perspective1 from "@/components/mall/perspective1";
 import { firestore } from "@/lib/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Vendors } from "@/types/products";
 import Loading from "@/components/loading";
 import useWindowDimensions from "@/hooks/dimentions";
 import FlipPhone from "@/components/mall/flipPhone";
+import RendorChoseVendor from "@/components/mall/rendorChoseVendor";
+import { useSearchParams } from "next/navigation";
 
 interface GroupedVendors {
   gold: Vendors[];
@@ -20,12 +22,14 @@ function Page() {
   const [floor, setFloor] = useState<string>("gold");
   const [styledVendors, setStyledVendors] = useState<Vendors[]>([]);
   const [fromTo, setFromTo] = useState<{from: number, to: number}>({from: 0, to: 4})
+  const searchParams = useSearchParams();
+  const vendorId = searchParams.get('brand');
+
   const [groupedVendors, setGroupedVendors] = useState<GroupedVendors>({
     gold: [],
     silver: [],
     raw: []
   });
-
   const {width, height} = useWindowDimensions();
 
   useEffect(() => {
@@ -194,6 +198,13 @@ function Page() {
               zoomInButton={zoomInButton}
               setZoomInButton={setZoomInButton}
             />
+            {vendorId &&
+              <div className="absolute h-[50vw] w-full flex justify-center items-center overflow-hidden">
+                <RendorChoseVendor
+                  allVendors={vendorImages}
+                />
+              </div>
+            }
           </div>
           }
         </div>
@@ -203,4 +214,10 @@ function Page() {
   return <Loading/> 
 }
 
-export default Page;
+export default function WrappedPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <Page />
+    </Suspense>
+  );
+}

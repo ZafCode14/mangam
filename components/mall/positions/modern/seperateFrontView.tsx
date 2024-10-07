@@ -1,26 +1,24 @@
 import Image from "next/image";
 import { useState } from "react";
-import MiddleView from "./middleView";
-import ModernFront from "./positions/modern/front";
-import ClassicFront from "./positions/classic/front";
+import MiddleView from "../../middleView";
+import ModernFront from "./front";
+import ClassicFront from "../classic/front";
+import { useRouter } from "next/navigation";
 
 interface FrontView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   vendor: any;
   frontView: string;
-  setShowFront: React.Dispatch<React.SetStateAction<boolean>>;
-  showFront: boolean;
 }
-function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
+function SeperateFrontView({ vendor, frontView }:FrontView) {
   const [showMiddle, setShowMiddle] = useState<boolean>(false);
   const shopStyle = vendor.vendor.chosenShopStyle.split('/')[3];
+  const router = useRouter();
 
   return (
     <div className="h-full w-full absolute z-30 top-0"
     style={{
-      opacity: showFront ? "1" : "0",
       transition: "1s ease",
-      pointerEvents: showFront ? "auto" : "none",
     }}
     >
       <div className="w-full h-full" 
@@ -34,7 +32,6 @@ function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
           width={2000}
           height={2000}
           className="object-cover h-full"
-          priority
         />      
         {/** Enter the shop button */}
         <div 
@@ -46,15 +43,17 @@ function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
           z-20
         `}>
         </div>
-        {/** Exit the shop button */}
+
+        {/** Exit */}
         <div 
-        onClick={() => setShowFront(false)}
+        onClick={() => router.push(`/shop/brand/${vendor.vendor.docID}`)}
         className={`
-          absolute z-20
+          absolute z-20 cursor-pointer
           bottom-0 left-0
           w-full h-[12vw]
         `}>
         </div>
+
         {
           shopStyle === "classic" ?
           <ClassicFront vendor={vendor}/> :
@@ -71,4 +70,4 @@ function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
   );
 }
 
-export default FrontView;
+export default SeperateFrontView;

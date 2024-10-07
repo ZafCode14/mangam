@@ -7,8 +7,9 @@ interface SearchProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   setBrand?: React.Dispatch<React.SetStateAction<boolean>>
   setShowFilter: React.Dispatch<React.SetStateAction<boolean>>;
+  brandId?: string;
 }
-function Search({ search, setSearch, show, setShowFilter }:SearchProps) {
+function Search({ search, setSearch, show, setShowFilter,brandId }:SearchProps) {
   return (
     <div className={`h-full w-full flex flex-col-reverse md:flex-row justify-between items-end`}>
 
@@ -50,7 +51,7 @@ function Search({ search, setSearch, show, setShowFilter }:SearchProps) {
 
       {/** Button */}
       {show !== 'brand' && show !== 'product' ?
-      <Link href={'/mall'}>
+      <Link href={`/mall?brand=${brandId}`}>
         <button className={`
           bg-[#2A1C1B]
           w-[200px] h-[50px] text-[14px]

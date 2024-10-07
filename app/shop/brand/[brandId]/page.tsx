@@ -108,7 +108,7 @@ const Page = ({ params }: BrandPageProps) => {
             </div>
           </div>
           <div className="w-full">
-            <Search search={search} setSearch={setSearch} show={show} setShowFilter={setShowFilter}/>
+            <Search search={search} setSearch={setSearch} show={show} setShowFilter={setShowFilter} brandId={brandId}/>
             <Products brandId={brandId} search={search} categories={categories} price={price} height={width <= 768 ? 300 : 300}/>
         </div>
         </div>

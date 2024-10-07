@@ -32,7 +32,7 @@ export default function Home() {
                 rounded-[4px] mb-12 mt-2 
                 flex justify-center items-center
               `}>Shop in Mall</Link>
-              <Link href={"/shop"} className={`
+              <Link href={"/shop?show=brand"} className={`
                 md:hidden
                 text-[14px] bg-[#2A1C1B] 
                 w-[150px] md:w-[180px] h-[44px] 

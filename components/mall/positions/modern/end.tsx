@@ -1,4 +1,6 @@
 import Image from "next/image";
+import ProductPage from "../../product";
+import { useState } from "react";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -7,6 +9,8 @@ interface Props {
 
 function ModernEnd({ vendor }: Props) {
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const [showProduct, setShowProduct] = useState<boolean>(false);
+  const [productID, setProductID] = useState<string>("");
 
   const commonStyle = `
     absolute
@@ -17,12 +21,22 @@ function ModernEnd({ vendor }: Props) {
   for (let i = 0; i < 18; i++) {
     images.push(vendor.vendor.spots[`${shopStyle}center.jpg`]?.[i]?.image);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const id: any = [];
+  for (let i = 0; i < 18; i++) {
+    id.push(vendor.vendor.spots[`${shopStyle}center.jpg`]?.[i]?.productID);
+  }
 
   return (
     <div className="h-full w-full absolute top-0 right-0">
       {/** Left Set */}
       {/** Position 1 */}
-      <div className={`${commonStyle} bottom-[22vw] left-[4vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[22vw] left-[4vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[0]);
+          setShowProduct(true);
+        }}
+      >
         {images[0] && (
           <Image
             src={images[0]}
@@ -35,7 +49,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 2 */}
-      <div className={`${commonStyle} bottom-[22vw] left-[11.5vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[22vw] left-[11.5vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[1]);
+          setShowProduct(true);
+        }}
+      >
         {images[1] && (
           <Image
             src={images[1]}
@@ -48,7 +67,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 3 */}
-      <div className={`${commonStyle} bottom-[22vw] left-[19vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[22vw] left-[19vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[2]);
+          setShowProduct(true);
+        }}
+      >
         {images[2] && (
           <Image
             src={images[2]}
@@ -61,7 +85,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 4 */}
-      <div className={`${commonStyle} bottom-[12vw] left-[4vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[12vw] left-[4vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[3]);
+          setShowProduct(true);
+        }}
+      >
         {images[3] && (
           <Image
             src={images[3]}
@@ -74,7 +103,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 5 */}
-      <div className={`${commonStyle} bottom-[12vw] left-[11.5vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[12vw] left-[11.5vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[4]);
+          setShowProduct(true);
+        }}
+      >
         {images[4] && (
           <Image
             src={images[4]}
@@ -87,7 +121,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 6 */}
-      <div className={`${commonStyle} bottom-[12vw] left-[19vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[12vw] left-[19vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[5]);
+          setShowProduct(true);
+        }}
+      >
         {images[5] && (
           <Image
             src={images[5]}
@@ -101,7 +140,12 @@ function ModernEnd({ vendor }: Props) {
 
       {/** Middle Set */}
       {/** Position 7 */}
-      <div className={`${commonStyle} bottom-[22vw] left-[41vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[22vw] left-[41vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[6]);
+          setShowProduct(true);
+        }}
+      >
         {images[6] && (
           <Image
             src={images[6]}
@@ -114,7 +158,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 8 */}
-      <div className={`${commonStyle} bottom-[22vw] left-[48vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[22vw] left-[48vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[7]);
+          setShowProduct(true);
+        }}
+      >
         {images[7] && (
           <Image
             src={images[7]}
@@ -127,7 +176,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 9 */}
-      <div className={`${commonStyle} bottom-[22vw] left-[55vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[22vw] left-[55vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[8]);
+          setShowProduct(true);
+        }}
+      >
         {images[8] && (
           <Image
             src={images[8]}
@@ -140,7 +194,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 10 */}
-      <div className={`${commonStyle} bottom-[12vw] left-[41vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[12vw] left-[41vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[9]);
+          setShowProduct(true);
+        }}
+      >
         {images[9] && (
           <Image
             src={images[9]}
@@ -153,7 +212,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 11 */}
-      <div className={`${commonStyle} bottom-[12vw] left-[48vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[12vw] left-[48vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[10]);
+          setShowProduct(true);
+        }}
+      >
         {images[10] && (
           <Image
             src={images[10]}
@@ -166,7 +230,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 12 */}
-      <div className={`${commonStyle} bottom-[12vw] left-[55vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[12vw] left-[55vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[11]);
+          setShowProduct(true);
+        }}
+      >
         {images[11] && (
           <Image
             src={images[11]}
@@ -180,7 +249,12 @@ function ModernEnd({ vendor }: Props) {
 
       {/** Right Set */}
       {/** Position 13 */}
-      <div className={`${commonStyle} bottom-[22vw] left-[73vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[22vw] left-[73vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[12]);
+          setShowProduct(true);
+        }}
+      >
         {images[12] && (
           <Image
             src={images[12]}
@@ -193,7 +267,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 14 */}
-      <div className={`${commonStyle} bottom-[22vw] left-[80.5vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[22vw] left-[80.5vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[13]);
+          setShowProduct(true);
+        }}
+      >
         {images[13] && (
           <Image
             src={images[13]}
@@ -206,7 +285,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 15 */}
-      <div className={`${commonStyle} bottom-[22vw] left-[88vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[22vw] left-[88vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[14]);
+          setShowProduct(true);
+        }}
+      >
         {images[14] && (
           <Image
             src={images[14]}
@@ -219,7 +303,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 16 */}
-      <div className={`${commonStyle} bottom-[12vw] left-[73vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[12vw] left-[73vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[15]);
+          setShowProduct(true);
+        }}
+      >
         {images[15] && (
           <Image
             src={images[15]}
@@ -232,7 +321,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 17 */}
-      <div className={`${commonStyle} bottom-[12vw] left-[80.5vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[12vw] left-[80.5vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[16]);
+          setShowProduct(true);
+        }}
+      >
         {images[16] && (
           <Image
             src={images[16]}
@@ -245,7 +339,12 @@ function ModernEnd({ vendor }: Props) {
       </div>
 
       {/** Position 18 */}
-      <div className={`${commonStyle} bottom-[12vw] left-[88vw] w-[6vw] h-[9vw]`}>
+      <div className={`${commonStyle} bottom-[12vw] left-[88vw] w-[6vw] h-[9vw] z-20`}
+        onClick={() => {
+          setProductID(id[17]);
+          setShowProduct(true);
+        }}
+      >
         {images[17] && (
           <Image
             src={images[17]}
@@ -257,6 +356,25 @@ function ModernEnd({ vendor }: Props) {
         )}
       </div>
 
+      {productID &&
+        <div onClick={() => setShowProduct(false)} className={`
+          w-full h-full
+          flex justify-center items-center
+          absolute z-40
+        `} style={{
+          pointerEvents: showProduct ? "auto" : "none",
+          opacity: showProduct ? "1" : "0",
+        }}>
+          <div onClick={(e) => e.stopPropagation()} className={`
+            w-[800px] h-[500px]
+            max-w-[90%] max-h-[90vh]
+            bg-[white] rounded-md
+          `} style={{
+          }}>
+            <ProductPage productId={productID}/>
+          </div>
+        </div>
+      }
     </div>
   );
 }
