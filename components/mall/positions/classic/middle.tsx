@@ -11,7 +11,6 @@ function ClassicMiddle({ vendor }: Props) {
   const commonStyle = `
     absolute
     flex items-end
-    bg-[#004d8071]
   `;
 
   const rimage0 = vendor.vendor.spots[`${shopStyle}right.jpg`]?.[0]?.image;

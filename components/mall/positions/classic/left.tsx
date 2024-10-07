@@ -11,7 +11,6 @@ function ClassicLeft({ vendor }: Props) {
   const commonStyle = `
     absolute
     flex flex-col justify-end
-    bg-[#004d8071]
   `;
   const image0 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[0]?.image;
   const image1 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[1]?.image;

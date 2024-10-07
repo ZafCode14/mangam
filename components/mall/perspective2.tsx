@@ -59,7 +59,6 @@ function Perspective2({ fromTo, setFromTo, setZoomInButton, setElev, floor, p2, 
             className={`
               absolute top-[8vw] left-[-8vw]
               w-[12vw] h-[12vw] cursor-pointer
-              bg-[red]
             `} 
           ></button>
         </div>
@@ -197,7 +196,6 @@ function Perspective2({ fromTo, setFromTo, setZoomInButton, setElev, floor, p2, 
               className={`
                 absolute top-[15vw] left-[-5vw]
                 w-[12vw] h-[9vw] cursor-pointer
-                bg-[#ff000073]
               `} 
             ></button>
           </div>
@@ -214,7 +212,6 @@ function Perspective2({ fromTo, setFromTo, setZoomInButton, setElev, floor, p2, 
                 className={`
                   absolute top-[3vw] left-[-5vw]
                   w-[12vw] h-[8vw] cursor-pointer
-                  bg-[#0080007c]
                 `} 
               ></button>
             </div>

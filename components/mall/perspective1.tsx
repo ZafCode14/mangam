@@ -91,7 +91,6 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
               className={`
                 absolute top-[10vw] left-[-10vw]
                 w-[15vw] h-[12vw] cursor-pointer
-                bg-[blue]
                 z-10
               `} 
             ></button>
@@ -262,7 +261,6 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
                 absolute 
                 top-[6vw] left-[43vw]
                 w-[15vw] h-[12vw] cursor-pointer
-                z-10 bg-[#00800073]
               `} 
             ></button>
           </div>
@@ -280,7 +278,6 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
                   absolute 
                   top-[15vw] left-[43vw]
                   w-[15vw] h-[12vw] cursor-pointer
-                  z-10 bg-[#ff000073]
                 `} 
               ></button>
             </div>

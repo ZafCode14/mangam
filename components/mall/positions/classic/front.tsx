@@ -20,7 +20,6 @@ function ClassicFront({ vendor }: Props) {
   const commonStyle = `
     absolute
     flex items-end
-    bg-[#004d8071]
   `;
 
   return (

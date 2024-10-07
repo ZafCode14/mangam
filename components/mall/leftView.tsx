@@ -32,9 +32,8 @@ function LeftView({ vendor, leftView, setShowLeft, showLeft }:LeftView) {
       onClick={() => setShowLeft(false)}
       className={`
         absolute z-20
-        bottom-0 left-[37vw]
-        w-[27vw] h-[9vw]
-        bg-[red]
+        bottom-0 left-0
+        w-full h-[12vw]
       `}>
       </div>
       {

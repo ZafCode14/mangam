@@ -11,8 +11,6 @@ function ModernRight({ vendor }: Props) {
   const commonStyle = `
     absolute
     flex items-end
-    bg-[#004d8071]
-   
   `;
 
   const image0 = vendor.vendor.spots[`${shopStyle}right.jpg`]?.[0]?.image;
