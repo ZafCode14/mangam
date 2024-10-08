@@ -179,29 +179,31 @@ function Page() {
           {
           height > width ? <FlipPhone/> :
           <div className="h-full w-screen flex items-center justify-center">
-            <Perspective1
-              fromTo={fromTo}
-              setFromTo={setFromTo}
-              zoomInButton={zoomInButton}
-              setZoomInButton={setZoomInButton}
-              setElev={setElev}
-              p1={vendorImages}
-              p2={vendorImages2}
-              floor={floor}
-            />
-            <Elevator
-              elev={elev}
-              setFromTo={setFromTo}
-              setElev={setElev}
-              setFloor={setFloor}
-              floor={floor}
-              zoomInButton={zoomInButton}
-              setZoomInButton={setZoomInButton}
-            />
-            {vendorId &&
+            {vendorId ?
               <div className="absolute h-[50vw] w-full flex justify-center items-center overflow-hidden">
                 <RendorChoseVendor
                   allVendors={vendorImages}
+                />
+              </div> :
+              <div className="w-full h-full flex items-center">
+                <Perspective1
+                  fromTo={fromTo}
+                  setFromTo={setFromTo}
+                  zoomInButton={zoomInButton}
+                  setZoomInButton={setZoomInButton}
+                  setElev={setElev}
+                  p1={vendorImages}
+                  p2={vendorImages2}
+                  floor={floor}
+                />
+                <Elevator
+                  elev={elev}
+                  setFromTo={setFromTo}
+                  setElev={setElev}
+                  setFloor={setFloor}
+                  floor={floor}
+                  zoomInButton={zoomInButton}
+                  setZoomInButton={setZoomInButton}
                 />
               </div>
             }
