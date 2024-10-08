@@ -49,7 +49,6 @@ function RendorChoseVendor({ allVendors }:Props) {
     const allVendorsWithChosenStyle = Object.values(allVendors[vendorStyle]).slice(1);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const matchingVendor: any = allVendorsWithChosenStyle.find((v: any) => v.vendor.docID === vendorId);
-    console.log(matchingVendor);
       
     if (matchingVendor) {
       return (

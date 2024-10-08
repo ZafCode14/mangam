@@ -190,7 +190,7 @@ function Page() {
                   allVendors={vendorImages}
                 />
               </div> :
-              <div className="w-full h-full flex items-center">
+              <div className="w-full h-full flex items-center justify-center">
                 <Perspective1
                   fromTo={fromTo}
                   setFromTo={setFromTo}
