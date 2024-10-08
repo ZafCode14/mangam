@@ -35,16 +35,21 @@ function Page() {
   useEffect(() => {
     const getVendors = async () => {
       const vendorsCollection = collection(firestore, 'vendors');
-      const q = query(vendorsCollection, where('chosenShopStyle', '!=', null));
+
+      // Query vendors with status 'approved'
+      const q = query(vendorsCollection, where('status', '==', 'approved'));
 
       try {
         const querySnapshot = await getDocs(q);
-        
+
         // Map the documents and include the id
-        const vendors: Vendors[] = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }) as Vendors);
+        const vendors: Vendors[] = querySnapshot.docs
+          .map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          }) as Vendors)
+          // Filter out vendors with null chosenShopStyle
+          .filter(vendor => vendor.chosenShopStyle !== null);
 
         // Group vendors by chosenShopStyle
         const groupedVendors = vendors.reduce((acc, vendor) => {
@@ -59,7 +64,7 @@ function Page() {
           return acc;
         }, { gold: [], silver: [], raw: [] } as GroupedVendors);
 
-        // Sort each group by JoinDate (assuming it's a timestamp)
+        // Sort each group by joinDate (assuming it's a timestamp)
         const sortByJoinDate = (vendors: Vendors[]) => {
           return vendors.sort((a, b) => b.joinDate.seconds - a.joinDate.seconds);
         };
