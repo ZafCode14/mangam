@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import useVendors from './vendors';
-import { getFirestore, collection, getDocs, query, where, limit } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 
 // Define Product type
 interface Product {
@@ -14,11 +14,11 @@ interface Product {
   category: string;
 }
 
-const useProducts = (limitCount: number = 10) => { // Default to 10 products
+const useProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
-  
+
   const [vendors] = useVendors();
 
   // Memoize vendorIds to avoid re-render loops
@@ -36,18 +36,16 @@ const useProducts = (limitCount: number = 10) => { // Default to 10 products
         for (const vendorId of vendorIds) {
           const q = query(
             collection(db, 'products'),
-            where('brandDocID', '==', vendorId),
-            limit(limitCount) // Use the limit passed to the hook
+            where('brandDocID', '==', vendorId)
           );
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
-            allProducts.push({ id: doc.id, ...doc.data() } as Product);
+            allProducts.push({ id: doc.id, ...(doc.data() as Omit<Product, 'id'>) });
           });
         }
 
         const sortedProducts = allProducts.sort((a, b) => a.name.localeCompare(b.name));
-        
-        // Only set products if the component is still mounted
+
         if (isMounted) {
           setProducts(sortedProducts);
         }
@@ -67,9 +65,9 @@ const useProducts = (limitCount: number = 10) => { // Default to 10 products
     }
 
     return () => {
-      isMounted = false; // Cleanup function sets isMounted to false
+      isMounted = false;
     };
-  }, [vendorIds, limitCount]); // Add limitCount to dependencies
+  }, [vendorIds]);
 
   return { products, loading, error }; // Return as object for clarity
 };

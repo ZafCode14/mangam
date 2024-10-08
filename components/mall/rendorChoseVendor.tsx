@@ -52,7 +52,7 @@ function RendorChoseVendor({ allVendors }:Props) {
       
     if (matchingVendor) {
       return (
-        <div className="w-full h-[50vw]">
+        <div className="relative h-[52vw] w-full flex justify-center items-center overflow-hidden">
           <SeperateFrontView
             vendor={matchingVendor}
             frontView={matchingVendor.frontView}

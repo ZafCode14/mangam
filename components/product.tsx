@@ -23,11 +23,11 @@ function Product({ product, res }:Prop) {
     <Link href={`/shop/product/${product.docID}`} className="w-full h-full relative text-black">
       <div className={`w-full h-full object-cover overflow-hidden flex justify-center items-center bg-[white] rounded-md`}>
         <Image
+          loading="lazy"
           src={product.images[0]}
           alt={'search icon'}
           width={res}
           height={res}
-          priority
           className={`object-contain h-full`}
         />
       </div>

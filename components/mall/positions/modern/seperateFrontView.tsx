@@ -50,6 +50,7 @@ function SeperateFrontView({ vendor, frontView }:FrontView) {
         className={`
           absolute z-20 cursor-pointer
           bottom-0 left-0
+          bg-red
           w-full h-[12vw]
         `}>
         </div>

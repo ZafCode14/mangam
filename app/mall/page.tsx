@@ -192,7 +192,7 @@ function Page() {
           {
           <div className="h-full w-screen flex items-center justify-center">
             {vendorId ?
-              <div className="absolute h-[50vw] w-full flex justify-center items-center overflow-hidden">
+              <div className="w-full h-full flex items-center justify-center">
                 <RendorChoseVendor
                   allVendors={vendorImages}
                 />
