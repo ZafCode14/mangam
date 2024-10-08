@@ -11,6 +11,8 @@ function ModernFront({ vendor }: Props) {
   const [showProduct, setShowProduct] = useState<boolean>(false);
   const [productID, setProductID] = useState<string>("");
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const floor = shopStyle.split('/')[2];
+  const style = shopStyle.split('/')[3];
 
   const image0 = vendor.vendor.spots[`${shopStyle}front.jpg`]?.[0]?.image;
   const image1 = vendor.vendor.spots[`${shopStyle}front.jpg`]?.[1]?.image;
@@ -34,6 +36,13 @@ function ModernFront({ vendor }: Props) {
   return (
     <div className="h-full w-full absolute top-0 right-0" style={{
     }}>
+      <Image
+        src={`/images/mall/arrows/${floor}/${style}/Front.png`}
+        alt="item"
+        width={800}
+        height={800}
+        className="object-cover w-full absolute"
+      />
       {/** Position 1 */}
       <div
         className={`${commonStyle} bottom-[18vw] right-[56.3vw] w-[4vw] h-[10vw] z-20`}

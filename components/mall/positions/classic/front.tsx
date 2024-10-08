@@ -12,6 +12,9 @@ function ClassicFront({ vendor }: Props) {
   const [productID, setProductID] = useState<string>("");
   const shopStyle = vendor.vendor.chosenShopStyle;
 
+  const floor = shopStyle.split('/')[2];
+  const style = shopStyle.split('/')[3];
+
   const image0 = vendor.vendor.spots[`${shopStyle}front.jpg`]?.[0]?.image;
   const image1 = vendor.vendor.spots[`${shopStyle}front.jpg`]?.[1]?.image;
   const image2 = vendor.vendor.spots[`${shopStyle}front.jpg`]?.[2]?.image;
@@ -37,6 +40,13 @@ function ClassicFront({ vendor }: Props) {
 
   return (
     <div className="h-full w-full absolute top-0 right-0">
+      <Image
+        src={`/images/mall/arrows/${floor}/${style}/Front.png`}
+        alt="item"
+        width={800}
+        height={800}
+        className="object-cover w-full"
+      />
       {/** Position 1 */}
       <div
         className={`${commonStyle} bottom-[16vw] left-[6vw] w-[4vw] h-[10vw] z-20`}

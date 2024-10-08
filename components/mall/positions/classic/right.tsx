@@ -9,6 +9,8 @@ interface Props {
 
 function ClassicRight({ vendor }: Props) {
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const floor = shopStyle.split('/')[2];
+  const style = shopStyle.split('/')[3];
   const [productID, setProductID] = useState<string>("");
   const [showProduct, setShowProduct] = useState<boolean>(false);
 
@@ -34,6 +36,13 @@ function ClassicRight({ vendor }: Props) {
 
   return (
     <div className="h-full w-full absolute top-0 right-0">
+      <Image
+        src={`/images/mall/arrows/${floor}/${style}/Right.png`}
+        alt="item"
+        width={800}
+        height={800}
+        className="object-cover w-full absolute"
+      />
       {/** Position 1 */}
       <div
         className={`${commonStyle} bottom-[19vw] left-[22vw] w-[8vw] h-[12vw] z-20`}

@@ -28,13 +28,13 @@ function RightView({ vendor, rightView, setShowRight, showRight }: RightView) {
         height={2000}
         className="object-cover h-full"
       />
-      {/** Enter the shop button */}
+      {/** Back to Establishing View */}
       <div
         onClick={() => setShowRight(false)}
         className={`
           absolute z-20
-          bottom-0 left-0
-          w-full h-[10vw]
+          bottom-[2vw] left-[42vw]
+          w-[16vw] h-[12vw]
         `}
       >
       </div>

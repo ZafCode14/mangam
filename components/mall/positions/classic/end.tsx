@@ -11,6 +11,8 @@ function ClassicEnd({ vendor }: Props) {
   const [showProduct, setShowProduct] = useState<boolean>(false);
   const [productID, setProductID] = useState<string>("");
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const floor = shopStyle.split('/')[2];
+  const style = shopStyle.split('/')[3];
 
   const commonStyle = `
     absolute
@@ -42,6 +44,13 @@ function ClassicEnd({ vendor }: Props) {
   const id9 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[9]?.productID;
   return (
     <div className="h-full w-full absolute top-0 right-0">
+      <Image
+        src={`/images/mall/arrows/${floor}/${style}/Center.png`}
+        alt="item"
+        width={800}
+        height={800}
+        className="object-cover w-full absolute"
+      />
       {/** Position 1 */}
       <div
         className={`${commonStyle} bottom-[18.5vw] left-[1vw] w-[7vw] h-[12vw] z-20`}

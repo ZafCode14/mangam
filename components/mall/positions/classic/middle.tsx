@@ -9,6 +9,9 @@ interface Props {
 
 function ClassicMiddle({ vendor }: Props) {
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const floor = shopStyle.split('/')[2];
+  const style = shopStyle.split('/')[3];
+
   const [showProduct, setShowProduct] = useState<boolean>(false);
   const [productID, setProductID] = useState<string>("");
 
@@ -28,8 +31,16 @@ function ClassicMiddle({ vendor }: Props) {
 
   const id0 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[0]?.productID;
   const id1 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[1]?.productID;
+
   return (
     <div className="h-full w-full absolute top-0 right-0">
+      <Image
+        src={`/images/mall/arrows/${floor}/${style}/Establishing.png`}
+        alt="item"
+        width={800}
+        height={800}
+        className="object-cover w-full absolute"
+      />
       {/** Position 1 */}
       <div
         className={`${commonStyle} bottom-[21vw] right-[7vw] w-[5vw] h-[8vw] z-20`}

@@ -66,34 +66,49 @@ function MiddleView({ vendor, middleView, setShowMiddle, showMiddle }:MiddleView
           height={2000}
           className="object-cover h-full"
         />      
-        {/** Enter the shop button */}
-        <div className={`
-          absolute z-20
-          flex
-          top-[5vw] left-0
-          w-full h-[38vw]
-        `}>
+        {/** Go To the Left view */}
+        <div onClick={() => setShowLeft(true)}
+        className={`
+          absolute z-20 
+          bottom-[8vw] left-[8vw]
+          h-[10vw] w-[10vw]
+        `}> </div>
 
-          <div 
-          onClick={() => setShowLeft(true)}
-          className="h-full flex-[.7]"></div>
+        {/** Go To the Center view */}
+        <div onClick={() => setShowEnd(true)}
+        className={shopStyle === "modern" ? `
+          absolute z-20 
+          top-[9vw] left-0
+          h-[23vw] w-full
+        ` : `
+          absolute z-20 
+          top-[13vw] left-[20vw]
+          h-[18vw] w-[60vw]
+        `}></div>
 
-          <div 
-          onClick={() => setShowEnd(true)}
-          className="h-full flex-1"></div>
+        {/** Go To the Right view */}
+        <div onClick={() => setShowRight(true)}
+        className={shopStyle === "modern" ? `
+          absolute z-20 
+          bottom-[8vw] right-[16vw]
+          h-[10vw] w-[10vw]
+        ` : `
+          absolute z-20 
+          bottom-[8vw] right-[10vw]
+          h-[10vw] w-[10vw]
+        `}></div>
 
-          <div 
-          onClick={() => setShowRight(true)}
-          className="h-full flex-[.7] "></div>
-
-          </div>
-        {/** Enter the shop button */}
+        {/** Go back to Fron View */}
         <div 
         onClick={() => setShowMiddle(false)}
-        className={`
+        className={shopStyle === "modern" ? `
           absolute z-20
-          bottom-0 left-0
-          w-full h-[12vw]
+          bottom-[3vw] left-[42vw]
+          w-[16vw] h-[12vw]
+        ` : `
+          absolute z-20
+          bottom-[1vw] left-[42vw]
+          w-[16vw] h-[12vw]
         `}>
         </div>
 

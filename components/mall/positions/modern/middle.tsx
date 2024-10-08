@@ -9,6 +9,8 @@ interface Props {
 
 function ModernMiddle({ vendor }: Props) {
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const floor = shopStyle.split('/')[2];
+  const style = shopStyle.split('/')[3];
   const [showProduct, setShowProduct] = useState<boolean>(false);
   const [productID, setProductID] = useState<string>("");
 
@@ -34,6 +36,13 @@ function ModernMiddle({ vendor }: Props) {
   const id2 = vendor.vendor.spots[`${shopStyle}left.jpg`]?.[2]?.productID;
   return (
     <div className="h-full w-full absolute top-0 right-0">
+      <Image
+        src={`/images/mall/arrows/${floor}/${style}/Establishing.png`}
+        alt="item"
+        width={800}
+        height={800}
+        className="object-cover w-full absolute"
+      />
       {/** Position 1 */}
       <div
         className={`${commonStyle} bottom-[19vw] right-[25vw] w-[5vw] h-[6vw] z-20`}

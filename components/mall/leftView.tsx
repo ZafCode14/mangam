@@ -27,13 +27,13 @@ function LeftView({ vendor, leftView, setShowLeft, showLeft }:LeftView) {
         height={2000}
         className="object-cover h-full"
       />      
-      {/** Enter the shop button */}
+      {/** Back to Establishing View */}
       <div 
       onClick={() => setShowLeft(false)}
       className={`
         absolute z-20
-        bottom-0 left-0
-        w-full h-[12vw]
+        bottom-[2vw] left-[42vw]
+        w-[16vw] h-[12vw]
       `}>
       </div>
       {

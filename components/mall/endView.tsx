@@ -31,10 +31,14 @@ function EndView({ vendor, endView, setShowEnd, showEnd }: EndView) {
       {/** Enter the shop button */}
       <div
         onClick={() => setShowEnd(false)}
-        className={`
+        className={shopStyle === "modern" ?`
           absolute z-20
-          bottom-0 left-0
-          w-full h-[11vw]
+          bottom-[1vw] left-[42vw]
+          w-[16vw] h-[10vw]
+        `: `
+          absolute z-20
+          bottom-[3vw] left-[40vw]
+          w-[16vw] h-[10vw]
         `}
       >
       </div>

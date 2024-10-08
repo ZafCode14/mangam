@@ -9,6 +9,8 @@ interface Props {
 
 function ModernRight({ vendor }: Props) {
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const floor = shopStyle.split('/')[2];
+  const style = shopStyle.split('/')[3];
   const [productID, setProductID] = useState<string>("");
   const [showProduct, setShowProduct] = useState<boolean>(false);
 
@@ -45,6 +47,13 @@ function ModernRight({ vendor }: Props) {
 
   return (
     <div className="h-full w-full absolute top-0 right-0">
+      <Image
+        src={`/images/mall/arrows/${floor}/${style}/Right.png`}
+        alt="item"
+        width={800}
+        height={800}
+        className="object-cover w-full absolute"
+      />
       {/** Back Right Set */}
       {/** Position 13 */}
       <div className={`${commonStyle} bottom-[25vw] left-[0vw] w-[7vw] h-[10vw] z-20`} onClick={() => { setProductID(id12); setShowProduct(true); }}>

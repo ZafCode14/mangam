@@ -11,6 +11,8 @@ function ModernLeft({ vendor }: Props) {
   const [productID, setProductID] = useState<string>("");
   const [showProduct, setShowProduct] = useState<boolean>(false);
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const floor = shopStyle.split('/')[2];
+  const style = shopStyle.split('/')[3];
 
   const commonStyle = `
     absolute
@@ -43,6 +45,13 @@ function ModernLeft({ vendor }: Props) {
   const bid5 = vendor.vendor.spots[`${shopStyle}center.jpg`]?.[5]?.productID;
   return (
     <div className="h-full w-full absolute top-0 right-0">
+      <Image
+        src={`/images/mall/arrows/${floor}/${style}/Left.png`}
+        alt="item"
+        width={800}
+        height={800}
+        className="object-cover w-full absolute"
+      />
       {/** End left Set */}
       {/** Position 1 */}
       <div className={`${commonStyle} bottom-[30vw] left-[60vw] w-[6vw] h-[8vw] z-20`}

@@ -39,20 +39,29 @@ function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
         {/** Enter the shop button */}
         <div 
         onClick={() => setShowMiddle(true)}
-        className={`
+        className={shopStyle === "modern" ? `
           absolute
-          top-[5vw] left-0
-          w-full h-[38vw]
+          top-[16vw] left-[2vw]
+          w-[30vw] h-[8vw]
+          z-20
+        ` : `
+          absolute
+          top-[21vw] left-[35vw]
+          w-[30vw] h-[8vw]
           z-20
         `}>
         </div>
         {/** Exit the shop button */}
         <div 
         onClick={() => setShowFront(false)}
-        className={`
+        className={shopStyle === "modern" ? `
           absolute z-20
-          bottom-0 left-0
-          w-full h-[12vw]
+          bottom-[4vw] left-[10vw]
+          w-[15vw] h-[12vw]
+        ` : `
+          absolute z-20
+          bottom-[4vw] left-[43vw]
+          w-[15vw] h-[12vw]
         `}>
         </div>
         {

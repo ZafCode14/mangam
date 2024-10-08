@@ -9,6 +9,8 @@ interface Props {
 
 function ModernEnd({ vendor }: Props) {
   const shopStyle = vendor.vendor.chosenShopStyle;
+  const floor = shopStyle.split('/')[2];
+  const style = shopStyle.split('/')[3];
   const [showProduct, setShowProduct] = useState<boolean>(false);
   const [productID, setProductID] = useState<string>("");
 
@@ -29,6 +31,13 @@ function ModernEnd({ vendor }: Props) {
 
   return (
     <div className="h-full w-full absolute top-0 right-0">
+      <Image
+        src={`/images/mall/arrows/${floor}/${style}/Center.png`}
+        alt="item"
+        width={800}
+        height={800}
+        className="object-cover w-full absolute"
+      />
       {/** Left Set */}
       {/** Position 1 */}
       <div className={`${commonStyle} bottom-[22vw] left-[4vw] w-[6vw] h-[9vw] z-20`}
