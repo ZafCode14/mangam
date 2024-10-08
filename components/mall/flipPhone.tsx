@@ -3,11 +3,18 @@ import Image from "next/image";
 function FlipPhone() {
   return (
     <div className={`
-      bg-[white] 
       fixed z-20 top-0 right-0
       w-full h-screen 
       flex items-center justify-center 
+      backdrop-blur-md
     `}>
+      <Image
+        alt="flip phone"
+        src={"/images/mall/mall.png"}
+        width={400}
+        height={400}
+        className={`absolute rotate-90 min-w-[100vh] h-[100vw] pl-[70px] object-cover blur-md`}
+      />
       <Image
         alt="flip phone"
         src={"/images/flipPhone/arrowLeft.png"}

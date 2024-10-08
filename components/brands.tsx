@@ -6,13 +6,16 @@ import useWindowDimensions from "@/hooks/dimentions";
 
 interface BrandProps {
   search: string;
+  floor: string;
 }
-function Brands({ search }:BrandProps) {
+function Brands({ search, floor }:BrandProps) {
   const [vendors, loading] = useVendors();
   const {width} = useWindowDimensions();
 
-  const filteredBrands = vendors.filter((vendor) =>
-    vendor.name.toLowerCase().includes(search.toLowerCase())
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const filteredBrands = vendors.filter((vendor: any) =>
+    vendor.name.toLowerCase().includes(search.toLowerCase()) &&
+    vendor.chosenShopStyle.includes(floor)
   );
 
   if (!loading) {

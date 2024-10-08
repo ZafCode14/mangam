@@ -45,7 +45,7 @@ function ModernMiddle({ vendor }: Props) {
       />
       {/** Position 1 */}
       <div
-        className={`${commonStyle} bottom-[19vw] right-[25vw] w-[5vw] h-[6vw] z-20`}
+        className={`${commonStyle} bottom-[19.5vw] right-[25vw] w-[5vw] h-[5.5vw] z-20`}
         onClick={() => {
           setProductID(rid0);
           setShowProduct(true);
@@ -64,7 +64,7 @@ function ModernMiddle({ vendor }: Props) {
 
       {/** Position 2 */}
       <div
-        className={`${commonStyle} bottom-[19vw] right-[19.5vw] w-[5vw] h-[6vw] z-20`}
+        className={`${commonStyle} bottom-[19.5vw] right-[19.5vw] w-[5vw] h-[5.5vw] z-20`}
         onClick={() => {
           setProductID(rid1);
           setShowProduct(true);
@@ -83,7 +83,7 @@ function ModernMiddle({ vendor }: Props) {
 
       {/** Position 3 */}
       <div
-        className={`${commonStyle} bottom-[19vw] right-[14vw] w-[5vw] h-[6vw] z-20`}
+        className={`${commonStyle} bottom-[19.5vw] right-[14vw] w-[5vw] h-[5.5vw] z-20`}
         onClick={() => {
           setProductID(rid2);
           setShowProduct(true);
@@ -103,7 +103,7 @@ function ModernMiddle({ vendor }: Props) {
 
       {/** Position 1 */}
       <div
-        className={`${commonStyle} bottom-[19vw] left-[17vw] w-[5vw] h-[6vw] z-20`}
+        className={`${commonStyle} bottom-[19.5vw] left-[17vw] w-[5vw] h-[5.5vw] z-20`}
         onClick={() => {
           setProductID(id0);
           setShowProduct(true);
@@ -122,7 +122,7 @@ function ModernMiddle({ vendor }: Props) {
 
       {/** Position 2 */}
       <div
-        className={`${commonStyle} bottom-[19vw] left-[11.5vw] w-[5vw] h-[6vw] z-20`}
+        className={`${commonStyle} bottom-[19.5vw] left-[11.5vw] w-[5vw] h-[5.5vw] z-20`}
         onClick={() => {
           setProductID(id1);
           setShowProduct(true);
@@ -141,7 +141,7 @@ function ModernMiddle({ vendor }: Props) {
 
       {/** Position 3 */}
       <div
-        className={`${commonStyle} bottom-[19vw] left-[6vw] w-[5vw] h-[6vw] z-20`}
+        className={`${commonStyle} bottom-[19.5vw] left-[6vw] w-[5vw] h-[5.5vw] z-20`}
         onClick={() => {
           setProductID(id2);
           setShowProduct(true);

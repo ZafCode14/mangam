@@ -17,7 +17,8 @@ interface PerspectiveProp {
 function Perspective2({ fromTo, setFromTo, setZoomInButton, setElev, floor, p2, p1 }: PerspectiveProp) {
   const allVendors = Object.values(p2[floor]).slice(1)
   const sliceVendorSet = allVendors.slice(fromTo.from, fromTo.to).reverse();
-  const vendorSet = sliceVendorSet.slice(2, 4).reverse();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const vendorSet: any = sliceVendorSet.slice(2, 4).reverse();
 
   if (floor === "raw") {
   return (
@@ -97,13 +98,18 @@ function Perspective2({ fromTo, setFromTo, setZoomInButton, setElev, floor, p2, 
             object-cover
           `}
         />
+{/** vendorSet[0].vendor.chosenShopStyle.split('/')[3] */}
         <Vendor
           vendor={vendorSet[0] || {mallView: `/images/mall/perspective2/${floor}/classic1.png`}}
           floor={floor}
-          bannerClassName={`
-            absolute top-[12vw] right-[10vw] 
+          bannerClassName={vendorSet[0].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
+            absolute top-[12.3vw] right-[11.3vw] z-20
             flex justify-center
             w-[20vw] h-[5vw]
+          ` : `
+            absolute top-[10.5vw] right-[12.5vw] z-20
+            flex justify-center
+            w-[15vw] h-[6vw]
           `}
           bannerStyle={{
             transform: "skewY(-22deg)"
@@ -121,9 +127,14 @@ function Perspective2({ fromTo, setFromTo, setZoomInButton, setElev, floor, p2, 
         <Vendor 
           vendor={vendorSet[1] || {mallView: `/images/mall/perspective2/${floor}/classic2.png`}}
           floor={floor}
-          bannerClassName={`
-            absolute 
-            top-[15vw] left-[24vw] 
+          bannerClassName={vendorSet[0].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
+            absolute z-20
+            top-[15vw] left-[27.2vw] 
+            flex justify-center
+            w-[8vw] h-[5vw]
+          ` : `
+            absolute z-20
+            top-[15vw] left-[22.5vw] 
             flex justify-center
             w-[12vw] h-[5vw]
           `}

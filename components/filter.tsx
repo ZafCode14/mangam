@@ -11,10 +11,12 @@ interface FilterProp {
   price: number[];
   categories: string[];
   setCategories: React.Dispatch<React.SetStateAction<string[]>>;
+  setFloor?: React.Dispatch<React.SetStateAction<string>>;
   setPrice: React.Dispatch<React.SetStateAction<number[]>>;
   marginTop: string;
+  floor?: string;
 }
-function Filter({ marginTop, price, categories, setPrice, setCategories, brandId }:FilterProp) {
+function Filter({ marginTop, price, categories, floor, setPrice, setFloor, setCategories, brandId }:FilterProp) {
   const searchParams = useSearchParams();
   const p = usePathname();
   const [products, loading] = useProducts();
@@ -48,9 +50,22 @@ function Filter({ marginTop, price, categories, setPrice, setCategories, brandId
       } else {
         setFilteredCategories(["Bracelets", "Rings", "Brooches", "Earrings", "Necklaces", "Anklets", "Cufflinks"]);
       }
+    }  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, products, categories, price, brandId, floor]);
+
+  useEffect(() => {
+    if (setFloor) {
+      if (gold) {
+        setFloor("gold");
+      } else if (silver) {
+        setFloor("silver");
+      } else if (raw) {
+        setFloor("raw");
+      } else {
+        setFloor("");
+      }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, products, categories, price, brandId]);
+  }, [gold, silver, raw, setFloor])
 
   // Function to handle category toggling
   const handleCategoryChange = (category: string) => {
@@ -120,7 +135,7 @@ function Filter({ marginTop, price, categories, setPrice, setCategories, brandId
                 onClick={() => handleFloorChange("raw")}
                 className={`w-full h-auto`}
                 style={{
-                  marginTop: silver ? "10px" : "0px",
+                  marginTop: raw ? "12px" : "0px",
                   transition: ".4s ease"
                 }}
               />

@@ -13,6 +13,7 @@ function ShowComponent({
   setSearch,
   categories,
   price,
+  floor,
   setShowFilter
 }: {
   search: string;
@@ -21,6 +22,7 @@ function ShowComponent({
   setCategories: React.Dispatch<React.SetStateAction<string[]>>;
   setShowFilter: React.Dispatch<React.SetStateAction<boolean>>;
   price: number[];
+  floor: string;
   setPrice: React.Dispatch<React.SetStateAction<number[]>>;
 }) {
   const searchParams = useSearchParams();
@@ -37,7 +39,10 @@ function ShowComponent({
     <div>
       <Search search={search} setSearch={setSearch} show={show} setShowFilter={setShowFilter}/>
       {show === "brand" ? (
-        <Brands search={search} />
+        <Brands 
+          search={search}
+          floor={floor}
+        />
       ) : (
         <Products
           brandId={"all"}
@@ -56,6 +61,7 @@ function Page() {
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [categories, setCategories] = useState<string[]>([]);
   const [price, setPrice] = useState<number[]>([0, 300000]);
+  const [floor, setFloor] = useState<string>("");
 
   return (
     <main className="flex justify-center w-full h-[100vh] text-white">
@@ -69,7 +75,7 @@ function Page() {
             fixed top-0 right-0 z-10 lg:static
             flex justify-center items-center lg:block
             w-screen h-[100vh] lg:w-auto lg:mr-5 lg:mt-24 lg:h-auto
-            bg-[#000000cb] lg:bg-transparent
+            lg:bg-transparent backdrop-blur-md
           `} onClick={() => setShowFilter(false)}>
             <div onClick={(e) => e.stopPropagation()}>
               <Filter
@@ -77,6 +83,8 @@ function Page() {
                 categories={categories}
                 setCategories={setCategories}
                 setPrice={setPrice}
+                setFloor={setFloor}
+                floor={floor}
                 marginTop="md:mt-[0]"
                 brandId=""
               />
@@ -92,6 +100,7 @@ function Page() {
               price={price}
               setPrice={setPrice}
               setShowFilter={setShowFilter}
+              floor={floor}
             />
           </div>
         </div>

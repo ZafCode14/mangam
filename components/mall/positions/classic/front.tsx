@@ -45,7 +45,7 @@ function ClassicFront({ vendor }: Props) {
         alt="item"
         width={800}
         height={800}
-        className="object-cover w-full"
+        className="object-cover w-full absolute"
       />
       {/** Position 1 */}
       <div

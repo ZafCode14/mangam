@@ -94,7 +94,7 @@ const Page = ({ params }: BrandPageProps) => {
             fixed top-0 right-0 z-10 lg:static
             flex justify-center items-center lg:block
             w-screen h-[100vh] lg:w-auto lg:mr-5 lg:mt-24 lg:h-auto
-            bg-[#000000cb] lg:bg-transparent
+            lg:bg-transparent
           `} onClick={() => setShowFilter(false)}>
             <div onClick={(e) => e.stopPropagation()}>
               <Filter

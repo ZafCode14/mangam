@@ -199,23 +199,26 @@ function ModernRight({ vendor }: Props) {
         )}
       </div>
 
-      {productID && (
-        <div
-          onClick={() => setShowProduct(false)}
-          className="w-full h-full flex justify-center items-center absolute z-40"
-          style={{
-            pointerEvents: showProduct ? "auto" : "none",
-            opacity: showProduct ? "1" : "0",
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="w-[800px] h-[80vh] bg-[#eee] z-50 p-4 flex items-center justify-center"
-          >
-            <ProductPage productId={productID} />
+      {productID &&
+        <div onClick={() => setShowProduct(false)} className={`
+          w-full h-full
+          flex justify-center items-center
+          absolute z-40
+        `} style={{
+          pointerEvents: showProduct ? "auto" : "none",
+          opacity: showProduct ? "1" : "0",
+        }}>
+          <div onClick={(e) => e.stopPropagation()} className={`
+            w-[800px] h-[500px]
+            max-w-[90%] max-h-[90vh]
+            bg-[white] rounded-md
+          `} style={{
+          }}>
+            <ProductPage productId={productID}/>
           </div>
         </div>
-      )}
+      }
+
     </div>
   );
 }

@@ -183,7 +183,7 @@ function ModernLeft({ vendor }: Props) {
 
       {/** Position 2 */}
       <div
-        className={`${commonStyle} bottom-[20.5vw] left-[51.5vw] w-[7vw] h-[9vw] z-20`}
+        className={`${commonStyle} bottom-[20.8vw] left-[51.5vw] w-[7vw] h-[8.3vw] z-20`}
         onClick={() => {
           setProductID(id1);
           setShowProduct(true);
@@ -202,7 +202,7 @@ function ModernLeft({ vendor }: Props) {
 
       {/** Position 3 */}
       <div
-        className={`${commonStyle} bottom-[21.5vw] left-[45.5vw] w-[6vw] h-[8vw] z-20`}
+        className={`${commonStyle} bottom-[21.5vw] left-[45.5vw] w-[6vw] h-[7.5vw] z-20`}
         onClick={() => {
           setProductID(id2);
           setShowProduct(true);

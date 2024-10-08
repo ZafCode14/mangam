@@ -18,7 +18,9 @@ interface PerspectiveProp {
 
 function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setElev, floor, p1, p2 }: PerspectiveProp) {
   const vendors = Object.values(p1[floor]).slice(1);
-  const vendorSet = vendors.slice(fromTo.from, fromTo.to)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const vendorSet: any = vendors.slice(fromTo.from, fromTo.to)
+  console.log(vendorSet[0].vendor.chosenShopStyle.split('/')[3])
 
   if (floor === "raw") {
     return (
@@ -140,10 +142,15 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
         <Vendor 
           vendor={vendorSet[0] || {mallView: `/images/mall/perspective1/${floor}/classic1.png`}}
           floor={floor}
-          bannerClassName={`
+          bannerClassName={vendorSet[0].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
             absolute top-[12vw] right-[10vw] z-20
             flex justify-center
             w-[20vw] h-[5vw]
+          ` : `
+            absolute 
+            flex justify-center
+            top-[11vw] right-[10vw] z-20
+            w-[17vw] h-[5vw]
           `}
           bannerStyle={{
             transform: "skewY(-22deg)"
@@ -161,11 +168,16 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
         <Vendor 
           vendor={vendorSet[1] || {mallView: `/images/mall/perspective1/${floor}/classic2.png`}}
           floor={floor}
-          bannerClassName={`
+          bannerClassName={vendorSet[1].vendor.chosenShopStyle.split('/')[3] === 'classic' ?`
             absolute 
-            top-[14vw] left-[20vw] z-20
-            w-[12vw] h-[5vw]
             flex justify-center
+            top-[12.5vw] left-[15vw] z-20
+            w-[15vw] h-[5vw]
+          ` : `
+            absolute 
+            flex justify-center
+            top-[13vw] left-[20vw] z-20
+            w-[12vw] h-[5vw]
           `}
           bannerStyle={{
             transform: "skewY(21deg)"
@@ -184,7 +196,12 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
         <Vendor 
           vendor={vendorSet[2] || {mallView: `/images/mall/perspective1/${floor}/classic3.png`}}
           floor={floor}
-          bannerClassName={`
+          bannerClassName={vendorSet[2].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
+            absolute 
+            top-[19.5vw] right-[33.1vw] z-20
+            w-[5vw] h-[2vw]
+            flex justify-center
+          ` : `
             absolute 
             top-[19vw] right-[32.5vw] z-20
             w-[5vw] h-[2vw]
@@ -206,10 +223,15 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
         <Vendor 
           vendor={vendorSet[3] || {mallView: `/images/mall/perspective1/${floor}/classic4.png`}}
           floor={floor}
-          bannerClassName={`
+          bannerClassName={vendorSet[3].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
             absolute 
-            top-[20.3vw] left-[37vw] z-20
-            w-[2.8vw] h-[2.3vw]
+            top-[20vw] left-[35.5vw] z-20
+            w-[4vw] h-[2.3vw]
+            flex justify-center
+          ` : `
+            absolute 
+            top-[19vw] left-[36.9vw] z-20
+            w-[3.2vw] h-[2.3vw]
             flex justify-center
           `}
           bannerStyle={{

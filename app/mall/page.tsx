@@ -175,6 +175,14 @@ function Page() {
           flex items-end
         `}
       >
+        {/** Flip the Phone Componenet */}
+        {
+        height > width && 
+        <div className="absolute w-full h-full z-20">
+          <FlipPhone/>
+        </div>
+        }
+
         <div className={`
           fixed
           ${height < 450 && "z-30"}
@@ -182,7 +190,6 @@ function Page() {
           height: height < 450 ? "100vh" : "calc(100vh - 80px)"
         }}>
           {
-          height > width ? <FlipPhone/> :
           <div className="h-full w-screen flex items-center justify-center">
             {vendorId ?
               <div className="absolute h-[50vw] w-full flex justify-center items-center overflow-hidden">
