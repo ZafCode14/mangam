@@ -96,7 +96,13 @@ const Products = ({ brandId, search, categories, price, height }: Prop) => {
           vendors.some((vendor) => vendor.docID === product.brandDocID)
         );
 
-        setProducts((prevProducts) => [...prevProducts, ...filteredProducts]);
+        // Filter out duplicates based on product.id
+        setProducts((prevProducts) => {
+          const newProducts = filteredProducts.filter(
+            (product) => !prevProducts.some((p) => p.id === product.id)
+          );
+          return [...prevProducts, ...newProducts];
+        });
 
         if (productsSnapshot.docs.length < PRODUCTS_BATCH_SIZE) {
           setHasMore(false); // No more products to load
@@ -110,6 +116,7 @@ const Products = ({ brandId, search, categories, price, height }: Prop) => {
     },
     [vendors, lastVisible]
   );
+
 
   useEffect(() => {
     if (vendors.length > 0) {
