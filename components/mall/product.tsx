@@ -2,12 +2,11 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Loading from '@/components/loading';
-import useAuthUser from '@/hooks/user';
 import { useRouter } from 'next/navigation';
 import { putWishlist } from '@/components/wishlist/wishlist';
 import AddToCart from '@/components/productPage/cart';
 import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from '@/lib/firebase';
+import { auth, firestore } from '@/lib/firebase';
 import CreateAppointment from '@/app/shop/product/[productId]/(appointments)/createAppointment';
 import { Product, VendorBranch } from '@/types/products';
 
@@ -27,8 +26,8 @@ const ProductPage = ({ productId }: ProductPageProps) => {
   const [appointment, setAppointment] = useState(false);
   const [cart, setCart] = useState(false);
   const [loading, setLoading] = useState(true); // New loading state
-  const [theuser] = useAuthUser();
   const [totalInStock, setTotalInStock] = useState<number>(0);
+  const user = auth.currentUser;
   const router = useRouter();
 
   useEffect(() => {
@@ -84,7 +83,7 @@ const ProductPage = ({ productId }: ProductPageProps) => {
   }, [productId]);
 
   const handleUnauthUser = (callback: () => void) => {
-    if (!theuser) {
+    if (!user) {
       router.push('/login');
     } else {
       callback();
@@ -92,7 +91,7 @@ const ProductPage = ({ productId }: ProductPageProps) => {
   };
 
   const handleWishlist = () => {
-    const userId = theuser?.id;
+    const userId = user?.uid;
     const productId = product?.docID;
 
     if (userId && productId) {
