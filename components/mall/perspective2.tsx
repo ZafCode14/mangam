@@ -219,7 +219,7 @@ function Perspective2({ fromTo, setFromTo, setZoomInButton, setElev, floor, p2, 
 
           {/** Continue mall once */}
           {
-            vendorSet.length > 0 &&
+            fromTo.to < vendorSet.length &&
             <div className="relative">
               <div
                 onClick={() => {
