@@ -53,8 +53,9 @@ function Search({ search, setSearch, show, setShowFilter,brandId }:SearchProps) 
       {show !== 'brand' && show !== 'product' ?
       <Link href={`/mall?brand=${brandId}`}>
         <button className={`
+          absolute right-0 top-[-70px] mr-2 md:mr-0 md:static
           bg-[#2A1C1B]
-          w-[200px] h-[50px] text-[14px]
+          w-[110px] h-[40px] md:w-[200px] md:h-[50px] text-[14px]
           rounded-lg
         `}>Virtual Store</button>
       </Link>

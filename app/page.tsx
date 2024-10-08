@@ -53,7 +53,7 @@ export default function Home() {
           />
           <div className="relative text-white flex flex-col justify-center items-center">
             <h2 className="text-[22px] font-bold">All Your Favorite Brands In One Place</h2>
-            <Link href={"/shop"} className="text-[14px] bg-[#2A1C1B] w-[180px] h-[44px] rounded-[4px] mb-12 mt-2 flex justify-center items-center">Shop by Brand</Link>
+            <Link href={"/shop?show=brand"} className="text-[14px] bg-[#2A1C1B] w-[180px] h-[44px] rounded-[4px] mb-12 mt-2 flex justify-center items-center">Shop by Brand</Link>
           </div>
         </div>
       </div>
