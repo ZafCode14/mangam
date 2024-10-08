@@ -102,7 +102,7 @@ function Perspective2({ fromTo, setFromTo, setZoomInButton, setElev, floor, p2, 
         <Vendor
           vendor={vendorSet[0] || {mallView: `/images/mall/perspective2/${floor}/classic1.png`}}
           floor={floor}
-          bannerClassName={vendorSet[0].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
+          bannerClassName={vendorSet[0]?.vendor?.chosenShopStyle.split('/')[3] === 'classic' ? `
             absolute top-[12.3vw] right-[11.3vw] z-20
             flex justify-center
             w-[20vw] h-[5vw]
@@ -127,7 +127,7 @@ function Perspective2({ fromTo, setFromTo, setZoomInButton, setElev, floor, p2, 
         <Vendor 
           vendor={vendorSet[1] || {mallView: `/images/mall/perspective2/${floor}/classic2.png`}}
           floor={floor}
-          bannerClassName={vendorSet[0].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
+          bannerClassName={vendorSet[0]?.vendor?.chosenShopStyle.split('/')[3] === 'classic' ? `
             absolute z-20
             top-[15vw] left-[27.2vw] 
             flex justify-center

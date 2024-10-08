@@ -20,7 +20,6 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
   const vendors = Object.values(p1[floor]).slice(1);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const vendorSet: any = vendors.slice(fromTo.from, fromTo.to)
-  console.log(vendorSet[0].vendor.chosenShopStyle.split('/')[3])
 
   if (floor === "raw") {
     return (
@@ -142,7 +141,7 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
         <Vendor 
           vendor={vendorSet[0] || {mallView: `/images/mall/perspective1/${floor}/classic1.png`}}
           floor={floor}
-          bannerClassName={vendorSet[0].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
+          bannerClassName={vendorSet[0]?.vendor?.chosenShopStyle.split('/')[3] === 'classic' ? `
             absolute top-[12vw] right-[10vw] z-20
             flex justify-center
             w-[20vw] h-[5vw]
@@ -168,7 +167,7 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
         <Vendor 
           vendor={vendorSet[1] || {mallView: `/images/mall/perspective1/${floor}/classic2.png`}}
           floor={floor}
-          bannerClassName={vendorSet[1].vendor.chosenShopStyle.split('/')[3] === 'classic' ?`
+          bannerClassName={vendorSet[1]?.vendor?.chosenShopStyle.split('/')[3] === 'classic' ?`
             absolute 
             flex justify-center
             top-[12.5vw] left-[15vw] z-20
@@ -196,7 +195,7 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
         <Vendor 
           vendor={vendorSet[2] || {mallView: `/images/mall/perspective1/${floor}/classic3.png`}}
           floor={floor}
-          bannerClassName={vendorSet[2].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
+          bannerClassName={vendorSet[2]?.vendor?.chosenShopStyle.split('/')[3] === 'classic' ? `
             absolute 
             top-[19.5vw] right-[33.1vw] z-20
             w-[5vw] h-[2vw]
@@ -223,7 +222,7 @@ function Perspective1({ fromTo, setFromTo, zoomInButton, setZoomInButton,  setEl
         <Vendor 
           vendor={vendorSet[3] || {mallView: `/images/mall/perspective1/${floor}/classic4.png`}}
           floor={floor}
-          bannerClassName={vendorSet[3].vendor.chosenShopStyle.split('/')[3] === 'classic' ? `
+          bannerClassName={vendorSet[3]?.vendor?.chosenShopStyle.split('/')[3] === 'classic' ? `
             absolute 
             top-[20vw] left-[35.5vw] z-20
             w-[4vw] h-[2.3vw]
