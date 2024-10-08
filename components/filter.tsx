@@ -19,7 +19,7 @@ interface FilterProp {
 function Filter({ marginTop, price, categories, floor, setPrice, setFloor, setCategories, brandId }:FilterProp) {
   const searchParams = useSearchParams();
   const p = usePathname();
-  const [products, loading] = useProducts();
+  const {products, loading} = useProducts(20);
 
   const [filteredCategories, setFilteredCategories] = useState<string[]>([]);
   const [show, setShow] = useState<string | null>(searchParams.get("show"));

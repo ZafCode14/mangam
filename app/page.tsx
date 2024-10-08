@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-  const [products, loading] = useProducts();
+  const {products, loading} = useProducts();
 
   return (
     <main className="flex flex-col items-center">

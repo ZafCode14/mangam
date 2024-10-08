@@ -20,7 +20,7 @@ interface Prop {
   height: number;
 }
 function Products({ brandId, search, categories, price, height }: Prop) {
-  const [products, loading] = useProducts();
+  const {products, loading} = useProducts(20);
 
   if (!loading) {
     const filteredProducts = products.filter((product) => {
