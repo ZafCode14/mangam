@@ -3,7 +3,7 @@ import Link from "next/link";
 
 interface SearchProps {
   search: string;
-  show: string | null;
+  show?: string | null;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   setBrand?: React.Dispatch<React.SetStateAction<boolean>>
   setShowFilter: React.Dispatch<React.SetStateAction<boolean>>;
