@@ -3,38 +3,73 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { auth } from "@/lib/firebase";
-import { onAuthStateChanged, User } from "firebase/auth";
-import useAuthUser from "@/hooks/user";
+import { auth, firestore } from "@/lib/firebase";
 import useWindowDimensions from "@/hooks/dimentions";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  addresses: {
+    id: {
+      country: string;
+      governate: string;
+      city: string;
+      postalCode: string;
+      apartment: string;
+      firstName: string;
+      lastName: string;
+      phoneNumber: string;
+      address: string;
+      addressId: string;
+      id: string;
+    }
+  }
+  defaultAddress: string;
+  // Add other user properties as needed
+}
 function Header() {
-  const [theuser] = useAuthUser();
-  const [user, setUser] = useState<User | null>(null); // Store the authenticated user
+  const user = auth.currentUser;
+  const [userInfo, setUserInfo] = useState<User | null>(null);
   const [cartCount, setCartCount] = useState(0); // Track the number of items in the cart
   const [isMounted, setIsMounted] = useState(false); // To ensure component is mounted
   const p = usePathname();
 
   const { height } = useWindowDimensions();
 
-  // Check if user is authenticated
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user); // User is logged in
-      } else {
-        setUser(null); // User is not logged in
-      }
-    });
-
-    return () => unsubscribe(); // Cleanup subscription on component unmount
-  }, []);
-
   // Function to retrieve cart items from localStorage
   const getCartItems = () => {
     const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
     setCartCount(cartItems.length); // Update the cart count
   };
+
+  {/** Get user Info from the Users Table */}
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        try {
+          const userDocRef = doc(firestore, 'users', currentUser.uid);
+          const userDoc = await getDoc(userDocRef);
+
+          if (userDoc.exists()) {
+            setUserInfo({ id: userDoc.id, ...(userDoc.data() as Omit<User, 'id'>) });
+          } else {
+            setUserInfo(null); // User document does not exist
+          }
+        } catch (error) {
+          console.error(error)
+        }
+      } else {
+        setUserInfo(null); // No authenticated user
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, []);
 
   // Initial load of cart items
   useEffect(() => {
@@ -137,7 +172,7 @@ function Header() {
               text-[16px] 
               font-bold
             `}>
-              {theuser !== null && theuser.firstName.charAt(0).toUpperCase()}
+              {user !== null && userInfo?.firstName.charAt(0).toUpperCase()}
             </p>
           </Link>
         ) : (
