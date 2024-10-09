@@ -9,6 +9,7 @@ interface FilterProp {
   price: number[];
   categories: string[];
   setCategories: React.Dispatch<React.SetStateAction<string[]>>;
+  setShowFilter: React.Dispatch<React.SetStateAction<boolean>>;
   setFloor?: React.Dispatch<React.SetStateAction<string>>;
   setPrice: React.Dispatch<React.SetStateAction<number[]>>;
   marginTop: string;
@@ -16,7 +17,7 @@ interface FilterProp {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   products: any[];
 }
-function Filter({ marginTop, price, categories, setPrice, setFloor, setCategories, products}:FilterProp) {
+function Filter({ marginTop, price, categories, setShowFilter, setPrice, setFloor, setCategories, products}:FilterProp) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const searchParams = useSearchParams();
 
@@ -91,7 +92,10 @@ function Filter({ marginTop, price, categories, setPrice, setFloor, setCategorie
                 width={500}
                 height={500}
                 priority
-                onClick={() => handleFloorChange("gold")}
+                onClick={() => {
+                  handleFloorChange("gold");
+                  setTimeout(() => setShowFilter(false), 500);
+                }}
                 className={`w-full h-auto`}
                 style={{
                   marginBottom: gold ? "20px" : "0px",
@@ -103,7 +107,10 @@ function Filter({ marginTop, price, categories, setPrice, setFloor, setCategorie
                 src={'/images/mall/elevator/silverFloor.png'}
                 width={500}
                 height={500}
-                onClick={() => handleFloorChange("silver")}
+                onClick={() => {
+                  handleFloorChange("silver");
+                  setTimeout(() => setShowFilter(false), 500);
+                }}
                 className={`w-full h-auto`}
                 style={{
                   marginBottom: silver ? "10px" : "0px",
@@ -116,7 +123,10 @@ function Filter({ marginTop, price, categories, setPrice, setFloor, setCategorie
                 src={'/images/mall/elevator/rawFloor.png'}
                 width={500}
                 height={500}
-                onClick={() => handleFloorChange("raw")}
+                onClick={() => {
+                  handleFloorChange("raw");
+                  setTimeout(() => setShowFilter(false), 500);
+                }}
                 className={`w-full h-auto`}
                 style={{
                   marginTop: raw ? "12px" : "0px",

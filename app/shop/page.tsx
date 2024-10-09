@@ -78,6 +78,7 @@ function ShowComponent() {
             products={products}
             categories={categories}
             setCategories={setCategories}
+            setShowFilter={setShowFilter}
             setPrice={setPrice}
             setFloor={setFloor}
             floor={floor}

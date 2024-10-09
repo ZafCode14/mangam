@@ -50,10 +50,10 @@ function Page() {
           className="h-full object-cover"
           priority
         />
-        <p className="absolute text-[45px] top-12 left-12 leading-[45px]">
+        <p className="hidden lg:block absolute text-[45px] top-12 left-12 leading-[45px] mt-[5vw]">
           Experience <br /> <i>Something New</i>
         </p>
-        <p className="absolute text-[45px] bottom-12 right-5 leading-[45px]">
+        <p className="hidden lg:block absolute text-[45px] bottom-12 right-5 leading-[45px]">
           All Your <br /> Favorite Brands <br /> <i>In One Place</i>
         </p>
       </div>

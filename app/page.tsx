@@ -78,7 +78,7 @@ export default function Home() {
       {loading ?
       <Loading/> :
       <div className="p-3 md:p-10 bg-[#E7E7E7]">
-        <div className="flex-col items-center bg-[#F1F1F1] rounded-[5%]">
+        <div className="flex-col items-center pb-5 md:pb-0 bg-[#F1F1F1] rounded-[10vw] md:rounded-[5vw]">
           <p className="flex justify-center md:block w-full py-10 my-5 md:ml-10 text-[24px] font-bold">
             Trending Products
           </p>
