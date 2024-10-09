@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import useVendors from "@/hooks/vendors";
 
 export interface Product {
   name: string;
@@ -14,10 +13,12 @@ export interface Product {
 export interface Prop {
   product: Product;
   res: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  vendors: any[]; // Pass vendors from the parent component
 }
-function Product({ product, res }:Prop) {
-  const [vendors] = useVendors()
-  const brand = vendors.find((vendor) => vendor.docID === product.brandDocID);
+
+function Product({ product, res, vendors }: Prop) {
+  const vendor = vendors?.find((vendor) => vendor.docID === product.brandDocID); // Find the vendor based on brandDocID
 
   return (
     <Link href={`/shop/product/${product.docID}`} className="w-full h-full relative text-black">
@@ -32,7 +33,7 @@ function Product({ product, res }:Prop) {
         />
       </div>
       <p className="relative font-bold leading-[16px] mt-[5px]">{product.name}</p>
-      <p className="relative text-[12px]">{brand?.name}</p>
+      <p className="relative text-[12px]">{vendor?.name || 'Unknown Vendor'}</p> {/* Handle undefined vendor */}
       <p className="relative text-[12px]">{product.price} EGP</p>
     </Link>
   );

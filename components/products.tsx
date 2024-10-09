@@ -1,19 +1,6 @@
-import { useEffect, useState, useRef, useCallback } from "react";
-import Loading from "./loading";
+import { fetchVendors } from "@/lib/api";
+import { useEffect, useState } from "react";
 import Product from "./product";
-import { collection, getDocs, query, where, orderBy, startAfter, limit } from "firebase/firestore";
-import { firestore } from "@/lib/firebase";
-
-export interface ProductAttr {
-  id: string;
-  name: string;
-  description: string;
-  images: string[];
-  brandDocID: string;
-  docID: string;
-  price: number;
-  category: string;
-}
 
 interface Prop {
   brandId: string;
@@ -21,142 +8,28 @@ interface Prop {
   categories: string[];
   price: number[];
   height: number;
-}
-
-interface Vendor {
-  id: string;
-  name: string;
-  logo: string;
-  docID: string;
-  // Add other vendor fields if necessary
-}
-
-const Products = ({ brandId, search, categories, price, height }: Prop) => {
-  const [vendors, setVendors] = useState<Vendor[]>([]);
-  const [products, setProducts] = useState<ProductAttr[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [hasMore, setHasMore] = useState(true);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [lastVisible, setLastVisible] = useState<any>(null); // Store the last document snapshot for pagination
+  products: any[]; // Use the ProductAttr type for better type safety
+}
 
-  const observerRef = useRef<HTMLDivElement | null>(null);
+const Products = ({ brandId, search, categories, price, height, products }: Prop) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [vendors, setVendors] = useState<any[]>([]); // Store all vendors
 
-  const PRODUCTS_BATCH_SIZE = 10; // Fetch products in batches of 10
-
-  // Fetch approved vendors
   useEffect(() => {
-    const fetchVendors = async () => {
+    const loadVendors = async () => {
       try {
-        const vendorsCollection = collection(firestore, "vendors");
-        const approvedVendorsQuery = query(vendorsCollection, where("status", "==", "approved"));
-        const vendorsSnapshot = await getDocs(approvedVendorsQuery);
-        const vendorsList: Vendor[] = vendorsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          docID: doc.id, // Using doc.id as the docID
-          ...doc.data(),
-        })) as Vendor[];
-        setVendors(vendorsList);
+        const fetchedVendors = await fetchVendors();
+        setVendors(fetchedVendors);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching vendors:", error);
       }
     };
 
-    fetchVendors();
+    loadVendors();
   }, []);
 
-  // Fetch products based on approved vendors with pagination
-  const fetchProducts = useCallback(
-    async (isInitialFetch = false) => {
-      try {
-        const productsCollection = collection(firestore, "products");
-        let productQuery = query(
-          productsCollection,
-          orderBy("name"),
-          limit(PRODUCTS_BATCH_SIZE)
-        );
-
-        if (!isInitialFetch && lastVisible) {
-          // Continue from the last product fetched
-          productQuery = query(
-            productsCollection,
-            orderBy("name"),
-            startAfter(lastVisible),
-            limit(PRODUCTS_BATCH_SIZE)
-          );
-        }
-
-        const productsSnapshot = await getDocs(productQuery);
-        const productsList: ProductAttr[] = productsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as ProductAttr[];
-
-        // Filter products whose brandDocID matches the approved vendor's docID
-        const filteredProducts = productsList.filter((product) =>
-          vendors.some((vendor) => vendor.docID === product.brandDocID)
-        );
-
-        // Filter out duplicates based on product.id
-        setProducts((prevProducts) => {
-          const newProducts = filteredProducts.filter(
-            (product) => !prevProducts.some((p) => p.id === product.id)
-          );
-          return [...prevProducts, ...newProducts];
-        });
-
-        if (productsSnapshot.docs.length < PRODUCTS_BATCH_SIZE) {
-          setHasMore(false); // No more products to load
-        }
-
-        setLastVisible(productsSnapshot.docs[productsSnapshot.docs.length - 1]);
-        setLoading(false); // Set loading to false after fetching data
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [vendors, lastVisible]
-  );
-
-
-  useEffect(() => {
-    if (vendors.length > 0) {
-      fetchProducts(true); // Fetch initial batch of products
-    }
-  }, [vendors, fetchProducts]);
-
-  // IntersectionObserver callback to load more products when reaching the bottom
-  const loadMoreProducts = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const target = entries[0];
-      if (target.isIntersecting && hasMore && !loading) {
-        fetchProducts();
-      }
-    },
-    [fetchProducts, hasMore, loading]
-  );
-
-  // Set up IntersectionObserver to trigger when scrolling to the bottom
-  useEffect(() => {
-    const observer = new IntersectionObserver(loadMoreProducts, {
-      root: null,
-      rootMargin: "200px", // Start loading more when 200px from the bottom
-      threshold: 0.1,
-    });
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      if (observerRef.current) observer.unobserve(observerRef.current);
-    };
-  }, [loadMoreProducts]);
-
-  if (loading && products.length === 0) {
-    return <Loading />;
-  }
-
+  // Filter products based on criteria
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
     const matchesCategory = categories.length === 0 || categories.includes(product.category);
@@ -171,23 +44,19 @@ const Products = ({ brandId, search, categories, price, height }: Prop) => {
         maxHeight: `calc(100vh - ${height}px)`,
       }}
     >
-      {filteredProducts.map((product, index) => {
+      {filteredProducts.map((product) => {
         if (brandId === "all" || brandId === product.brandDocID) {
           return (
             <div
-              key={index}
+              key={product.docID} // Use unique identifier for key
               className="max-w-[48%] w-[200px] xl:w-[18%] h-[150px] mb-[60px] mx-[1%] mt-5"
             >
-              <Product product={product} res={300} />
+              <Product product={product} res={300} vendors={vendors} />
             </div>
           );
         }
-        return null;
+        return null; // If brandId does not match, return null
       })}
-      {/* Loading indicator for loading more products */}
-      <div ref={observerRef} className="w-full h-[50px] flex justify-center items-center">
-        {loading && <Loading />}
-      </div>
     </div>
   );
 };

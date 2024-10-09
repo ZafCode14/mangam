@@ -1,13 +1,11 @@
 import Image from "next/image";
 import React from "react";
 import ReactSlider from 'react-slider';
-import useProducts from "@/hooks/products";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
 interface FilterProp {
-  brandId: string;
+  brandId?: string;
   price: number[];
   categories: string[];
   setCategories: React.Dispatch<React.SetStateAction<string[]>>;
@@ -15,11 +13,12 @@ interface FilterProp {
   setPrice: React.Dispatch<React.SetStateAction<number[]>>;
   marginTop: string;
   floor?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  products: any[];
 }
-function Filter({ marginTop, price, categories, floor, setPrice, setFloor, setCategories, brandId }:FilterProp) {
+function Filter({ marginTop, price, categories, setPrice, setFloor, setCategories, products}:FilterProp) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const searchParams = useSearchParams();
-  const p = usePathname();
-  const {products, loading} = useProducts();
 
   const [filteredCategories, setFilteredCategories] = useState<string[]>([]);
   const [show, setShow] = useState<string | null>(searchParams.get("show"));
@@ -27,31 +26,16 @@ function Filter({ marginTop, price, categories, floor, setPrice, setFloor, setCa
   const [silver, setSilver] = useState<boolean>(false);
   const [raw, setRaw] = useState<boolean>(false);
 
+  useEffect(() => {
+    const allCategories = products.map((product) => product.category);
+    const uniqueCategories = Array.from(new Set(allCategories)); // Remove duplicates
+    setFilteredCategories(uniqueCategories);
+  }, [products])
 
   useEffect(() => {
     const a = searchParams.get("show");
     setShow(a);
   }, [searchParams]);
-
-  useEffect(() => {
-    if (!loading && products) {
-      const filteredProducts = products.filter((product) => {
-        const matchbrand = product.brandDocID === brandId;
-        return matchbrand;
-      });
-
-      // Extract unique categories
-      const uniqueCategories = brandId === "" ? 
-      Array.from(new Set(products.map(product => product.category))) : 
-      Array.from(new Set(filteredProducts.map(product => product.category)));
-
-      if (p.startsWith("/shop/brand/")) {
-        setFilteredCategories(uniqueCategories);
-      } else {
-        setFilteredCategories(["Bracelets", "Rings", "Brooches", "Earrings", "Necklaces", "Anklets", "Cufflinks"]);
-      }
-    }  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, products, categories, price, brandId, floor]);
 
   useEffect(() => {
     if (setFloor) {
@@ -185,5 +169,4 @@ function Filter({ marginTop, price, categories, floor, setPrice, setFloor, setCa
     </div>
   );
 }
-
 export default Filter;

@@ -1,12 +1,37 @@
 "use client";
 import Loading from "@/components/loading";
 import Product from "@/components/product";
-import useProducts from "@/hooks/products";
+import { fetchProducts, fetchVendors } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const { products, loading, error } = useProducts();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [products, setProducts] = useState<any[]>([]); // State to store products
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [vendors, setVendors] = useState<any[]>([]); // State to store products
+  const [loading, setLoading] = useState<boolean>(true); // State to manage loading
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [error, setError] = useState<any>(null); // State to manage errors
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const fetchedProducts = await fetchProducts(undefined, 10);
+        setProducts(fetchedProducts);
+        const fetchedVendors = await fetchVendors();
+        setVendors(fetchedVendors);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setError("Failed to load products."); // Update error state
+      } finally {
+        setLoading(false); // Set loading to false once done
+      }
+    };
+
+    loadProducts();
+  }, []);
 
   return (
     <main className="flex flex-col items-center">
@@ -50,56 +75,57 @@ export default function Home() {
         </div>
       </div>
 
-      {/** Trending Products Section */}
-      {loading ? (
-        <Loading />
-      ) : error ? (
-        <div className="text-red-500">Error loading products: {error.message}</div>
-      ) : (
-        <div className="p-3 md:p-10 bg-[#E7E7E7]">
-          <div className="flex-col items-center bg-[#F1F1F1] rounded-[5%]">
-            <p className="flex justify-center md:block w-full py-10 my-5 md:ml-10 text-[24px] font-bold">
-              Trending Products
-            </p>
-            <div className="w-full">
-              <div className="flex flex-col-reverse md:flex-row">
-                <div className="w-full md:w-1/2 h-[90vw] md:h-[40vw] flex flex-wrap justify-end items-center">
-                  {products.slice(0, 4).map((product, index) => (
-                    <div key={index} className="w-[45%] h-[50%] mx-[2.5%] mb-20">
-                      <Product product={product} res={2000} />
-                    </div>
-                  ))}
-                </div>
-                <div className="w-full md:w-1/2 md:mt-20 flex items-center">
-                  {products[4] && (
-                    <div className="w-[97.5%] h-[90vw] md:h-[40vw] mb-20 mx-[2.5%]">
-                      <Product product={products[4]} res={2000} />
-                    </div>
-                  )}
-                </div>
+      {loading ?
+      <Loading/> :
+      <div className="p-3 md:p-10 bg-[#E7E7E7]">
+        <div className="flex-col items-center bg-[#F1F1F1] rounded-[5%]">
+          <p className="flex justify-center md:block w-full py-10 my-5 md:ml-10 text-[24px] font-bold">
+            Trending Products
+          </p>
+
+          {loading && <p>Loading products...</p>}
+          {error && <p className="text-red-500">{error}</p>}
+
+          <div className="w-full">
+            <div className="flex flex-col-reverse md:flex-row">
+              <div className="w-full md:w-1/2 h-[90vw] md:h-[40vw] flex flex-wrap justify-end items-center">
+                {products.slice(0, 4).map((product) => (
+                  <div key={product.id} className="w-[45%] h-[50%] mx-[2.5%] mb-20">
+                    <Product vendors={vendors} product={product} res={2000} />
+                  </div>
+                ))}
+              </div>
+              <div className="w-full md:w-1/2 md:mt-20 flex items-center">
+                {products[4] && (
+                  <div className="w-[97.5%] h-[90vw] md:h-[40vw] mb-20 mx-[2.5%]">
+                    <Product vendors={vendors} product={products[4]} res={2000} />
+                  </div>
+                )}
               </div>
             </div>
-            <div className="flex mt-20 mb-20 pb-20">
-              <div className="flex flex-col-reverse md:flex-row-reverse">
-                <div className="h-[90vw] md:h-[40vw] w-full md:w-1/2 flex flex-wrap items-center">
-                  {products.slice(5, 9).map((product, index) => (
-                    <div key={index} className="w-[45%] h-[50%] mx-[2.5%] mb-20">
-                      <Product product={product} res={2000} />
-                    </div>
-                  ))}
-                </div>
-                <div className="w-full md:w-1/2 flex items-center justify-end mr-5 mt-20 md:mt-10">
-                  {products[9] && (
-                    <div className="w-[97.5%] h-[90vw] md:h-[40vw] mb-20 ml-[2.5%]">
-                      <Product product={products[9]} res={2000} />
-                    </div>
-                  )}
-                </div>
+          </div>
+
+          <div className="flex mt-20 mb-20 pb-20">
+            <div className="flex flex-col-reverse md:flex-row-reverse">
+              <div className="h-[90vw] md:h-[40vw] w-full md:w-1/2 flex flex-wrap items-center">
+                {products.slice(5, 9).map((product) => (
+                  <div key={product.id} className="w-[45%] h-[50%] mx-[2.5%] mb-20">
+                    <Product vendors={vendors} product={product} res={2000} />
+                  </div>
+                ))}
+              </div>
+              <div className="w-full md:w-1/2 flex items-center justify-end mr-5 mt-20 md:mt-10">
+                {products[9] && (
+                  <div className="w-[97.5%] h-[90vw] md:h-[40vw] mb-20 ml-[2.5%]">
+                    <Product vendors={vendors} product={products[9]} res={2000} />
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
+      }
     </main>
   );
 }

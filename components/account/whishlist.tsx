@@ -5,17 +5,29 @@ import useAuthUser from "@/hooks/user";
 import Loading from "../loading";
 import getProductById from "../wishlist/productsById";
 import Image from "next/image";
-import useVendors from "@/hooks/vendors";
+import { fetchVendors } from "@/lib/api";
 
 function Whishlist() {
   const [wishlist, setWishlist] = useState<string[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [products, setProducts] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [vendors, setVendors] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true); // Loading state
   const [theuser] = useAuthUser();
   const userId = theuser?.id;
 
-  const [vendors] = useVendors();
+  useEffect(() => {
+    try {
+      const loadVendors = async () => {
+        const fetchedVendors = await fetchVendors();
+        setVendors(fetchedVendors);
+      }
+      loadVendors();
+    } catch (error) {
+      console.error(error);
+    }
+  }, [])
 
   // Fetch wishlist
   useEffect(() => {

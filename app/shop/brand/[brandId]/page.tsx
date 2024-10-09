@@ -6,10 +6,10 @@ import Filter from '@/components/filter';
 import Search from '@/components/search';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import useWindowDimensions from '@/hooks/dimentions';
 import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
+import { fetchProducts } from '@/lib/api';
 
 interface Brand {
   logo: string;
@@ -24,25 +24,23 @@ const Page = ({ params }: BrandPageProps) => {
   const [categories, setCategories] = useState<string[]>([]);
   const [price, setPrice] = useState<number[]>([0, 300000]);
   const { brandId } = params;
-  const [brand, setBrand] = useState<Brand | null>(null);
+  const [vendor, setVendor] = useState<Brand | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [products, setProducts] = useState<any[]>([]);
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const { width } = useWindowDimensions();
-  const p = usePathname();
-  console.log(p.split('/').reverse()[0]);
-
 
   useEffect(() => {
     const fetchVendors = async () => {
       try {
         // Reference the document by its ID (show)
-        const vendorDocRef = doc(firestore, "vendors", p.split('/').reverse()[0]);
-
+        const vendorDocRef = doc(firestore, "vendors", params.brandId);
         // Fetch the document snapshot
         const vendorSnapshot = await getDoc(vendorDocRef);
 
         if (vendorSnapshot.exists()) {
           // If the document exists, set the state with the vendor data
-          setBrand(vendorSnapshot.data() as Brand);
+          setVendor(vendorSnapshot.data() as Brand);
         } else {
           console.log("Vendor not found");
         }
@@ -50,15 +48,25 @@ const Page = ({ params }: BrandPageProps) => {
         console.error("Error fetching vendor:", error);
       }
     };
+    const loadProducts = async () => {
+      try {
+        const fetchedProducts = await fetchProducts(params.brandId);
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error("Error fetching vendors:", error);
+      }
+    };
     fetchVendors();
-  }, [p]);
+    loadProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  if (brand) {
+  if (vendor) {
     return (
       <main className={`flex flex-col items-center w-full text-white`}>
         <div className='relative mt-[80px] w-full flex justify-center items-center'>
           <Image
-            src={brand.logo}
+            src={vendor.logo}
             alt='brand logo'
             width={300}
             height={300}
@@ -95,12 +103,13 @@ const Page = ({ params }: BrandPageProps) => {
           >
             <div onClick={(e) => e.stopPropagation()}>
               <Filter
+                products={products}
                 price={price}
                 categories={categories}
                 setCategories={setCategories}
                 setPrice={setPrice}
                 marginTop="md:mt-[0]"
-                brandId=""
+                brandId={params.brandId}
               />
             </div>
           </div>
@@ -112,6 +121,7 @@ const Page = ({ params }: BrandPageProps) => {
               brandId={brandId}
             />
             <Products
+              products={products}
               brandId={brandId}
               search={search}
               categories={categories}

@@ -11,6 +11,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { firestore } from '@/lib/firebase';
 import CreateAppointment from './(appointments)/createAppointment';
 import { Product, VendorBranch } from '@/types/products';
+import { fetchProducts } from '@/lib/api';
 
 interface Vendor {
   docID: string;
@@ -26,6 +27,8 @@ interface ProductPageProps {
 
 const Page = ({ params }: ProductPageProps) => {
   const { productId } = params;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [products, setProducts] = useState<any[]>([]); // State to store products
   const [product, setProduct] = useState<Product | null>(null);
   const [vendor, setVendor] = useState<Vendor | null>(null);
   const [appointment, setAppointment] = useState(false);
@@ -33,6 +36,9 @@ const Page = ({ params }: ProductPageProps) => {
   const [theuser] = useAuthUser();
   const [totalInStock, setTotalInStock] = useState<number>(0);
   const router = useRouter();
+
+  useEffect(() => {
+  }, []);
 
   useEffect(() => {
     if (product) {
@@ -79,8 +85,20 @@ const Page = ({ params }: ProductPageProps) => {
         console.error("Error fetching product or vendor:", error);
       }
     };
+
+    const loadProducts = async () => {
+      try {
+        const fetchedProducts = await fetchProducts(undefined);
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    loadProducts();
     getVendorandProduct();
-  }, [productId]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleUnauthUser = (callback: () => void) => {
     if (!theuser) {
@@ -180,7 +198,7 @@ const Page = ({ params }: ProductPageProps) => {
             <div className='border-t border-gray-400 flex-1'></div>
           </div>
           <div className='px-2'>
-            <Products brandId={product.brandDocID} search={""} categories={[]} price={[0, 300000]} height={300}/>
+            <Products products={products} brandId={product.brandDocID} search={""} categories={[]} price={[0, 300000]} height={300}/>
           </div>
         </div>
       </main>
