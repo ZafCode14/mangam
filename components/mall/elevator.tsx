@@ -72,7 +72,7 @@ function Elevator({ elev, setElev, setFloor, floor, setFromTo, setZoomInButton }
           width={3000}
           height={3000}
           onClick={() => {
-            setFromTo({from: 0, to: 4});
+            setFromTo({from: 0, to: 2});
             setZoomInButton(false);
             setElev(prev => !prev);
             setFloor("raw");

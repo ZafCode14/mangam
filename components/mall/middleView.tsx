@@ -8,6 +8,10 @@ import ModernMiddle from "./positions/modern/middle";
 import ClassicEnd from "./positions/classic/end";
 import ClassicMiddle from "./positions/classic/middle";
 import ClassicCenter from "./positions/classic/center";
+import IndustrialEnd from "./positions/industrial/end";
+import CaveMiddle from "./positions/cave/middle";
+import IndustrialMiddle from "./positions/industrial/middle";
+import CaveEnd from "./positions/cave/end";
 
 interface MiddleView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -119,23 +123,35 @@ function MiddleView({ vendor, middleView, setShowMiddle, showMiddle }:MiddleView
             scale: "55%",
           }}>
             <ClassicEnd vendor={vendor}/>
-          </div> :
+          </div> : shopStyle === "modern" ?
           <div className="relative top-[-12.8vw] right-[2.8vw]" style={{
             scale: "60%",
           }}>
             <ModernEnd vendor={vendor}/>
+          </div> : shopStyle === "industrial" ?
+          <div className="relative top-[-12.8vw] right-[1.3vw]" style={{
+            scale: "49%",
+          }}>
+            <IndustrialEnd vendor={vendor}/>
+          </div> :
+          <div className="relative top-[-9.5vw] right-[0vw]" style={{
+            scale: "63%",
+          }}>
+            <CaveEnd vendor={vendor}/>
           </div>
         }
 
         { 
         shopStyle === "classic" &&
-            <ClassicCenter vendor={vendor}/>
+          <ClassicCenter vendor={vendor}/>
         }
 
         {
           shopStyle === "classic" ?
-          <ClassicMiddle vendor={vendor}/> :
-          <ModernMiddle vendor={vendor}/>
+          <ClassicMiddle vendor={vendor}/> : shopStyle === "modern" ?
+          <ModernMiddle vendor={vendor}/> : shopStyle === "industrial" ?
+          <IndustrialMiddle vendor={vendor}/> :
+          <CaveMiddle vendor={vendor}/>
         }
       </div>
     </div>

@@ -3,6 +3,8 @@ import { useState } from "react";
 import MiddleView from "./middleView";
 import ModernFront from "./positions/modern/front";
 import ClassicFront from "./positions/classic/front";
+import IndustrialFront from "./positions/industrial/front";
+import CaveFront from "./positions/cave/front";
 
 interface FrontView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,7 +69,11 @@ function FrontView({ vendor, frontView, setShowFront, showFront }:FrontView) {
         {
           shopStyle === "classic" ?
           <ClassicFront vendor={vendor}/> :
-          <ModernFront vendor={vendor}/>
+          shopStyle === "modern" ?
+          <ModernFront vendor={vendor}/> :
+          shopStyle === "cave" ?
+          <CaveFront vendor={vendor}/> :
+          <IndustrialFront vendor={vendor}/>
         }
       </div>
       <MiddleView

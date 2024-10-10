@@ -1,6 +1,8 @@
 import Image from "next/image";
 import ModernEnd from "./positions/modern/end";
 import ClassicEnd from "./positions/classic/end";
+import IndustrialEnd from "./positions/industrial/end";
+import CaveEnd from "./positions/cave/end";
 
 interface EndView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,8 +46,10 @@ function EndView({ vendor, endView, setShowEnd, showEnd }: EndView) {
       </div>
       {
         shopStyle === "classic" ?
-        <ClassicEnd vendor={vendor}/> :
-        <ModernEnd vendor={vendor}/>
+        <ClassicEnd vendor={vendor}/> : shopStyle === "modern" ?
+        <ModernEnd vendor={vendor}/> : shopStyle === "industrial" ?
+        <IndustrialEnd vendor={vendor}/> :
+        <CaveEnd vendor={vendor}/>
       }
     </div>
   );

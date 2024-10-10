@@ -1,6 +1,8 @@
 import Image from "next/image";
 import ModernLeft from "./positions/modern/left";
 import ClassicLeft from "./positions/classic/left";
+import CaveLeft from "./positions/cave/left";
+import IndustrialLeft from "./positions/industrial/left";
 
 interface LeftView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,8 +40,10 @@ function LeftView({ vendor, leftView, setShowLeft, showLeft }:LeftView) {
       </div>
       {
         shopStyle === "classic" ?
-        <ClassicLeft vendor={vendor}/> :
-        <ModernLeft vendor={vendor}/>
+        <ClassicLeft vendor={vendor}/> : shopStyle === "modern" ?
+        <ModernLeft vendor={vendor}/> : shopStyle === "industrial" ?
+        <IndustrialLeft vendor={vendor}/> :
+        <CaveLeft vendor={vendor}/>
       }
     </div>
   );

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import ModernRight from "./positions/modern/right";
 import ClassicRight from "./positions/classic/right";
+import CaveRight from "./positions/cave/right";
+import IndustrialRight from "./positions/industrial/right";
 
 interface RightView {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,8 +42,10 @@ function RightView({ vendor, rightView, setShowRight, showRight }: RightView) {
       </div>
       {
         shopStyle === "classic" ?
-        <ClassicRight vendor={vendor}/> :
-        <ModernRight vendor={vendor}/>
+        <ClassicRight vendor={vendor}/> : shopStyle === "modern" ?
+        <ModernRight vendor={vendor}/> : shopStyle === "industrial" ?
+        <IndustrialRight vendor={vendor}/> :
+        <CaveRight vendor={vendor}/>
       }
     </div>
   );

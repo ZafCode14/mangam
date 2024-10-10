@@ -103,6 +103,7 @@ const Page = ({ params }: BrandPageProps) => {
           >
             <div onClick={(e) => e.stopPropagation()}>
               <Filter
+                setShowFilter={setShowFilter}
                 products={products}
                 price={price}
                 categories={categories}
